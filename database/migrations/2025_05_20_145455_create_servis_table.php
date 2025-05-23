@@ -16,6 +16,8 @@ return new class extends Migration
             $table->date('tgl_datang');
             $table->date('tgl_keluar')->nullable();
             $table->decimal('total_biaya', 10, 2)->nullable();
+            $table->text('keluhan_awal')->nullable();
+            $table->enum('status_servis', ['proses', 'selesai', 'dibatalkan'])->default('proses');
             $table->unsignedBigInteger('id_kendaraan');
             $table->unsignedBigInteger('id_mekanik');
             $table->timestamps();

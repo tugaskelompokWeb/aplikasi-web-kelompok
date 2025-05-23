@@ -15,13 +15,16 @@ return new class extends Migration
             $table->id('id_garansi');
             $table->unsignedBigInteger('id_pelanggan');
             $table->unsignedBigInteger('id_kendaraan');
-            $table->unsignedBigInteger('id_staff');
+            $table->unsignedBigInteger('user_id');
             $table->text('keluhan')->nullable();
+            $table->date('tanggal_garansi');
+            $table->date('batas_akhir');
+            $table->enum('status', ['aktif', 'kadaluarsa', 'batal'])->default('aktif');
             $table->timestamps();
 
             $table->foreign('id_pelanggan')->references('id_pelanggan')->on('pelanggans')->onDelete('cascade');
             $table->foreign('id_kendaraan')->references('id_kendaraan')->on('kendaraans')->onDelete('cascade');
-            $table->foreign('id_staff')->references('id_staff')->on('staff')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

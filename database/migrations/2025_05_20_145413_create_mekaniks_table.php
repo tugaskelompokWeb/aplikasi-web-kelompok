@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('mekaniks', function (Blueprint $table) {
             $table->id('id_mekanik');
             $table->string('nama');
+            $table->string('telepon')->nullable();
+            $table->string('keahlian')->nullable();
+            $table->enum('status', ['aktif', 'nonaktif'])->default('aktif');
             $table->timestamps();
         });
     }

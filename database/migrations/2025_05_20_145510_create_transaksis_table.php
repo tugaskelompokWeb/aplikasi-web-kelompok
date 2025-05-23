@@ -14,12 +14,10 @@ return new class extends Migration
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id('id_transaksi');
             $table->unsignedBigInteger('id_servis');
-            $table->unsignedBigInteger('id_barang');
             $table->decimal('total_harga', 10, 2);
             $table->timestamps();
 
             $table->foreign('id_servis')->references('id_servis')->on('servis')->onDelete('cascade');
-            $table->foreign('id_barang')->references('id_barang')->on('barangs')->onDelete('cascade');
         });
     }
 

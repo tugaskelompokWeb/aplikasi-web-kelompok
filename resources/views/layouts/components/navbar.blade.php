@@ -155,7 +155,7 @@
               class="user-image rounded-circle shadow"
               alt="User Image"
             />
-            <span class="d-none d-md-inline">Alexander Pierce</span>
+            <span class="d-none d-md-inline">{{ auth()->user()->name ?? 'User' }}</span>
           </a>
           <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
             <!--begin::User Image-->
@@ -166,26 +166,19 @@
                 alt="User Image"
               />
               <p>
-                Alexander Pierce - Web Developer
-                <small>Member since Nov. 2023</small>
+                {{ auth()->user()->name ?? 'User' }}
+                <small>Member</small>
               </p>
             </li>
             <!--end::User Image-->
             <!--begin::Menu Body-->
-            <li class="user-body">
-              <!--begin::Row-->
-              <div class="row">
-                <div class="col-4 text-center"><a href="#">Followers</a></div>
-                <div class="col-4 text-center"><a href="#">Sales</a></div>
-                <div class="col-4 text-center"><a href="#">Friends</a></div>
-              </div>
-              <!--end::Row-->
-            </li>
             <!--end::Menu Body-->
             <!--begin::Menu Footer-->
             <li class="user-footer">
-              <a href="#" class="btn btn-default btn-flat">Profile</a>
-              <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-default btn-flat float-end">Logout</button>
+                  </form>
             </li>
             <!--end::Menu Footer-->
           </ul>

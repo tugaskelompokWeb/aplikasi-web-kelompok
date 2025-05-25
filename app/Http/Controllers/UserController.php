@@ -96,4 +96,14 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('User berhasil dihapus.');
     }
 
+    public function logout(Request $request)
+    {
+        auth()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login.form')->with('success', 'Logout berhasil');
+    }
+
+
 }

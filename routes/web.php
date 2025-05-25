@@ -10,6 +10,9 @@ Route::post('/login', [UserController::class, 'login'])->name('login');
 
 Route::middleware('auth')->group(function() {
 
+    Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+
+
     Route::get('/', function () {
         return view('pages/dashboard/index');
     })->name('dashboard');

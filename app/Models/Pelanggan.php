@@ -8,9 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Pelanggan extends Model
 {
     use HasUuids;
-    protected $table = 'pelanggan';
+    protected $table = 'pelanggans';
 
     protected $fillable = [
-        'nama', 'alamat', 'telepon'
+        'nama', 
+        'alamat', 
+        'telepon', 
+        'email', 
+        'jenis_kelamin', 
+        'tanggal_lahir'
     ];
 }

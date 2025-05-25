@@ -29,10 +29,9 @@
                 <!--end::Row-->
               </div>
         </div>
-        <div class="app-content">
-          @yield('content')
-          <!--end::Container-->
-        </div>
+        <div class="container-fluid">
+            @yield('content')
+            </div>
         <!--end::App Content-->
       </main>
       <!--end::App Main-->

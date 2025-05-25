@@ -7,6 +7,15 @@ Route::get('/login', function () {
     return view('auth.login');
 })->name('login.form');
 Route::post('/login', [UserController::class, 'login'])->name('login');
-Route::get('/', function () {
-    return view('pages/dashboard/index');
-})->name('dashboard');
+
+Route::middleware('auth')->group(function() {
+
+    Route::get('/', function () {
+        return view('pages/dashboard/index');
+    })->name('dashboard');
+    Route::resource('users', UserController::class);
+
+
+});
+
+

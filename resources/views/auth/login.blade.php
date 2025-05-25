@@ -60,17 +60,18 @@
         </div>
         <div class="card-body login-card-body">
           <p class="login-box-msg">Silahkan Login Dahulu</p>
-          <form action="{{ route('login') }}" method="post">
+          <form action="{{ route('login') }}" method="POST">
+            @csrf
             <div class="input-group mb-1">
               <div class="form-floating">
-                <input type="text" class="form-control" value="" placeholder="Masukan Nama" required />
+                <input type="text" name="name" class="form-control" value="" placeholder="Masukan Nama" required />
                 <label for="loginName">Masukan Nama : </label>
               </div>
               <div class="input-group-text"><span class="bi bi-envelope"></span></div>
             </div>
             <div class="input-group mb-1">
               <div class="form-floating">
-                <input id="loginPassword" type="password" class="form-control" placeholder="" />
+                <input id="loginPassword" name="password" type="password" class="form-control" placeholder="Masukan Password" />
                 <label for="loginPassword">Masukan Password : </label>
               </div>
               <div class="input-group-text"><span class="bi bi-lock-fill"></span></div>

@@ -11,10 +11,15 @@ class Kendaraan extends Model
     protected $table = 'kendaraans';
 
     protected $fillable = [
-        'no_plat', 'tipe', 'tahun', 'id_pelanggan'
+        'no_plat', 
+        'merk', 
+        'tipe', 
+        'warna', 
+        'tahun', 
+        'id_pelanggan'
     ];
 
     public function pelanggan() {
-        return $this->belongsTo(pelanngan::class, 'id_pelanggan', 'id');
+        return $this->belongsTo(pelanggan::class, 'id_pelanggan', 'id');
     }
 }

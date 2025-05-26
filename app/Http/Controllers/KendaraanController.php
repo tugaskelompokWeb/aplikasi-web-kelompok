@@ -2,23 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kendaraan;
 use App\Models\Role;
 use App\Models\Mekanik;
+use App\Models\Pelanggan;
 use Illuminate\Http\Request;
 
 class KendaraanController extends Controller
 {
-    public function index(){
-        $kendaraans = Kendaraan::with('role')->get();
-        return view('pages.kendaraan.index', compact('kendaraan'));
+    public function index()
+    {
+        $kendaraans = Kendaraan::with('pelanggan')->get();
+        return view('pages.kendaraan.index', compact('kendaraans'));
     }
 
-    public function create(){
-        $roles = Role::all();
-        return view('pages.kendaraan.create', compact('roles'));
+    public function create()
+    {
+        return view('pages.kendaraan.create');
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $validated = $request->validate([
             'no_plat' => 'required',
             'merk' => 'required|string',
@@ -41,9 +45,9 @@ class KendaraanController extends Controller
 
     public function edit($id) {
         $kendaraans = Kendaraan::findOrFail($id);
-        $roles = Role::all();
+        $pelanggans = Pelanggan::all();
 
-        return view('pages.kendaraan.edit', compact(['kendaraan', 'roles']));
+        return view('pages.kendaraan.edit', compact(['kendaraan', 'pelanggans']));
     }
 
     public function update(Request $request, $id)
@@ -63,7 +67,7 @@ class KendaraanController extends Controller
         return redirect()->route('kendaraan.index')->with('Kendaraan berhasil di update');
     }
 
-    public function destroy($id);
+    public function destroy($id)
     {
         $kendaraans = Kendaraan::findOrFail($id);
 

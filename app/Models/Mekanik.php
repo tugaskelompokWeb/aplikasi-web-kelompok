@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Mekanik extends Model
 {
     use HasUuids;
-    protected $table = 'mekaniks';
+    protected $table = 'mekanik';
 
     protected $fillable = [
         'nama', 'telepon', 'keahlian', 'status'

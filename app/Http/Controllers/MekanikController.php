@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
 use App\Models\Mekanik;
 use Illuminate\Http\Request;
 
 class MekanikController extends Controller
 {
     public function index(){
-        $mekaniks = Mekanik::with('role')->get();
-        return view('pages.mekanik.index', compact('mekanik'));
+        $mekaniks = Mekanik::all();
+        return view('pages.mekanik.index', compact('mekaniks'));
     }
 
     public function create(){
-        $roles = Role::all();
-        return view('pages.mekanik.create', compact('roles'));
+        return view('pages.mekanik.create');
     }
 
     public function store(Request $request){
@@ -37,9 +35,8 @@ class MekanikController extends Controller
 
     public function edit($id) {
         $mekaniks = Mekanik::findOrFail($id);
-        $roles = Role::all();
 
-        return view('pages.mekanik.edit', compact(['mekanik', 'roles']));
+        return view('pages.mekanik.edit', compact('mekanik'));
     }
 
     public function update(Request $request, $id)
@@ -57,7 +54,7 @@ class MekanikController extends Controller
         return redirect()->route('mekanik.index')->with('Mekanik berhasil di update');
     }
 
-    public function destroy($id);
+    public function destroy($id)
     {
         $mekaniks = Mekanik::findOrFail($id);
 

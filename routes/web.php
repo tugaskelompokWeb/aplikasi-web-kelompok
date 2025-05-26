@@ -8,8 +8,6 @@ Route::get('/login', function () {
 })->name('login.form');
 Route::post('/login', [UserController::class, 'login'])->name('login');
 
-Route::middleware('auth')->group(function() {
-
     Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
 
@@ -18,7 +16,5 @@ Route::middleware('auth')->group(function() {
     })->name('dashboard');
     Route::resource('users', UserController::class);
 
-
-});
 
 

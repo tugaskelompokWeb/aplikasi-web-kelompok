@@ -43,7 +43,7 @@ class UserController extends Controller
     {
         //
     }
-    
+
     public function edit(Pelanggan $pelanggans)
     {
         //
@@ -53,7 +53,7 @@ class UserController extends Controller
     {
         //
     }
-    
+
     public function destroy(Pelanggan $pelanggans)
     {
         //

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class PelangganController extends Controller
 {
     public function index(){
-        $pelanggans = User::with('role')->get();
+        $pelanggans = Pelanggan::with('role')->get();
         return view('pages.pelanggan.index', compact('pelanggan'));
     }
 

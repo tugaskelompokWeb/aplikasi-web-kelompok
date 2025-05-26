@@ -3,60 +3,76 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
-use App\Models\User;
+use App\Models\Mekanik;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class KendaraanController extends Controller
 {
-    public function index()
-    {
-        //akses model Kendaraan
-        $kendaraans = Kendaraan::all();
-
-        return view('kendaraan.index')->with('kendaraan', $kendarans);
+    public function index(){
+        $kendaraans = Kendaraan::with('role')->get();
+        return view('pages.kendaraan.index', compact('kendaraan'));
     }
 
-    public function create()
-    {
-        return view('kendaraan.create');
+    public function create(){
+        $roles = Role::all();
+        return view('pages.kendaraan.create', compact('roles'));
     }
 
-    public function store(Request $request)
-    {
-        $input = $request->validate([
-            'no_plat' => 'required|unique:kendaraan',
-            'merk' => 'required',
-            'tipe' => 'required',
-            'warna' => 'required',
+    public function store(Request $request){
+        $validated = $request->validate([
+            'no_plat' => 'required',
+            'merk' => 'required|string',
+            'tipe' => 'required|string',
+            'warna' => 'required|string',
             'tahun' => 'required',
             'id_pelanggan' => 'required'
         ]);
 
-        //simpan ke tabel Kendaraan
-        Kendaraan::create($input);
-
-        return redirect()->route('kendaraan.index')
-                         ->with('success', 'Kendaraan berhasil disimpan');
+        $kendaraans = Kendaraan::create([
+            'no_plat' => $validated['no_plat'],
+            'merk' => $validated['merk'],
+            'tipe' => $validated['tipe'],
+            'warna' => $validated['warna'],
+            'tahun' => $validated['tahun'],
+            'id_pelanggan' => $validated['id_pelanggan'],
+        ]);
+        return redirect()->route('kendaraan.index');
     }
 
-    public function show(Kendaraan $kendaraans)
-    {
-        //
-    }
-    
-    public function edit(Kendaraan $kendaraans)
-    {
-        //
+    public function edit($id) {
+        $kendaraans = Kendaraan::findOrFail($id);
+        $roles = Role::all();
+
+        return view('pages.kendaraan.edit', compact(['kendaraan', 'roles']));
     }
 
-    public function update(Request $request, Kendaraan $kendaraans)
+    public function update(Request $request, $id)
     {
-        //
-    }
-    
-    public function destroy(Kendaraan $kendaraans)
-    {
-        //
+        $kendaraans = Kendaraan::findOrFail($id);
+
+        $validated = $request->validate([
+            'no_plat' => 'required',
+            'merk' => 'required|string',
+            'tipe' => 'required|string',
+            'warna' => 'required|string',
+            'tahun' => 'required',
+            'id_pelanggan' => 'required'
+        ]);
+
+        $kendaraans->update($validated);
+        return redirect()->route('kendaraan.index')->with('Kendaraan berhasil di update');
     }
 
+    public function destroy($id);
+    {
+        $kendaraans = Kendaraan::findOrFail($id);
+
+        if (auth()->id() === $kendaraans->$id) {
+            return redirect()->route('kendaraan.index')->with('error', 'Tidak dapat menghapus data.');
+        }
+
+        $kendaraans->delete();
+
+        return redirect()->route('kendaraan.index')->with('Kendaraan berhasil dihapus.');
+    }
 }

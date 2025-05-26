@@ -9,28 +9,32 @@ class Garansi extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'ID_Garansi';
+    protected $primaryKey = 'id_Garansi';
+    protected $table = 'garansi' ;
 
     protected $fillable = [
-        'ID_Pelanggan',
-        'ID_Kendaraan',
-        'ID_Staff',
-        'Keluhan'
+        'id_Pelanggan',
+        'id_Kendaraan',
+        'user_id',
+        'Keluhan',
+        'tanggal_garansi',
+        'batas_akhir',
+        'status'
     ];
 
     public function pelanggan()
     {
-        return $this->belongsTo(Pelanggan::class, 'ID_Pelanggan');
+        return $this->belongsTo(Pelanggan::class, 'id_Pelanggan');
     }
 
     public function kendaraan()
     {
-        return $this->belongsTo(Kendaraan::class, 'ID_Kendaraan');
+        return $this->belongsTo(Kendaraan::class, 'id_Kendaraan');
     }
 
-    public function staff()
+    public function user()
     {
-        return $this->belongsTo(Staff::class, 'ID_Staff');
+        return $this->belongsTo(user::class, 'user_id');
     }
 }
 

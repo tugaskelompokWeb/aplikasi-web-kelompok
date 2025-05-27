@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+<<<<<<< Updated upstream
 use App\Models\Role;
 use App\Models\Pelanggan;
+=======
+use App\Models\Pelanggan; 
+>>>>>>> Stashed changes
 use Illuminate\Http\Request;
 
 class PelangganController extends Controller
@@ -14,7 +18,11 @@ class PelangganController extends Controller
     }
 
     public function create(){
+<<<<<<< Updated upstream
         return view('pages.pelanggan.create');
+=======
+        return view('pages.pelanggan.create', compact('pelanggan'));
+>>>>>>> Stashed changes
     }
 
     public function store(Request $request){
@@ -41,7 +49,11 @@ class PelangganController extends Controller
     public function edit($id) {
         $pelanggans = Pelanggan::findOrFail($id);
 
+<<<<<<< Updated upstream
         return view('pages.pelanggan.edit', compact('pelanggans'));
+=======
+        return view('pages.pelanggan.edit', compact(['pelanggan']));
+>>>>>>> Stashed changes
     }
 
 

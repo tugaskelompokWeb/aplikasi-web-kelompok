@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kendaraan;
+<<<<<<< Updated upstream
 use App\Models\Role;
 use App\Models\Mekanik;
 use App\Models\Pelanggan;
+=======
+>>>>>>> Stashed changes
 use Illuminate\Http\Request;
 
 class KendaraanController extends Controller
 {
+<<<<<<< Updated upstream
     public function index()
     {
         $kendaraans = Kendaraan::with('pelanggan')->get();
@@ -19,6 +23,15 @@ class KendaraanController extends Controller
     public function create()
     {
         return view('pages.kendaraan.create');
+=======
+    public function index(){
+        $kendaraans = Kendaraan::with('pelanggan')->get();
+        return view('pages.kendaraan.index', compact('kendaraan'));
+    }
+
+    public function create(){
+        return view('pages.kendaraan.create', compact('kendaraan'));
+>>>>>>> Stashed changes
     }
 
     public function store(Request $request)
@@ -45,9 +58,14 @@ class KendaraanController extends Controller
 
     public function edit($id) {
         $kendaraans = Kendaraan::findOrFail($id);
+<<<<<<< Updated upstream
         $pelanggans = Pelanggan::all();
 
         return view('pages.kendaraan.edit', compact(['kendaraan', 'pelanggans']));
+=======
+
+        return view('pages.kendaraan.edit', compact(['kendaraan']));
+>>>>>>> Stashed changes
     }
 
     public function update(Request $request, $id)

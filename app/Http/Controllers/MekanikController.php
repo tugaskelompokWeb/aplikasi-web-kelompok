@@ -13,7 +13,11 @@ class MekanikController extends Controller
     }
 
     public function create(){
+<<<<<<< Updated upstream
         return view('pages.mekanik.create');
+=======
+        return view('pages.mekanik.create', compact('mekanik'));
+>>>>>>> Stashed changes
     }
 
     public function store(Request $request){
@@ -36,7 +40,11 @@ class MekanikController extends Controller
     public function edit($id) {
         $mekaniks = Mekanik::findOrFail($id);
 
+<<<<<<< Updated upstream
         return view('pages.mekanik.edit', compact('mekanik'));
+=======
+        return view('pages.mekanik.edit', compact(['mekanik']));
+>>>>>>> Stashed changes
     }
 
     public function update(Request $request, $id)

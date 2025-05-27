@@ -7,20 +7,19 @@ use Illuminate\Http\Request;
 
 class MekanikController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $mekaniks = Mekanik::all();
         return view('pages.mekanik.index', compact('mekaniks'));
     }
 
-    public function create(){
-<<<<<<< Updated upstream
+    public function create()
+    {
         return view('pages.mekanik.create');
-=======
-        return view('pages.mekanik.create', compact('mekanik'));
->>>>>>> Stashed changes
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $validated = $request->validate([
             'name' => 'required|unique:mekanik,name',
             'telepon' => 'required|string',
@@ -28,28 +27,20 @@ class MekanikController extends Controller
             'status' => 'required|string'
         ]);
 
-        $mekaniks = Mekanik::create([
-            'name' => $validated['name'],
-            'telepon' => $validated['telepon'],
-            'keahlian' => $validated['keahlian'],
-            'status' => $validated['status']
-        ]);
-        return redirect()->route('mekanik.index');
+        Mekanik::create($validated);
+
+        return redirect()->route('mekanik.index')->with('success', 'Mekanik berhasil ditambahkan.');
     }
 
-    public function edit($id) {
-        $mekaniks = Mekanik::findOrFail($id);
-
-<<<<<<< Updated upstream
+    public function edit($id)
+    {
+        $mekanik = Mekanik::findOrFail($id);
         return view('pages.mekanik.edit', compact('mekanik'));
-=======
-        return view('pages.mekanik.edit', compact(['mekanik']));
->>>>>>> Stashed changes
     }
 
     public function update(Request $request, $id)
     {
-        $mekaniks = Mekanik::findOrFail($id);
+        $mekanik = Mekanik::findOrFail($id);
 
         $validated = $request->validate([
             'name' => 'required|unique:mekanik,name,' . $id,
@@ -58,20 +49,21 @@ class MekanikController extends Controller
             'status' => 'required|string'
         ]);
 
-        $mekaniks->update($validated);
-        return redirect()->route('mekanik.index')->with('Mekanik berhasil di update');
+        $mekanik->update($validated);
+
+        return redirect()->route('mekanik.index')->with('success', 'Mekanik berhasil diupdate.');
     }
 
     public function destroy($id)
     {
-        $mekaniks = Mekanik::findOrFail($id);
+        $mekanik = Mekanik::findOrFail($id);
 
-        if (auth()->id() === $mekaniks->$id) {
-            return redirect()->route('mekanik.index')->with('error', 'Tidak dapat menghapus data.');
+        if (auth()->id() === $mekanik->id) {
+            return redirect()->route('mekanik.index')->with('error', 'Tidak dapat menghapus data sendiri.');
         }
 
-        $mekaniks->delete();
+        $mekanik->delete();
 
-        return redirect()->route('mekanik.index')->with('Mekanik berhasil dihapus.');
+        return redirect()->route('mekanik.index')->with('success', 'Mekanik berhasil dihapus.');
     }
 }

@@ -3,17 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kendaraan;
-<<<<<<< Updated upstream
-use App\Models\Role;
-use App\Models\Mekanik;
 use App\Models\Pelanggan;
-=======
->>>>>>> Stashed changes
 use Illuminate\Http\Request;
 
 class KendaraanController extends Controller
 {
-<<<<<<< Updated upstream
     public function index()
     {
         $kendaraans = Kendaraan::with('pelanggan')->get();
@@ -22,16 +16,8 @@ class KendaraanController extends Controller
 
     public function create()
     {
-        return view('pages.kendaraan.create');
-=======
-    public function index(){
-        $kendaraans = Kendaraan::with('pelanggan')->get();
-        return view('pages.kendaraan.index', compact('kendaraan'));
-    }
-
-    public function create(){
-        return view('pages.kendaraan.create', compact('kendaraan'));
->>>>>>> Stashed changes
+        $pelanggans = Pelanggan::all();
+        return view('pages.kendaraan.create', compact('pelanggans'));
     }
 
     public function store(Request $request)
@@ -41,60 +27,52 @@ class KendaraanController extends Controller
             'merk' => 'required|string',
             'tipe' => 'required|string',
             'warna' => 'required|string',
-            'tahun' => 'required',
-            'id_pelanggan' => 'required'
+            'tahun' => 'required|integer',
+            'id_pelanggan' => 'required|exists:pelanggan,id'
         ]);
 
-        $kendaraans = Kendaraan::create([
-            'no_plat' => $validated['no_plat'],
-            'merk' => $validated['merk'],
-            'tipe' => $validated['tipe'],
-            'warna' => $validated['warna'],
-            'tahun' => $validated['tahun'],
-            'id_pelanggan' => $validated['id_pelanggan'],
-        ]);
-        return redirect()->route('kendaraan.index');
+        Kendaraan::create($validated);
+
+        return redirect()->route('kendaraan.index')->with('success', 'Kendaraan berhasil ditambahkan.');
     }
 
-    public function edit($id) {
-        $kendaraans = Kendaraan::findOrFail($id);
-<<<<<<< Updated upstream
+    public function edit($id)
+    {
+        $kendaraan = Kendaraan::findOrFail($id);
         $pelanggans = Pelanggan::all();
 
-        return view('pages.kendaraan.edit', compact(['kendaraan', 'pelanggans']));
-=======
-
-        return view('pages.kendaraan.edit', compact(['kendaraan']));
->>>>>>> Stashed changes
+        return view('pages.kendaraan.edit', compact('kendaraan', 'pelanggans'));
     }
 
     public function update(Request $request, $id)
     {
-        $kendaraans = Kendaraan::findOrFail($id);
+        $kendaraan = Kendaraan::findOrFail($id);
 
         $validated = $request->validate([
             'no_plat' => 'required',
             'merk' => 'required|string',
             'tipe' => 'required|string',
             'warna' => 'required|string',
-            'tahun' => 'required',
-            'id_pelanggan' => 'required'
+            'tahun' => 'required|integer',
+            'id_pelanggan' => 'required|exists:pelanggan,id'
         ]);
 
-        $kendaraans->update($validated);
-        return redirect()->route('kendaraan.index')->with('Kendaraan berhasil di update');
+        $kendaraan->update($validated);
+
+        return redirect()->route('kendaraan.index')->with('success', 'Kendaraan berhasil diupdate.');
     }
 
     public function destroy($id)
     {
-        $kendaraans = Kendaraan::findOrFail($id);
+        $kendaraan = Kendaraan::findOrFail($id);
 
-        if (auth()->id() === $kendaraans->$id) {
-            return redirect()->route('kendaraan.index')->with('error', 'Tidak dapat menghapus data.');
+        // Logika berikut bisa dihapus jika tidak relevan
+        if (auth()->id() === $kendaraan->id) {
+            return redirect()->route('kendaraan.index')->with('error', 'Tidak dapat menghapus data sendiri.');
         }
 
-        $kendaraans->delete();
+        $kendaraan->delete();
 
-        return redirect()->route('kendaraan.index')->with('Kendaraan berhasil dihapus.');
+        return redirect()->route('kendaraan.index')->with('success', 'Kendaraan berhasil dihapus.');
     }
 }

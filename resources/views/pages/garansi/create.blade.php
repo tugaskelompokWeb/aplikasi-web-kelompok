@@ -1,24 +1,24 @@
-@extends('layouts.components.app')
+k7k\@extends('layouts.components.app')
 
-@section('page-title', 'Form User')
-@section('breadcrumb', 'form-user')
-@section('title', 'User')
+@section('page-title', 'Form Garansi')
+@section('breadcrumb', 'form-garansi')
+@section('title', 'Garansi')
 @section('content')
     <!--begin::Row-->
     <div class="row">
         <div class="col-12">
-            {{-- form tambah prodi --}}
+            {{-- form tambah Garansi --}}
             <div class="card card-primary card-outline mb-4">
                   <!--begin::Header-->
-                  <div class="card-header"><div class="card-title">Form Tambah User</div></div>
+                  <div class="card-header"><div class="card-title">Form Tambah Garansi</div></div>
                   <!--end::Header-->
                   <!--begin::Form-->
-                  <form action="{{ route('users.store') }}" method="POST">
+                  <form action="{{ route('garansi.store') }}" method="POST">
                     @csrf
                     <!--begin::Body-->
                     <div class="card-body">
                       <div class="mb-3">
-                        <label for="name" class="form-label">Nama User</label>
+                        <label for="name" class="form-label">Nama Garansi</label>
                         <input type="text" class="form-control" name="name" value="{{ old('name') }}" required>
                         @error('name')
                           <div class="text-danger">{{ $message }}</div>

@@ -18,16 +18,16 @@
                     <!--begin::Body-->
                     <div class="card-body">
                       <div class="mb-3">
-                        <label for="name" class="form-label">Nama Mekanik</label>
-                        <input type="text" class="form-control" name="name" value="{{ old('name') }}" required>
-                        @error('name')
+                        <label for="nama" class="form-label">Nama Mekanik</label>
+                        <input type="text" class="form-control" name="nama" value="{{ old('nama') }}" required>
+                        @error('nama')
                           <div class="text-danger">{{ $message }}</div>
                         @enderror
                       </div>
                       <div class="mb-3">
-                        <label for="no_telp" class="form-label">No Telp</label>
-                        <input type="text" class="form-control" name="no_telp" value="{{ old('no_telp') }}" required>
-                        @error('no_telp') <small class="text-danger">{{ $message }}</small> @enderror
+                        <label for="telepon" class="form-label">No Telp</label>
+                        <input type="text" class="form-control" name="telepon" value="{{ old('telepon') }}" required>
+                        @error('telepon') <small class="text-danger">{{ $message }}</small> @enderror
                       </div>
                       <div class="mb-3">
                         <label for="keahlian" class="form-label">Keahlian</label>
@@ -37,10 +37,21 @@
                         @enderror
                       </div>
                       <div class="mb-3">
-                        <label for="status" class="form-label">Status</label>
-                        <input type="text" class="form-control" name="status" required>
+                        <label class="form-label d-block">Status</label>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="status" id="aktif" value="aktif" {{ old('status') == 'aktif' ? 'checked' : '' }} required>
+                          <label class="form-check-label" for="aktif">Aktif</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="status" id="tidak-aktif" value="nonaktif" {{ old('status') == 'nonaktif' ? 'checked' : '' }}>
+                          <label class="form-check-label" for="tidak-aktif">Tidak Aktif</label>
+                        </div>
+                        @error('status')
+                          <div class="text-danger">{{ $message }}</div>
+                        @enderror
                       </div>
-                      
+
+
                     <!--end::Body-->
                     <!--begin::Footer-->
                     <div class="card-footer">

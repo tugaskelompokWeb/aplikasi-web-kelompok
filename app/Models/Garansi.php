@@ -9,12 +9,12 @@ class Garansi extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'id_Garansi';
+    protected $primaryKey = 'id_garansi';
     protected $table = 'garansi' ;
 
     protected $fillable = [
-        'id_Pelanggan',
-        'id_Kendaraan',
+        'id_pelanggan',
+        'id_kendaraan',
         'user_id',
         'Keluhan',
         'tanggal_garansi',

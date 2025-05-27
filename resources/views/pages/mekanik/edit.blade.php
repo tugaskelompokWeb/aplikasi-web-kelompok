@@ -21,17 +21,17 @@
                 <!--begin::Body-->
                 <div class="card-body">
                     <div class="mb-3">
-                        <label for="name" class="form-label">Nama Mekanik</label>
-                        <input type="text" class="form-control" name="name" value="{{ old('name', $mekanik->name) }}" required>
+                        <label for="nama" class="form-label">Nama Mekanik</label>
+                        <input type="text" class="form-control" name="nama" value="{{ old('nama', $mekanik->nama) }}">
                         @error('name')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="mb-3">
-                        <label for="no_telp" class="form-label">No Telp</label>
-                        <input type="text" class="form-control" name="no_telp" value="{{ old('no_telp', $mekanik->no_telp) }}" required>
-                        @error('no_telp')
+                        <label for="telepon" class="form-label">No Telp</label>
+                        <input type="text" class="form-control" name="telepon" value="{{ old('telepon', $mekanik->telepon) }}">
+                        @error('telepon')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
@@ -41,10 +41,20 @@
                         @error('keahlian') <small class="text-danger">{{ $message }}</small> @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="status" class="form-label">Status</label>
-                        <textarea class="form-control" name="status" required>{{ old('status', $mekanik->status) }}</textarea>
-                        @error('status') <small class="text-danger">{{ $message }}</small> @enderror
+                        <label class="form-label d-block">Status</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="status" id="aktif" value="aktif"
+                                {{ old('status', $mekanik->status) == 'aktif' ? 'checked' : '' }}>
+                            <label class="form-check-label" for="aktif">Aktif</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="status" id="tidak-aktif" value="nonaktif"
+                                {{ old('status', $mekanik->status) == 'nonaktif' ? 'checked' : '' }}>
+                            <label class="form-check-label" for="tidak-aktif">Tidak Aktif</label>
+                        </div>
+                        @error('status') <div class="text-danger">{{ $message }}</div> @enderror
                     </div>
+
                 </div>
                 <!--end::Body-->
                 <!--begin::Footer-->

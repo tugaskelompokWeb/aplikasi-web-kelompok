@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('kendaraan', function (Blueprint $table) {
-            $table->id('id_kendaraan');
+            $table->uuid('id')->primary();
             $table->string('no_plat')->unique();
             $table->string('merek')->nullable();
             $table->string('tipe');
@@ -20,10 +20,10 @@ return new class extends Migration
             $table->string('no_mesin')->nullable();
             $table->string('warna')->nullable();
             $table->year('tahun');
-            $table->unsignedBigInteger('id_pelanggan');
+            $table->uuid('pelanggan_id');
             $table->timestamps();
 
-            $table->foreign('id_pelanggan')->references('id_pelanggan')->on('pelanggan')->onDelete('cascade');
+            $table->foreign('pelanggan_id')->references('id')->on('pelanggan')->onDelete('cascade');
         });
     }
 

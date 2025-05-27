@@ -1,13 +1,13 @@
-@extends('layout.components.app')
+@extends('layouts.components.app')
 
-@section('tittle', 'Mekanik')
+@section('title', 'Mekanik')
 
-@section('page-tittle', 'Halaman Mekanik')
+@section('page-title', 'Halaman Mekanik')
 @section('breadcrumb', 'mekanik')
 
 @section('content')
     <!-- begin::Row -->
-     <div class="row"> 
+     <div class="row">
         <div class="col-12">
             <!-- Default box -->
              <div class="card">
@@ -40,17 +40,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($mekanik as $item)
+                            @foreach ($mekaniks as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->name ?? null }}</td>
-                                <td>{{ $item->no_telp }}</td>
+                                <td>{{ $item->nama ?? null }}</td>
+                                <td>{{ $item->telepon }}</td>
                                 <td>{{ $item->keahlian }}</td>
                                 <td>{{ $item->status }}</td>
                                 <td>
                                     <a href="{{ route('mekanik.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                     <form action="{{ route('mekanik.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
-                                        @call_user_func@method('DELETE')
+                                        @csrf
+                                        @method('DELETE')`
                                         <button class="btn btn-danger btn-sm">Delete</button>
                                     </form>
                                 </td>

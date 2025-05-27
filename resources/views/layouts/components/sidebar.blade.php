@@ -37,8 +37,26 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="{{route('pelanggan.index')}}" class="nav-link">
+                <i class="nav-icon bi bi-people"></i>
+              <p>Pelanggan</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('mekanik.index')}}" class="nav-link">
+                <i class="nav-icon bi bi-person-gear"></i>
+              <p>Mekanik</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('garansi.index')}}" class="nav-link">
+                <i class="nav-icon bi bi-shield-check"></i>
+              <p>Garansi</p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="{{route('users.index')}}" class="nav-link">
-              <i class="nav-icon bi bi-person"></i>
+               <i class="nav-icon bi bi-person"></i>
               <p>User</p>
             </a>
           </li>

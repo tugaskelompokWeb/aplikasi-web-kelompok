@@ -21,11 +21,11 @@ class PelangganController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|unique:pelanggan,name',
-            'alamat' => 'required|unique:pelanggan,alamat',
+            'nama' => 'required|unique:pelanggan,nama',
+            'alamat' => 'required|string',
             'telepon' => 'required|string',
             'email' => 'required|unique:pelanggan,email',
-            'jenis_kelamin' => 'required|string',
+            'jenis_kelamin' => 'required|in:L,P',
             'tanggal_lahir' => 'required|string'
         ]);
 
@@ -45,8 +45,8 @@ class PelangganController extends Controller
         $pelanggan = Pelanggan::findOrFail($id);
 
         $validated = $request->validate([
-            'name' => 'required|unique:pelanggan,name,' . $id,
-            'alamat' => 'required|unique:pelanggan,alamat,' . $id,
+            'nama' => 'required|unique:pelanggan,nama,' . $id,
+            'alamat' => 'required|string',
             'telepon' => 'required|string',
             'email' => 'required|unique:pelanggan,email,' . $id,
             'jenis_kelamin' => 'required|string',

@@ -21,10 +21,10 @@ class MekanikController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|unique:mekanik,name',
+            'nama' => 'required|unique:mekanik,nama',
             'telepon' => 'required|string',
             'keahlian' => 'required|string',
-            'status' => 'required|string'
+            'status' => 'required|in:aktif,nonaktif'
         ]);
 
         Mekanik::create($validated);
@@ -43,7 +43,7 @@ class MekanikController extends Controller
         $mekanik = Mekanik::findOrFail($id);
 
         $validated = $request->validate([
-            'name' => 'required|unique:mekanik,name,' . $id,
+            'nama' => 'required|unique:mekanik,nama,' . $id,
             'telepon' => 'required|string',
             'keahlian' => 'required|string',
             'status' => 'required|string'

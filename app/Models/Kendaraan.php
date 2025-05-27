@@ -20,6 +20,6 @@ class Kendaraan extends Model
     ];
 
     public function pelanggan() {
-        return $this->belongsTo(pelanggan::class, 'id_pelanggan', 'id');
+        return $this->belongsTo(pelanggan::class);
     }
 }

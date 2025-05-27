@@ -9,7 +9,9 @@
   <div class="container-fluid">
     <!-- Info boxes -->
     <div class="row">
-      <div class="col-12 col-sm-6 col-md-3">
+        <h1>Haloo.....</h1>
+        <h3>Sudah siap jadi programmer?</h3>
+      {{-- <div class="col-12 col-sm-6 col-md-3">
         <div class="info-box">
           <span class="info-box-icon text-bg-primary shadow-sm">
             <i class="bi bi-gear-fill"></i>
@@ -24,9 +26,9 @@
           <!-- /.info-box-content -->
         </div>
         <!-- /.info-box -->
-      </div>
+      </div> --}}
       <!-- /.col -->
-      <div class="col-12 col-sm-6 col-md-3">
+      {{-- <div class="col-12 col-sm-6 col-md-3">
         <div class="info-box">
           <span class="info-box-icon text-bg-danger shadow-sm">
             <i class="bi bi-hand-thumbs-up-fill"></i>
@@ -38,11 +40,11 @@
           <!-- /.info-box-content -->
         </div>
         <!-- /.info-box -->
-      </div>
+      </div> --}}
       <!-- /.col -->
       <!-- fix for small devices only -->
       <!-- <div class="clearfix hidden-md-up"></div> -->
-      <div class="col-12 col-sm-6 col-md-3">
+      {{-- <div class="col-12 col-sm-6 col-md-3">
         <div class="info-box">
           <span class="info-box-icon text-bg-success shadow-sm">
             <i class="bi bi-cart-fill"></i>
@@ -54,9 +56,9 @@
           <!-- /.info-box-content -->
         </div>
         <!-- /.info-box -->
-      </div>
+      </div> --}}
       <!-- /.col -->
-      <div class="col-12 col-sm-6 col-md-3">
+      {{-- <div class="col-12 col-sm-6 col-md-3">
         <div class="info-box">
           <span class="info-box-icon text-bg-warning shadow-sm">
             <i class="bi bi-people-fill"></i>
@@ -68,12 +70,12 @@
           <!-- /.info-box-content -->
         </div>
         <!-- /.info-box -->
-      </div>
+      </div> --}}
       <!-- /.col -->
     </div>
     <!-- /.row -->
     <!--begin::Row-->
-    <div class="row">
+    {{-- <div class="row">
       <div class="col-md-12">
         <div class="card mb-4">
           <div class="card-header">
@@ -203,7 +205,7 @@
         <!-- /.card -->
       </div>
       <!-- /.col -->
-    </div>
+    </div> --}}
     <!--end::Row-->
     <!--begin::Row-->
     <div class="row">
@@ -213,7 +215,7 @@
         <div class="row g-4 mb-4">
           <div class="col-md-6">
             <!-- DIRECT CHAT -->
-            <div class="card direct-chat direct-chat-warning">
+            {{-- <div class="card direct-chat direct-chat-warning">
               <div class="card-header">
                 <h3 class="card-title">Direct Chat</h3>
                 <div class="card-tools">
@@ -456,13 +458,13 @@
                 </form>
               </div>
               <!-- /.card-footer-->
-            </div>
+            </div> --}}
             <!-- /.direct-chat -->
           </div>
           <!-- /.col -->
           <div class="col-md-6">
             <!-- USERS LIST -->
-            <div class="card">
+            {{-- <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Latest Members</h3>
                 <div class="card-tools">
@@ -607,14 +609,14 @@
                 >
               </div>
               <!-- /.card-footer -->
-            </div>
+            </div> --}}
             <!-- /.card -->
           </div>
           <!-- /.col -->
         </div>
         <!--end::Row-->
         <!--begin::Latest Order Widget-->
-        <div class="card">
+        {{-- <div class="card">
           <div class="card-header">
             <h3 class="card-title">Latest Orders</h3>
             <div class="card-tools">
@@ -739,49 +741,49 @@
             </a>
           </div>
           <!-- /.card-footer -->
-        </div>
+        </div> --}}
         <!-- /.card -->
       </div>
       <!-- /.col -->
       <div class="col-md-4">
         <!-- Info Boxes Style 2 -->
-        <div class="info-box mb-3 text-bg-warning">
+        {{-- <div class="info-box mb-3 text-bg-warning">
           <span class="info-box-icon"> <i class="bi bi-tag-fill"></i> </span>
           <div class="info-box-content">
             <span class="info-box-text">Inventory</span>
             <span class="info-box-number">5,200</span>
           </div>
           <!-- /.info-box-content -->
-        </div>
+        </div> --}}
         <!-- /.info-box -->
-        <div class="info-box mb-3 text-bg-success">
+        {{-- <div class="info-box mb-3 text-bg-success">
           <span class="info-box-icon"> <i class="bi bi-heart-fill"></i> </span>
           <div class="info-box-content">
             <span class="info-box-text">Mentions</span>
             <span class="info-box-number">92,050</span>
           </div>
           <!-- /.info-box-content -->
-        </div>
+        </div> --}}
         <!-- /.info-box -->
-        <div class="info-box mb-3 text-bg-danger">
+        {{-- <div class="info-box mb-3 text-bg-danger">
           <span class="info-box-icon"> <i class="bi bi-cloud-download"></i> </span>
           <div class="info-box-content">
             <span class="info-box-text">Downloads</span>
             <span class="info-box-number">114,381</span>
           </div>
           <!-- /.info-box-content -->
-        </div>
+        </div> --}}
         <!-- /.info-box -->
-        <div class="info-box mb-3 text-bg-info">
+        {{-- <div class="info-box mb-3 text-bg-info">
           <span class="info-box-icon"> <i class="bi bi-chat-fill"></i> </span>
           <div class="info-box-content">
             <span class="info-box-text">Direct Messages</span>
             <span class="info-box-number">163,921</span>
           </div>
           <!-- /.info-box-content -->
-        </div>
+        </div> --}}
         <!-- /.info-box -->
-        <div class="card mb-4">
+        {{-- <div class="card mb-4">
           <div class="card-header">
             <h3 class="card-title">Browser Usage</h3>
             <div class="card-tools">
@@ -834,10 +836,10 @@
             </ul>
           </div>
           <!-- /.footer -->
-        </div>
+        </div> --}}
         <!-- /.card -->
         <!-- PRODUCT LIST -->
-        <div class="card">
+        {{-- <div class="card">
           <div class="card-header">
             <h3 class="card-title">Recently Added Products</h3>
             <div class="card-tools">
@@ -932,7 +934,7 @@
             <a href="javascript:void(0)" class="uppercase"> View All Products </a>
           </div>
           <!-- /.card-footer -->
-        </div>
+        </div> --}}
         <!-- /.card -->
       </div>
       <!-- /.col -->

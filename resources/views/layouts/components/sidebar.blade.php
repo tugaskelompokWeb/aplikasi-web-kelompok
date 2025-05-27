@@ -12,7 +12,7 @@
         />
         <!--end::Brand Image-->
         <!--begin::Brand Text-->
-        <span class="brand-text fw-light">AdminLTE 4</span>
+        <span class="brand-text fw-light">ProjectUAS</span>
         <!--end::Brand Text-->
       </a>
       <!--end::Brand Link-->
@@ -29,7 +29,7 @@
           data-accordion="false"
         >
           <li class="nav-item">
-            <a href="#" class="nav-link active">
+            <a href="{{route('dashboard')}}" class="nav-link active">
               <i class="nav-icon bi bi-speedometer"></i>
               <p>
                 Dashboard
@@ -65,40 +65,6 @@
                 <i class="nav-icon bi bi-people"></i>
               <p>Role</p>
             </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon bi bi-pencil-square"></i>
-              <p>
-                Forms
-                <i class="nav-arrow bi bi-chevron-right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="./forms/general.html" class="nav-link">
-                  <i class="nav-icon bi bi-circle"></i>
-                  <p>General Elements</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon bi bi-table"></i>
-              <p>
-                Tables
-                <i class="nav-arrow bi bi-chevron-right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="./tables/simple.html" class="nav-link">
-                  <i class="nav-icon bi bi-circle"></i>
-                  <p>Simple Tables</p>
-                </a>
-              </li>
-            </ul>
           </li>
           <li class="nav-header">EXAMPLES</li>
           <li class="nav-item">

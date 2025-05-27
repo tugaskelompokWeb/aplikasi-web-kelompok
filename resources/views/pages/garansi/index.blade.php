@@ -1,9 +1,9 @@
 @extends('layouts.components.app')
 
-@section('title', 'Users')
+@section('title', 'Garansi')
 
-@section('page-title', 'Halaman User')
-@section('breadcrumb', 'user')
+@section('page-title', 'Halaman Garansi')
+@section('breadcrumb', 'garansi')
 
 @section('content')
     <!--begin::Row-->
@@ -12,7 +12,7 @@
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-            <h3 class="card-title">Tabel User</h3>
+            <h3 class="card-title">Tabel Garansi</h3>
             <div class="card-tools">
                 <button
                 type="button"
@@ -34,7 +34,7 @@
             </div>
             </div>
             <div class="card-body">
-                <a href="{{ route('users.create') }}" class="btn btn-primary">Tambah</a>
+                <a href="{{ route('garansi.create') }}" class="btn btn-primary">Tambah</a>
                 <table class="table">
                     <thead>
                         <tr>
@@ -49,7 +49,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($users as $item)
+                        @foreach ($garansi as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->name ?? null }}</td>
@@ -59,8 +59,8 @@
                             <td>{{ $item->email }}</td>
                             <td>{{ $item->alamat }}</td>
                             <td>
-                                <a href="{{ route('users.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                <form action="{{ route('users.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus user ini?');">
+                                <a href="{{ route('garansi.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <form action="{{ route('garansi.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus user ini?');">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger btn-sm">Delete</button>

@@ -21,49 +21,70 @@
                 <!--begin::Body-->
                 <div class="card-body">
                     <div class="mb-3">
-                        <label for="name" class="form-label">Nama Garansi</label>
-                        <input type="text" class="form-control" name="name" value="{{ old('name', $garansi->name) }}" required>
-                        @error('name')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="text" class="form-control" name="email" value="{{ old('email', $garansi->email) }}" required>
-                        @error('email')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="role_id" class="form-label">Role</label>
-                        <select class="form-control" name="role_id" required>
-                            <option value="">-- Pilih Role --</option>
-                            @foreach ($roles as $role)
-                                <option value="{{ $role->id }}" {{ (old('role_id', $users->role_id) == $role->id) ? 'selected' : '' }}>
-                                    {{ $role->nama }}
+                        <label for="id_pelanggan" class="form-label">id_pelanggan</label>
+                        <select class="form-control" name="id_pelanggan" required>
+                            <option value="">-- Pilih Id_Pelanggan --</option>
+                            @foreach ($id_pelanggans as $id_pelanggan)
+                                <option value="{{ $pelanggan->id }}" {{ (old('id_pelanggan', $users->id_pelanggan) == $pelanggan->id) ? 'selected' : '' }}>
+                                    {{ $pelanggan->nama }}
                                 </option>
                             @endforeach
                         </select>
-                        @error('role_id') <small class="text-danger">{{ $message }}</small> @enderror
+                        @error('id_pelanggan') <small class="text-danger">{{ $message }}</small> @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="no_telp" class="form-label">No Telp</label>
-                        <input type="text" class="form-control" name="no_telp" value="{{ old('no_telp', $garansi->no_telp) }}" required>
-                        @error('no_telp') <small class="text-danger">{{ $message }}</small> @enderror
+                        <label for="id_kendaraan" class="form-label">id_kendaraan</label>
+                        <select class="form-control" name="id_kendaraan" required>
+                            <option value="">-- Pilih id_kendaraan --</option>
+                            @foreach ($id_kendaraans as $id_kendaraan)
+                                <option value="{{ $kendaraan->id }}" {{ (old('id_kendaraan', $users->id_kendaraan) == $kendaraan->id) ? 'selected' : '' }}>
+                                    {{ $kendaraan->no_plat }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('id_kendaraan') <small class="text-danger">{{ $message }}</small> @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="user_id" class="form-label">user_id</label>
+                        <select class="form-control" name="user_id" required>
+                            <option value="">-- Pilih user_id --</option>
+                            @foreach ($user_ids as $user_id)
+                                <option value="{{ $user->id }}" {{ (old('user_id', $users->user_id) == $user->id) ? 'selected' : '' }}>
+                                    {{ $user->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('user_id') <small class="text-danger">{{ $message }}</small> @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="keluhan" class="form-label">Keluhan</label>
+                        <input type="text" class="form-control" name="keluhan" value="{{ old('keluhan', $garansi->keluhan) }}" required>
+                        @error('keluhan')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="tanggal_garansi" class="form-label">Tanggal_Garansi</label>
+                        <input type="date" class="form-control" name="tanggal_garansi" value="{{ old('tanggal_garansi', $garansi->tanggal_garansi) }}" required>
+                        @error('tanggal_garansi')
+                            <div class="date-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="batas_akhir" class="form-label">Batas_Akhir</label>
+                        <input type="date" class="form-control" name="batas_akhir" value="{{ old('batas_akhir', $garansi->batas_akhir) }}" required>
+                        @error('batas_akhir')
+                            <div class="date-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <input type="text" class="form-control" name="status" value="{{ old('status', $garansi->status) }}" required>
+                        @error('status')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
-                    <div class="mb-3">
-                        <label for="posisi" class="form-label">Posisi</label>
-                        <input type="text" class="form-control" name="posisi" value="{{ old('posisi', $garansi->posisi) }}" required>
-                        @error('posisi') <small class="text-danger">{{ $message }}</small> @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="alamat" class="form-label">Alamat</label>
-                        <textarea class="form-control" name="alamat" required>{{ old('alamat', $garansi->alamat) }}</textarea>
-                        @error('alamat') <small class="text-danger">{{ $message }}</small> @enderror
-                    </div>
                 </div>
                 <!--end::Body-->
                 <!--begin::Footer-->

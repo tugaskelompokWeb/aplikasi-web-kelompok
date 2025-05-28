@@ -39,26 +39,25 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Nama_Pelanggan</th>
-                            <th>Nama_Kendaraan</th>
-                            <th>Nama_User</th>
-                            <th>Keluhan</th>
-                            <th>Tanggal_Garansi</th>
-                            <th>Batas_Akhir</th>
-                            <th>Status</th>
+                            <th>Nama</th>
+                            <th>Role</th>
+                            <th>Posisi</th>
+                            <th>No Telp</th>
+                            <th>Email</th>
+                            <th>Alamat</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($garansi as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->pelanggan->nama ?? null }}</td>
-                            <td>{{ $item->kendaraan->no_plat }}</td>
-                            <td>{{ $item->user->name }}</td>
-                            <td>{{ $item->Keluhan }}</td>
-                            <td>{{ $item->tanggal_garansi }}</td>
-                            <td>{{ $item->batas_akhir }}</td>
-                            <td>{{ $item->status }}</td>
+                            <td>{{ $item->name ?? null }}</td>
+                            <td>{{ $item->role->nama }}</td>
+                            <td>{{ $item->posisi }}</td>
+                            <td>{{ $item->no_telp }}</td>
+                            <td>{{ $item->email }}</td>
+                            <td>{{ $item->alamat }}</td>
                             <td>
                                 <a href="{{ route('garansi.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                 <form action="{{ route('garansi.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus user ini?');">

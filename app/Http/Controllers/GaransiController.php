@@ -9,7 +9,7 @@ class GaransiController extends Controller
 {
     public function index()
     {
-        $garansi = Garansi::all();
+        $garansi = Garansi::with(['pelanggan', 'kendaraan', 'user']);
         return view('pages.garansi.index', compact('garansi'));
     }
 

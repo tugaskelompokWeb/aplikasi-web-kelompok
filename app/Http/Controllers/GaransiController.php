@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Garansi;
+use App\Models\Kendaraan;
+use App\Models\Pelanggan;
+use App\Models\User;
 
 class GaransiController extends Controller
 {
@@ -15,17 +18,21 @@ class GaransiController extends Controller
 
     public function create()
     {
-        return view('pages.garansi.create');
+        $pelanggans = Pelanggan::all();
+        $kendaraans = Kendaraan::all();
+        $users = User::all();
+        return view('pages.garansi.create', compact('pelanggans', 'kendaraans', 'users'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'produk'            => 'required|string',
-            'nomor_seri'        => 'required|string|unique:garansi,nomor_seri',
-            'tanggal_mulai'     => 'required|date',
-            'tanggal_berakhir'  => 'required|date|after_or_equal:tanggal_mulai',
-            'keterangan'        => 'nullable|string',
+            'pelanggan_id'      => 'required|exists:pelanggan,id',
+            'kendaraan_id'      => 'required|exists:kendaraan,id',
+            'user_id'           => 'required|exists:users,id',
+            'tanggal_garansi'   => 'required',
+            'batas_akhir'       => 'nullable',
+            'status'            => 'required|in:aktif,nonaktif',
         ]);
 
         Garansi::create($validated);
@@ -36,7 +43,10 @@ class GaransiController extends Controller
     public function edit($id)
     {
         $garansi = Garansi::findOrFail($id);
-        return view('pages.garansi.edit', compact('garansi'));
+        $pelanggans = Pelanggan::all();
+        $kendaraans = Kendaraan::all();
+        $users = User::all();
+        return view('pages.garansi.edit', compact(['garansi', 'pelanggans', 'kendaraans', 'users']));
     }
 
     public function update(Request $request, $id)
@@ -44,11 +54,12 @@ class GaransiController extends Controller
         $garansi = Garansi::findOrFail($id);
 
         $validated = $request->validate([
-            'produk'            => 'required|string',
-            'nomor_seri'        => 'required|string|unique:garansi,nomor_seri,' . $id,
-            'tanggal_mulai'     => 'required|date',
-            'tanggal_berakhir'  => 'required|date|after_or_equal:tanggal_mulai',
-            'keterangan'        => 'nullable|string',
+            'pelanggan_id'      => 'required|exists:pelanggan,id',
+            'kendaraan_id'      => 'required|exists:kendaraan,id',
+            'user_id'           => 'required|exists:users,id',
+            'tanggal_garansi'   => 'required',
+            'batas_akhir'       => 'nullable',
+            'status'            => 'required|in:aktif,nonaktif',
         ]);
 
         $garansi->update($validated);

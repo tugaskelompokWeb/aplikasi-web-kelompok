@@ -53,19 +53,19 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->pelanggan->nama ?? null }}</td>
-                            <td>{{ $item->kendaraan->no_plat }}</td>
-                            <td>{{ $item->user->name }}</td>
-                            <td>{{ $item->Keluhan }}</td>
-                            <td>{{ $item->tanggal_garansi }}</td>
-                            <td>{{ $item->batas_akhir }}</td>
-                            <td>{{ $item->status }}</td>
+                            <td>{{ $item->kendaraan->no_plat ?? null }}</td>
+                            <td>{{ $item->user->name ?? null }}</td>
+                            <td>{{ $item->keluhan ?? null }}</td>
+                            <td>{{ $item->tanggal_garansi ?? null }}</td>
+                            <td>{{ $item->batas_akhir ?? null }}</td>
+                            <td>{{ $item->status ?? null }}</td>
                             <td>
-                                <a href="{{ route('garansi.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                <form action="{{ route('garansi.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus user ini?');">
+                                {{-- <a href="{{ route('garansi.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a> --}}
+                                {{-- <form action="{{ route('garansi.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus user ini?');">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger btn-sm">Delete</button>
-                                </form>
+                                </form> --}}
                             </td>
                         </tr>
                         @endforeach

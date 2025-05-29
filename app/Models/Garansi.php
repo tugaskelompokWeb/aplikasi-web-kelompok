@@ -9,12 +9,11 @@ class Garansi extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'id_garansi';
     protected $table = 'garansi' ;
 
     protected $fillable = [
-        'id_pelanggan',
-        'id_kendaraan',
+        'pelanggan_id',
+        'kendaraan_id',
         'user_id',
         'Keluhan',
         'tanggal_garansi',
@@ -24,12 +23,12 @@ class Garansi extends Model
 
     public function pelanggan()
     {
-        return $this->belongsTo(Pelanggan::class, 'id_Pelanggan');
+        return $this->belongsTo(Pelanggan::class, 'pelanggan_id');
     }
 
     public function kendaraan()
     {
-        return $this->belongsTo(Kendaraan::class, 'id_Kendaraan');
+        return $this->belongsTo(Kendaraan::class, 'kendaraan_id');
     }
 
     public function user()

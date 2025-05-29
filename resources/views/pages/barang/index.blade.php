@@ -1,9 +1,9 @@
 @extends('layouts.components.app')
 
-@section('title', 'Garansi')
+@section('title', 'Barang')
 
-@section('page-title', 'Halaman Garansi')
-@section('breadcrumb', 'garansi')
+@section('page-title', 'Halaman Barang')
+@section('breadcrumb', 'barang')
 
 @section('content')
     <!--begin::Row-->
@@ -12,7 +12,7 @@
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-            <h3 class="card-title">Tabel Garansi</h3>
+            <h3 class="card-title">Tabel Barang</h3>
             <div class="card-tools">
                 <button
                 type="button"
@@ -34,33 +34,33 @@
             </div>
             </div>
             <div class="card-body">
-                <a href="{{ route('garansi.create') }}" class="btn btn-primary">Tambah</a>
+                <a href="{{ route('barang.create') }}" class="btn btn-primary">Tambah</a>
                 <table class="table">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Nama</th>
-                            <th>Role</th>
-                            <th>Posisi</th>
-                            <th>No Telp</th>
-                            <th>Email</th>
-                            <th>Alamat</th>
+                            <th>Kode Barang</th>
+                            <th>Nama Barang</th>
+                            <th>Kategori</th>
+                            <th>Satuan</th>
+                            <th>Stok</th>
+                            <th>Harga</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($garansi as $item)
+                        @foreach ($barangs as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->name ?? null }}</td>
-                            <td>{{ $item->role->nama }}</td>
-                            <td>{{ $item->posisi }}</td>
-                            <td>{{ $item->no_telp }}</td>
-                            <td>{{ $item->email }}</td>
-                            <td>{{ $item->alamat }}</td>
+                            <td>{{ $item->kode_barang ?? null }}</td>
+                            <td>{{ $item->nama }}</td>
+                            <td>{{ $item->kategori }}</td>
+                            <td>{{ $item->satuan }}</td>
+                            <td>{{ $item->stok }}</td>
+                            <td>{{ $item->harga }}</td>
                             <td>
-                                <a href="{{ route('garansi.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                <form action="{{ route('garansi.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus user ini?');">
+                                <a href="{{ route('barang.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <form action="{{ route('barang.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus user ini?');">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger btn-sm">Delete</button>

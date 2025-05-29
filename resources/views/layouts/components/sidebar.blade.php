@@ -37,6 +37,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="{{route('barang.index')}}" class="nav-link">
+                <i class="nav-icon bi bi-people"></i>
+              <p>Barang</p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="{{route('pelanggan.index')}}" class="nav-link">
                 <i class="nav-icon bi bi-people"></i>
               <p>Pelanggan</p>

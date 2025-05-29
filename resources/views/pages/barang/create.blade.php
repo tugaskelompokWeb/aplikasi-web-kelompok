@@ -1,4 +1,4 @@
-k7k\@extends('layouts.components.app')
+@extends('layouts.components.app')
 
 @section('page-title', 'Form Garansi')
 @section('breadcrumb', 'form-garansi')
@@ -13,70 +13,65 @@ k7k\@extends('layouts.components.app')
                   <div class="card-header"><div class="card-title">Form Tambah Garansi</div></div>
                   <!--end::Header-->
                   <!--begin::Form-->
-                  <form action="{{ route('garansi.store') }}" method="POST">
+                  <form action="{{ route('barang.store') }}" method="POST">
                     @csrf
-                    <!--begin::Body-->
                     <div class="card-body">
-                      <div class="mb-3">
-                        <label for="name" class="form-label">Nama Garansi</label>
-                        <input type="text" class="form-control" name="name" value="{{ old('name') }}" required>
-                        @error('name')
-                          <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                      </div>
-                      <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="text" class="form-control" name="email" value="{{ old('email') }}" required>
-                        @error('npm')
-                          <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                      </div>
-                      <div class="mb-3">
-                        <label for="password" class="form-label">Masukan Password</label>
-                        <input type="text" class="form-control" name="password" value="{{ old('password') }}" required>
-                        @error('password')
-                          <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                      </div>
-                      <div class="mb-3">
-                        <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
-                        <input type="text" class="form-control" name="password_confirmation" required>
-                      </div>
-                      <div class="mb-3">
-                        <label for="role_id" class="form-label">Role</label>
-                        <select class="form-control" name="role_id" required>
-                            <option value="">-- Pilih Role --</option>
-                            @foreach ($roles as $role)
-                                <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? 'selected' : '' }}>
-                                    {{ $role->nama }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('role_id') <small class="text-danger">{{ $message }}</small> @enderror
-                      </div>
-                      <div class="mb-3">
-                        <label for="no_telp" class="form-label">No Telp</label>
-                        <input type="text" class="form-control" name="no_telp" value="{{ old('no_telp') }}" required>
-                        @error('no_telp') <small class="text-danger">{{ $message }}</small> @enderror
-                      </div>
-                      <div class="mb-3">
-                        <label for="posisi" class="form-label">Posisi</label>
-                        <input type="text" class="form-control" name="posisi" value="{{ old('posisi') }}" required>
-                        @error('posisi') <small class="text-danger">{{ $message }}</small> @enderror
-                      </div>
-                      <div class="mb-3">
-                        <label for="alamat" class="form-label">Alamat</label>
-                        <textarea class="form-control" name="alamat" required>{{ old('alamat') }}</textarea>
-                        @error('alamat') <small class="text-danger">{{ $message }}</small> @enderror
-                      </div>
-                    <!--end::Body-->
-                    <!--begin::Footer-->
-                    <div class="card-footer">
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                      <a href="{{ route('users.index') }}" class="btn btn-secondary">Kembali</a>
+                        <div class="mb-3">
+                            <label for="kode_barang" class="form-label">Kode Barang</label>
+                            <input type="text" class="form-control" name="kode_barang" value="{{ old('kode_barang') }}" required>
+                            @error('kode_barang') <div class="text-danger">{{ $message }}</div> @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="nama" class="form-label">Nama Barang</label>
+                            <input type="text" class="form-control" name="nama" value="{{ old('nama') }}" required>
+                            @error('nama') <div class="text-danger">{{ $message }}</div> @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="kategori" class="form-label">Kategori</label>
+                            <select class="form-control" name="kategori" required>
+                                <option value="">-- Pilih Kategori --</option>
+                                <option value="oli" {{ old('kategori') == 'oli' ? 'selected' : '' }}>Oli</option>
+                                <option value="sparepart" {{ old('kategori') == 'sparepart' ? 'selected' : '' }}>Sparepart</option>
+                                <option value="aki" {{ old('kategori') == 'aki' ? 'selected' : '' }}>Aki</option>
+                                <option value="lampu" {{ old('kategori') == 'lampu' ? 'selected' : '' }}>Lampu</option>
+                            </select>
+                            @error('kategori') <div class="text-danger">{{ $message }}</div> @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="satuan" class="form-label">Satuan</label>
+                            <select class="form-control" name="satuan" required>
+                                <option value="">-- Pilih Satuan --</option>
+                                <option value="pcs" {{ old('satuan') == 'pcs' ? 'selected' : '' }}>Pcs</option>
+                                <option value="box" {{ old('satuan') == 'box' ? 'selected' : '' }}>Box</option>
+                                <option value="kg" {{ old('satuan') == 'kg' ? 'selected' : '' }}>Kg</option>
+                                <option value="liter" {{ old('satuan') == 'liter' ? 'selected' : '' }}>Liter</option>
+                            </select>
+                            @error('satuan') <div class="text-danger">{{ $message }}</div> @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="harga" class="form-label">Harga</label>
+                            <input type="number" class="form-control" name="harga" value="{{ old('harga') }}" min="0" required>
+                            @error('harga') <div class="text-danger">{{ $message }}</div> @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="stok" class="form-label">Stok</label>
+                            <input type="number" class="form-control" name="stok" value="{{ old('stok') }}" min="0" required>
+                            @error('stok') <div class="text-danger">{{ $message }}</div> @enderror
+                        </div>
                     </div>
-                    <!--end::Footer-->
-                  </form>
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <a href="{{ route('barang.index') }}" class="btn btn-secondary">Kembali</a>
+                    </div>
+                </form>
+
+
                   <!--end::Form-->
             </div>
         </div>

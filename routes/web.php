@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BarangController;
 use App\Http\Controllers\GaransiController;
 use App\Http\Controllers\MekanikController;
 use App\Http\Controllers\PelangganController;
@@ -25,6 +26,7 @@ Route::post('/login', [UserController::class, 'login'])->name('login');
         Route::resource('pelanggan', PelangganController::class);
         Route::resource('mekanik', MekanikController::class);
         Route::resource('garansi', GaransiController::class);
+        Route::resource('barang', BarangController::class);
     });
 
 

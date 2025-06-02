@@ -22,6 +22,7 @@ Route::post('/login', [UserController::class, 'login'])->name('login');
         })->name('dashboard');
 
         Route::resource('users', UserController::class);
+        Route::get('users/search', [UserController::class, 'search'])->name('users.search');
         Route::resource('roles', RoleController::class);
         Route::resource('pelanggan', PelangganController::class);
         Route::resource('mekanik', MekanikController::class);

@@ -47,7 +47,7 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nama ?? null }}</td>
                                 <td>{{ $item->alamat }}</td>
-                                <td>{{ $item->no_telp }}</td>
+                                <td>{{ $item->telepon }}</td>
                                 <td>{{ $item->email }}</td>
                                 <td>{{ $item->jenis_kelamin }}</td>
                                 <td>{{ $item->tanggal_lahir }}</td>

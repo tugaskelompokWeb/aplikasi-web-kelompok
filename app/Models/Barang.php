@@ -10,7 +10,6 @@ class Barang extends Model
     use HasUuids;
     protected $table = 'barang';
     protected $fillable = [
-        'id',
         'kode_barang',
         'nama',
         'kategori',

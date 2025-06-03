@@ -34,7 +34,14 @@
             </div>
             </div>
             <div class="card-body">
-                <a href="{{ route('users.create') }}" class="btn btn-primary">Tambah</a>
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    <a href="{{ route('users.create') }}" class="btn btn-primary">Tambah</a>
+
+                    <form action="{{ route('users.index') }}" method="GET" class="d-flex gap-2">
+                        <input type="text" name="search" placeholder="Cari User" class="form-control" value="{{ request('search') }}">
+                        <button type="submit" class="btn btn-primary">Cari</button>
+                    </form>
+                </div>
                 <table class="table">
                     <thead>
                         <tr>

@@ -9,7 +9,7 @@ class BarangController extends Controller
 {
     public function index()
     {
-        $barangs = Barang::all(); // Fetch all barang data
+        $barangs = Barang::all();
         return view('pages.barang.index', compact('barangs'));
     }
 

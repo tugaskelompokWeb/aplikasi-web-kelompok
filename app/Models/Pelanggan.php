@@ -18,4 +18,14 @@ class Pelanggan extends Model
         'jenis_kelamin',
         'tanggal_lahir'
     ];
+
+    public function garansi()
+    {
+        return $this->hasMany(Garansi::class, 'pelanggan_id');
+    }
+
+    public function kendaraan()
+    {
+        return $this->hasMany(Kendaraan::class, 'pelanggan_id');
+    }
 }

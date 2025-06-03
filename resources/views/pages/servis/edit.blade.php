@@ -45,6 +45,18 @@
                       @error('kendaraan_id') <small class="text-danger">{{ $message }}</small> @enderror
                   </div>
                   <div class="mb-3">
+                      <label for="user_id" class="form-label">User</label>
+                      <select class="form-control" name="user_id" required>
+                          <option value="">-- Pilih User --</option>
+                          @foreach ($users as $user)
+                              <option value="{{ $user->id }}" {{ (old('user_id', $garansi->user_id) == $user->id) ? 'selected' : '' }}>
+                                  {{ $user->name }}
+                              </option>
+                          @endforeach
+                      </select>
+                      @error('user_id') <small class="text-danger">{{ $message }}</small> @enderror
+                  </div>
+                  <div class="mb-3">
                       <label for="keluhan" class="form-label">Keluhan</label>
                       <input type="text" class="form-control" name="keluhan" value="{{ old('keluhan', $garansi->keluhan)}}" required>
                       @error('keluhan')
@@ -72,7 +84,7 @@
                         <label class="form-check-label" for="aktif">Aktif</label>
                       </div>
                       <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="status" id="kadaluarsa" value="kadaluarsa" {{ old('status', $garansi->status) == 'kadaluarsa' ? 'checked' : '' }}>
+                        <input class="form-check-input" type="radio" name="status" id="kadaluarsa" value="nonaktif" {{ old('status', $garansi->status) == 'kadaluarsa' ? 'checked' : '' }}>
                         <label class="form-check-label" for="kadaluarsa">Kadaluarsa</label>
                       </div>
                       <div class="form-check form-check-inline">

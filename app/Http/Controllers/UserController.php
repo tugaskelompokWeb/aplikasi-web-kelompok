@@ -25,7 +25,8 @@ class UserController extends Controller
         return redirect()->route('dashboard')->with('success', 'Login berhasil');
     }
 
-    public function index(){
+    public function index(Request $request)
+    {
         $users = User::with('role')->get();
         return view('pages.users.index', compact('users'));
     }

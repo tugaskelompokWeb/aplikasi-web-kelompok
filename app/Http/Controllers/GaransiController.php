@@ -12,7 +12,7 @@ class GaransiController extends Controller
 {
     public function index()
     {
-        $garansi = Garansi::with(['pelanggan', 'kendaraan', 'user']);
+        $garansi = Garansi::with(['pelanggan', 'kendaraan', 'user'])->get();
         return view('pages.garansi.index', compact('garansi'));
     }
 
@@ -20,8 +20,7 @@ class GaransiController extends Controller
     {
         $pelanggans = Pelanggan::all();
         $kendaraans = Kendaraan::all();
-        $users = User::all();
-        return view('pages.garansi.create', compact('pelanggans', 'kendaraans', 'users'));
+        return view('pages.garansi.create', compact('pelanggans', 'kendaraans'));
     }
 
     public function store(Request $request)
@@ -29,12 +28,13 @@ class GaransiController extends Controller
         $validated = $request->validate([
             'pelanggan_id'      => 'required|exists:pelanggan,id',
             'kendaraan_id'      => 'required|exists:kendaraan,id',
-            'user_id'           => 'required|exists:users,id',
             'tanggal_garansi'   => 'required',
+            'keluhan'           => 'nullable|string|max:255',
             'batas_akhir'       => 'nullable',
-            'status'            => 'required|in:aktif,nonaktif',
+            'status'            => 'required|in:aktif,kadaluarsa,batal',
         ]);
 
+        $validated['user_id'] = auth()->id();
         Garansi::create($validated);
 
         return redirect()->route('garansi.index')->with('success', 'Data garansi berhasil ditambahkan');
@@ -45,8 +45,7 @@ class GaransiController extends Controller
         $garansi = Garansi::findOrFail($id);
         $pelanggans = Pelanggan::all();
         $kendaraans = Kendaraan::all();
-        $users = User::all();
-        return view('pages.garansi.edit', compact(['garansi', 'pelanggans', 'kendaraans', 'users']));
+        return view('pages.garansi.edit', compact(['garansi', 'pelanggans', 'kendaraans']));
     }
 
     public function update(Request $request, $id)
@@ -56,12 +55,13 @@ class GaransiController extends Controller
         $validated = $request->validate([
             'pelanggan_id'      => 'required|exists:pelanggan,id',
             'kendaraan_id'      => 'required|exists:kendaraan,id',
-            'user_id'           => 'required|exists:users,id',
             'tanggal_garansi'   => 'required',
+            'keluhan'           => 'nullable|string|max:255',
             'batas_akhir'       => 'nullable',
-            'status'            => 'required|in:aktif,nonaktif',
+            'status'            => 'required|in:aktif,kadaluarsa,batal',
         ]);
 
+        $validated['user_id'] = auth()->id();
         $garansi->update($validated);
 
         return redirect()->route('garansi.index')->with('success', 'Data garansi berhasil diperbarui');

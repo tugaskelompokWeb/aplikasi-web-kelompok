@@ -1,9 +1,9 @@
 @extends('layouts.components.app')
 
-@section('title', 'Garansi')
+@section('title', 'Transaksi')
 
-@section('page-title', 'Halaman Garansi')
-@section('breadcrumb', 'garansi')
+@section('page-title', 'Halaman Transaksi')
+@section('breadcrumb', 'transaksi')
 
 @section('content')
     <!--begin::Row-->
@@ -12,7 +12,7 @@
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-            <h3 class="card-title">Tabel Garansi</h3>
+            <h3 class="card-title">Tabel Transaksi</h3>
             <div class="card-tools">
                 <button
                 type="button"
@@ -34,34 +34,33 @@
             </div>
             </div>
             <div class="card-body">
-                <a href="{{ route('garansi.create') }}" class="btn btn-primary">Tambah</a>
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    <a href="{{ route('transaksi.create') }}" class="btn btn-primary">Tambah</a>
+                </div>
                 <table class="table">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Nama_Pelanggan</th>
-                            <th>Nama_Kendaraan</th>
-                            <th>Nama_User</th>
-                            <th>Keluhan</th>
-                            <th>Tanggal_Garansi</th>
-                            <th>Batas_Akhir</th>
-                            <th>Status</th>
+                            <th>Pelanggan</th>
+                            <th>Kendaraan</th>
+                            <th>Metode Pembayaran</th>
+                            <th>Total Harga</th>
+                            <th>Admin</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($garansi as $item)
+                        @foreach ($transaksi as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->pelanggan->nama ?? null }}</td>
-                            <td>{{ $item->kendaraan->no_plat ?? null }}</td>
-                            <td>{{ $item->user->name ?? null }}</td>
-                            <td>{{ $item->keluhan ?? "tidak ada" }}</td>
-                            <td>{{ $item->tanggal_garansi ?? null }}</td>
-                            <td>{{ $item->batas_akhir ?? null }}</td>
-                            <td>{{ $item->status ?? null }}</td>
+                            <td>{{ $item->pelanggan->nama ?? '-' }}</td>
+                            <td>{{ $item->pelanggan->kendaraan->pluck('nama')->join(', ') ?? '-' }}</td>
+                            <td>{{ $item->metode_pembayaran }}</td>
+                            <td>Rp{{ number_format($item->total_harga) }}</td>
+                            <td>{{ $item->user->name ?? '-' }}</td>
                             <td>
-                                <a href="{{ route('garansi.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                <form action="{{ route('garansi.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus garansi ini?');">
+                                <a href="{{ route('transaksi.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <form action="{{ route('transaksi.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus user ini?');">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger btn-sm">Delete</button>

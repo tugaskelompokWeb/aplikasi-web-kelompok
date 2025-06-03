@@ -24,11 +24,11 @@ class KendaraanController extends Controller
     {
         $validated = $request->validate([
             'no_plat' => 'required',
-            'merk' => 'required|string',
+            'merek' => 'required|string',
             'tipe' => 'required|string',
             'warna' => 'required|string',
-            'tahun' => 'required|integer',
-            'id_pelanggan' => 'required|exists:pelanggan,id'
+            'tahun' => 'required|string',
+            'pelanggan_id' => 'required|exists:pelanggan,id'
         ]);
 
         Kendaraan::create($validated);
@@ -50,11 +50,11 @@ class KendaraanController extends Controller
 
         $validated = $request->validate([
             'no_plat' => 'required',
-            'merk' => 'required|string',
+            'merek' => 'required|string',
             'tipe' => 'required|string',
             'warna' => 'required|string',
             'tahun' => 'required|integer',
-            'id_pelanggan' => 'required|exists:pelanggan,id'
+            'pelanggan_id' => 'required|exists:pelanggan,id'
         ]);
 
         $kendaraan->update($validated);

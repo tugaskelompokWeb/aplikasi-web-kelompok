@@ -1,9 +1,9 @@
 @extends('layouts.components.app')
 
-@section('title', 'Garansi')
+@section('title', 'Kendaraan')
 
-@section('page-title', 'Halaman Garansi')
-@section('breadcrumb', 'garansi')
+@section('page-title', 'Halaman Kendaraan')
+@section('breadcrumb', 'kendaraan')
 
 @section('content')
     <!--begin::Row-->
@@ -12,7 +12,7 @@
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-            <h3 class="card-title">Tabel Garansi</h3>
+            <h3 class="card-title">Tabel Kendaraan</h3>
             <div class="card-tools">
                 <button
                 type="button"
@@ -34,34 +34,33 @@
             </div>
             </div>
             <div class="card-body">
-                <a href="{{ route('garansi.create') }}" class="btn btn-primary">Tambah</a>
+                <a href="{{ route('kendaraan.create') }}" class="btn btn-primary">Tambah</a>
                 <table class="table">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Nama_Pelanggan</th>
-                            <th>Nama_Kendaraan</th>
-                            <th>Nama_User</th>
-                            <th>Keluhan</th>
-                            <th>Tanggal_Garansi</th>
-                            <th>Batas_Akhir</th>
-                            <th>Status</th>
+                            <th>No Plat</th>
+                            <th>Merk</th>
+                            <th>Tipe</th>
+                            <th>Warna</th>
+                            <th>Tahun</th>
+                            <th>Kepemilikan</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($garansi as $item)
+                        @foreach ($kendaraans as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->no_plat ?? null }}</td>
+                            <td>{{ $item->merek ?? null }}</td>
+                            <td>{{ $item->tipe ?? null }}</td>
+                            <td>{{ $item->warna ?? null }}</td>
+                            <td>{{ $item->tahun ?? null }}</td>
                             <td>{{ $item->pelanggan->nama ?? null }}</td>
-                            <td>{{ $item->kendaraan->no_plat ?? null }}</td>
-                            <td>{{ $item->user->name ?? null }}</td>
-                            <td>{{ $item->keluhan ?? "tidak ada" }}</td>
-                            <td>{{ $item->tanggal_garansi ?? null }}</td>
-                            <td>{{ $item->batas_akhir ?? null }}</td>
-                            <td>{{ $item->status ?? null }}</td>
                             <td>
-                                <a href="{{ route('garansi.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                <form action="{{ route('garansi.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus garansi ini?');">
+                                <a href="{{ route('kendaraan.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <form action="{{ route('kendaraan.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus user ini?');">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger btn-sm">Delete</button>

@@ -1,8 +1,8 @@
 @extends('layouts.components.app')
 
-@section('page-title', 'Form Garansi')
-@section('breadcrumb', 'form-garansi')
-@section('title', 'Garansi')
+@section('page-title', 'Form Barang')
+@section('breadcrumb', 'form-barang')
+@section('title', 'Barang')
 @section('content')
     <!--begin::Row-->
     <div class="row">
@@ -10,7 +10,7 @@
             {{-- form tambah Garansi --}}
             <div class="card card-primary card-outline mb-4">
                   <!--begin::Header-->
-                  <div class="card-header"><div class="card-title">Form Tambah Garansi</div></div>
+                  <div class="card-header"><div class="card-title">Form Tambah Barang</div></div>
                   <!--end::Header-->
                   <!--begin::Form-->
                   <form action="{{ route('barang.store') }}" method="POST">

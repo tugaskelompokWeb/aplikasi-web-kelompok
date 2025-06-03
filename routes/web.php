@@ -1,10 +1,14 @@
 <?php
 
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GaransiController;
+use App\Http\Controllers\KendaraanController;
 use App\Http\Controllers\MekanikController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ServisController;
+use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,13 +17,8 @@ Route::get('/login', function () {
 })->name('login.form');
 Route::post('/login', [UserController::class, 'login'])->name('login');
 
-    Route::post('/logout', [UserController::class, 'logout'])->name('logout');
-
-
     Route::middleware('auth')->group(function () {
-        Route::get('/', function () {
-            return view('pages/dashboard/index');
-        })->name('dashboard');
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::resource('users', UserController::class);
         Route::get('users/search', [UserController::class, 'search'])->name('users.search');
@@ -28,6 +27,11 @@ Route::post('/login', [UserController::class, 'login'])->name('login');
         Route::resource('mekanik', MekanikController::class);
         Route::resource('garansi', GaransiController::class);
         Route::resource('barang', BarangController::class);
+        Route::resource('servis', ServisController::class);
+        Route::resource('kendaraan', KendaraanController::class);
+        Route::resource('transaksi', TransaksiController::class);
+
+        Route::post('/logout', [UserController::class, 'logout'])->name('logout');
     });
 
 

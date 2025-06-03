@@ -51,7 +51,7 @@
                         @enderror
                       </div>
 
-
+                    </div>
                     <!--end::Body-->
                     <!--begin::Footer-->
                     <div class="card-footer">

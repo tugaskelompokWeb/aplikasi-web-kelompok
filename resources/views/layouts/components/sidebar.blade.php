@@ -1,5 +1,5 @@
 <!--begin::Sidebar-->
-<aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+<aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="light">
     <!--begin::Sidebar Brand-->
     <div class="sidebar-brand">
       <!--begin::Brand Link-->
@@ -29,7 +29,7 @@
           data-accordion="false"
         >
           <li class="nav-item">
-            <a href="{{route('dashboard')}}" class="nav-link active">
+            <a href="{{route('dashboard')}}" class="nav-link">
               <i class="nav-icon bi bi-speedometer"></i>
               <p>
                 Dashboard
@@ -37,10 +37,27 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('barang.index')}}" class="nav-link">
-                <i class="nav-icon bi bi-people"></i>
-              <p>Barang</p>
+            <a href="#" class="nav-link">
+              <i class="nav-icon bi bi-box-arrow-in-right"></i>
+              <p>
+                Master Data
+                <i class="nav-arrow bi bi-chevron-right"></i>
+              </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('barang.index')}}" class="nav-link">
+                  <i class="nav-icon bi bi-box"></i>
+                <p>Barang</p>
+              </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('mekanik.index')}}" class="nav-link">
+                    <i class="nav-icon bi bi-person-gear"></i>
+                  <p>Mekanik</p>
+                </a>
+              </li>
+            </ul>
           </li>
           <li class="nav-item">
             <a href="{{route('pelanggan.index')}}" class="nav-link">
@@ -49,9 +66,15 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('mekanik.index')}}" class="nav-link">
-                <i class="nav-icon bi bi-person-gear"></i>
-              <p>Mekanik</p>
+            <a href="{{route('kendaraan.index')}}" class="nav-link">
+                <i class="nav-icon bi bi-car-front"></i>
+              <p>Kendaraan</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('transaksi.index')}}" class="nav-link">
+              <i class="nav-icon bi bi-cart-check"></i>
+              <p>Transaksi</p>
             </a>
           </li>
           <li class="nav-item">
@@ -60,19 +83,7 @@
               <p>Garansi</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="{{route('users.index')}}" class="nav-link">
-               <i class="nav-icon bi bi-person"></i>
-              <p>User</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{route('roles.index')}}" class="nav-link">
-                <i class="nav-icon bi bi-people"></i>
-              <p>Role</p>
-            </a>
-          </li>
-          <li class="nav-header">EXAMPLES</li>
+          <li class="nav-header">SETTINGS</li>
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon bi bi-box-arrow-in-right"></i>
@@ -83,55 +94,15 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon bi bi-box-arrow-in-right"></i>
-                  <p>
-                    Version 1
-                    <i class="nav-arrow bi bi-chevron-right"></i>
-                  </p>
+                <a href="{{route('users.index')}}" class="nav-link">
+                   <i class="nav-icon bi bi-person"></i>
+                  <p>User</p>
                 </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="./examples/login.html" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Login</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="./examples/register.html" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Register</p>
-                    </a>
-                  </li>
-                </ul>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon bi bi-box-arrow-in-right"></i>
-                  <p>
-                    Version 2
-                    <i class="nav-arrow bi bi-chevron-right"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="./examples/login-v2.html" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Login</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="./examples/register-v2.html" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Register</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a href="./examples/lockscreen.html" class="nav-link">
-                  <i class="nav-icon bi bi-circle"></i>
-                  <p>Lockscreen</p>
+                <a href="{{route('roles.index')}}" class="nav-link">
+                    <i class="nav-icon bi bi-people"></i>
+                  <p>Role</p>
                 </a>
               </li>
             </ul>

@@ -28,4 +28,8 @@ class Servis extends Model
     public function kendaraan() {
         return $this->belongsTo(Kendaraan::class);
     }
+
+    public function jasaServis() {
+        return $this->hasMany(JasaService::class, 'servis_id');
+    }
 }

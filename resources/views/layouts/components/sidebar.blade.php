@@ -72,6 +72,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="{{route('servis.index')}}" class="nav-link">
+                <i class="nav-icon bi bi-tools"></i>
+              <p>Servis</p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="{{route('transaksi.index')}}" class="nav-link">
               <i class="nav-icon bi bi-cart-check"></i>
               <p>Transaksi</p>

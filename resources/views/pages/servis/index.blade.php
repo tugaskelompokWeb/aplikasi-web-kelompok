@@ -40,12 +40,11 @@
                         <tr>
                             <th>#</th>
                             <th>Tanggal Datang</th>
-                            <th>Tanggal Keluar</th>
-                            <th>Total Biaya</th>
-                            <th>Keluhan Awal</th>
-                            <th>Status Servis</th>
                             <th>Kendaraan</th>
                             <th>Mekanik</th>
+                            <th>Status</th>
+                            <th>Total Biaya</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,19 +52,18 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->tgl_datang ?? null }}</td>
-                                <td>{{ $item->tgl_keluar ?? null }}</td>
-                                <td>{{ $item->total_biaya ?? null }}</td>
-                                <td>{{ $item->keluhan_awal ?? null }}</td>
-                                <td>{{ $item->status_servis ?? null }}</td>
                                 <td>{{ $item->kendaraan->no_plat ?? null }}</td>
                                 <td>{{ $item->mekanik->nama ?? null }}</td>
+                                <td>{{ $item->status_servis ?? null }}</td>
+                                <td>{{ $item->total_biaya ?? null }}</td>
                                 <td>
-                                    {{-- <a href="{{ route('garansi.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a> --}}
-                                    {{-- <form action="{{ route('garansi.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus user ini?');">
+                                    <a href="{{ route('servis.show', $item->id) }}" class="btn btn-info btn-sm">Detail</a>
+                                    <a href="{{ route('servis.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                    <form action="{{ route('servis.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus user ini?');">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger btn-sm">Delete</button>
-                                    </form> --}}
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

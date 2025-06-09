@@ -41,7 +41,6 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Pelanggan</th>
                             <th>Kendaraan</th>
                             <th>Metode Pembayaran</th>
                             <th>Total Harga</th>
@@ -53,8 +52,7 @@
                         @foreach ($transaksi as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->pelanggan->nama ?? '-' }}</td>
-                            <td>{{ $item->pelanggan->kendaraan->pluck('nama')->join(', ') ?? '-' }}</td>
+                            <td>{{ $item->servis->kendaraan->pluck('no_plat')->join(', ') ?? '-' }}</td>
                             <td>{{ $item->metode_pembayaran }}</td>
                             <td>Rp{{ number_format($item->total_harga) }}</td>
                             <td>{{ $item->user->name ?? '-' }}</td>

@@ -4,6 +4,37 @@
 @section('breadcrumb', 'form-transaksi')
 @section('title', 'Transaksi')
 @section('content')
+
+<style>
+    .card {
+        border: none;
+        border-radius: 12px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #343a40;
+    }
+
+    .item-row {
+        border: 1px solid #dee2e6;
+        border-left: 4px solid #0d6efd;
+        transition: 0.3s;
+    }
+
+    .item-row:hover {
+        background-color: #f8f9fa;
+    }
+
+    .btn {
+        border-radius: 6px;
+    }
+
+    .form-select,
+    .form-control {
+        border-radius: 6px;
+    }
+</style>
     <!--begin::Row-->
     <div class="row">
         <div class="col-md-12">
@@ -19,8 +50,9 @@
                                     id="servis_id" name="servis_id" required>
                                 <option value="">Pilih Servis</option>
                                 @foreach($servis as $s)
-                                    <option value="{{ $s->id }}" {{ old('servis_id') == $s->id ? 'selected' : '' }}>
-                                        {{ $s->nama }} - Rp {{ number_format($s->harga, 0, ',', '.') }}
+                                    <option value="{{ $s->id }}" data-biaya="{{ $s->total_biaya }}"
+                                            {{ old('servis_id') == $s->id ? 'selected' : '' }}>
+                                        Servis #{{ $s->id }} - {{ $s->keluhan_awal }} - Rp {{ number_format($s->total_biaya, 0, ',', '.') }}
                                     </option>
                                 @endforeach
                             </select>
@@ -59,7 +91,7 @@
                             <div class="row g-2 align-items-end">
                                 <div class="col-md-4">
                                     <label class="form-label">Barang <span class="text-danger">*</span></label>
-                                    <select class="form-select barang-select" name="items[0][barang_id]" required>
+                                    <select class="form-select barang-select" name="items[0][barang_id]">
                                         <option value="">Pilih Barang</option>
                                         @foreach($barang as $b)
                                             <option value="{{ $b->id }}" data-harga="{{ $b->harga }}">
@@ -71,12 +103,12 @@
                                 <div class="col-md-2">
                                     <label class="form-label">Jumlah <span class="text-danger">*</span></label>
                                     <input type="number" class="form-control jumlah-input"
-                                           name="items[0][jumlah]" min="1" value="1" required>
+                                           name="items[0][jumlah]" min="1" value="1">
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">Harga Satuan <span class="text-danger">*</span></label>
                                     <input type="number" class="form-control harga-input"
-                                           name="items[0][harga_satuan]" min="0" step="0.01" required readonly>
+                                           name="items[0][harga_satuan]" min="0" step="0.01" readonly>
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label">Subtotal</label>
@@ -84,7 +116,7 @@
                                 </div>
                                 <div class="col-md-1 text-end">
                                     <button type="button" class="btn btn-danger btn-sm remove-item" disabled>
-                                        <i class="fas fa-trash"></i>Hapus
+                                        <i class="fas fa-trash"></i> Hapus
                                     </button>
                                 </div>
                             </div>
@@ -114,38 +146,10 @@
             </div>
         </div>
     </div>
-    <style>
-        .card {
-            border: none;
-            border-radius: 12px;
-        }
 
-        .form-label {
-            font-weight: 600;
-            color: #343a40;
-        }
-
-        .item-row {
-            border: 1px solid #dee2e6;
-            border-left: 4px solid #0d6efd;
-            transition: 0.3s;
-        }
-
-        .item-row:hover {
-            background-color: #f8f9fa;
-        }
-
-        .btn {
-            border-radius: 6px;
-        }
-
-        .form-select,
-        .form-control {
-            border-radius: 6px;
-        }
-    </style>
     <script>
         let itemCount = 1;
+        let servisBiaya = 0;
 
         const hargaBarang = {
             @foreach($barang as $b)
@@ -155,6 +159,13 @@
 
         const addItemBtn = document.getElementById('addItem');
         const itemContainer = document.getElementById('itemContainer');
+        const servisSelect = document.getElementById('servis_id');
+
+        servisSelect.addEventListener('change', function () {
+            const selectedOption = this.options[this.selectedIndex];
+            servisBiaya = parseFloat(selectedOption.getAttribute('data-biaya')) || 0;
+            calculateTotal();
+        });
 
         addItemBtn.addEventListener('click', function () {
             const newItem = document.querySelector('.item-row').cloneNode(true);
@@ -169,10 +180,10 @@
             });
 
             newItem.querySelector('.remove-item').disabled = false;
-
             itemContainer.appendChild(newItem);
             itemCount++;
             updateRemoveButtons();
+            calculateTotal();
         });
 
         document.addEventListener('click', function (e) {
@@ -217,15 +228,22 @@
         }
 
         function calculateTotal() {
-            let total = 0;
+            let itemsTotal = 0;
             document.querySelectorAll('.item-row').forEach(function (row) {
                 const jumlah = parseFloat(row.querySelector('.jumlah-input').value) || 0;
                 const harga = parseFloat(row.querySelector('.harga-input').value) || 0;
-                total += jumlah * harga;
+                itemsTotal += jumlah * harga;
             });
+            const total = servisBiaya + itemsTotal;
             document.getElementById('totalHarga').textContent = 'Rp ' + total.toLocaleString('id-ID');
         }
+
         updateRemoveButtons();
+        if (servisSelect.value) {
+            const selectedOption = servisSelect.options[servisSelect.selectedIndex];
+            servisBiaya = parseFloat(selectedOption.getAttribute('data-biaya')) || 0;
+            calculateTotal();
+        }
     </script>
 
 @endsection

@@ -9,7 +9,7 @@ class TransaksiItem extends Model
 {
     use HasUuids;
 
-    protected $table = 'transaksi_item';
+    protected $table = 'transaksi_items';
     protected $fillable = [
         'transaksi_id',
         'barang_id',

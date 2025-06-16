@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Garansi;
-use App\Models\Kendaraan;
+use App\Models\Kendaraan;   
 use App\Models\Pelanggan;
 use App\Models\User;
 

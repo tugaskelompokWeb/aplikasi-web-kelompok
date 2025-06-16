@@ -9,11 +9,14 @@ use App\Models\Pelanggan;
 use App\Models\Servis;
 use App\Models\Transaksi;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+
         $totalServis = Servis::count();
         $totalBarang = Barang::count();
         $totalTransaksi = Transaksi::count();
@@ -32,7 +35,44 @@ class DashboardController extends Controller
             ->limit(5)
             ->get();
 
-        return view('pages.dashboard.index', compact('totalServis', 'totalBarang', 'totalTransaksi', 'totalPelanggan', 'totalKendaraan', 'totalMekanik', 'servisHariIni', 'pendapatanHariIni', 'pendapatanBulanIni', 'stokMenipis', 'barangStokRendah'));
+        $filterKendaraan = $request->input('filter_kendaraan','bulanan');
+        $filterBarang = $request->input('filter_barang','bulanan');
+
+        if ($filterKendaraan == 'harian'){
+        $jumlahPlat = DB::select('
+            SELECT merek, COUNT(*) as jumlah
+            FROM kendaraan
+            WHERE DATE(created_at) = CURDATE()
+            GROUP BY merek
+        ');
+        }else {
+            $jumlahPlat = DB::select('
+            SELECT merek, COUNT(*) as jumlah
+            FROM kendaraan
+            WHERE MONTH(created_at) = MONTH(CURDATE())
+            GROUP BY merek
+        ');
+        }
+
+        if ($filterBarang == 'harian'){
+        $jumlahBarang = DB::select('
+        SELECT kategori, COUNT(*) as jumlahBarang
+        FROM barang
+        WHERE DATE(created_at) = CURDATE()
+        GROUP BY kategori');
+        }else {
+            $jumlahBarang = DB::select('
+            SELECT kategori, COUNT(*) as jumlahBarang
+            FROM barang
+            WHERE MONTH(created_at) = MONTH(CURDATE())
+            GROUP BY kategori');
+        }
+
+
+        return view('pages.dashboard.index', compact('totalServis', 'totalBarang', 'totalTransaksi',
+        'totalPelanggan', 'totalKendaraan', 'totalMekanik', 'servisHariIni', 'pendapatanHariIni',
+        'pendapatanBulanIni', 'stokMenipis', 'barangStokRendah','jumlahPlat', 'jumlahBarang', 'filterKendaraan', 'filterBarang'));
     }
+
 }
 

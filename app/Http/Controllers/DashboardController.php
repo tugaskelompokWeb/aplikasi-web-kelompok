@@ -10,10 +10,13 @@ use App\Models\Servis;
 use App\Models\Transaksi;
 use Carbon\Carbon;
 
+use Illuminate\Support\Facades\DB;
+
 class DashboardController extends Controller
 {
     public function index()
     {
+
         $totalServis = Servis::count();
         $totalBarang = Barang::count();
         $totalTransaksi = Transaksi::count();
@@ -32,7 +35,24 @@ class DashboardController extends Controller
             ->limit(5)
             ->get();
 
-        return view('pages.dashboard.index', compact('totalServis', 'totalBarang', 'totalTransaksi', 'totalPelanggan', 'totalKendaraan', 'totalMekanik', 'servisHariIni', 'pendapatanHariIni', 'pendapatanBulanIni', 'stokMenipis', 'barangStokRendah'));
+
+
+         $jumlahPlat = DB::select('
+            SELECT merek, COUNT(*) as jumlah
+            FROM kendaraan
+            GROUP BY merek
+        ');
+
+        $jumlahBarang = DB::select('
+        SELECT kategori, COUNT(*) as jumlahBarang
+        FROM barang
+        GROUP BY kategori');
+
+
+        return view('pages.dashboard.index', compact('totalServis', 'totalBarang', 'totalTransaksi',
+        'totalPelanggan', 'totalKendaraan', 'totalMekanik', 'servisHariIni', 'pendapatanHariIni',
+        'pendapatanBulanIni', 'stokMenipis', 'barangStokRendah','jumlahPlat', 'jumlahBarang'));
     }
+
 }
 

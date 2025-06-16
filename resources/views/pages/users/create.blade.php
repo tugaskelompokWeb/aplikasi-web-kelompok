@@ -13,7 +13,7 @@
                   <div class="card-header"><div class="card-title">Form Tambah User</div></div>
                   <!--end::Header-->
                   <!--begin::Form-->
-                  <form action="{{ route('users.store') }}" method="POST">
+                  <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <!--begin::Body-->
                     <div class="card-body">
@@ -69,6 +69,12 @@
                         <textarea class="form-control" name="alamat" required>{{ old('alamat') }}</textarea>
                         @error('alamat') <small class="text-danger">{{ $message }}</small> @enderror
                       </div>
+                      <div class="mb-3">
+                        <label for="foto" class="form-label">Foto</label>
+                        <input type="file" class="form-control" name="foto" accept="image/*">
+                        @error('foto') <small class="text-danger">{{ $message }}</small> @enderror
+                    </div>
+
                     <!--end::Body-->
                     <!--begin::Footer-->
                     <div class="card-footer">

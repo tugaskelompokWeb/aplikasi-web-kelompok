@@ -36,6 +36,7 @@
               </p>
             </a>
           </li>
+          @if(auth()->user()->hasRole('manager') || auth()->user()->hasRole('developer'))
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon bi bi-box-arrow-in-right"></i>
@@ -59,6 +60,7 @@
               </li>
             </ul>
           </li>
+         @endif
           <li class="nav-item">
             <a href="{{route('pelanggan.index')}}" class="nav-link">
                 <i class="nav-icon bi bi-people"></i>
@@ -83,12 +85,15 @@
               <p>Transaksi</p>
             </a>
           </li>
+          @if (auth()->user()->hasRole('manager') || auth()->user()->hasRole('developer'))
           <li class="nav-item">
             <a href="{{route('garansi.index')}}" class="nav-link">
                 <i class="nav-icon bi bi-shield-check"></i>
               <p>Garansi</p>
             </a>
           </li>
+          @endif
+          @if (auth()->user()->hasRole('manager') || auth()->user()->hasRole('developer'))
           <li class="nav-header">SETTINGS</li>
           <li class="nav-item">
             <a href="#" class="nav-link">
@@ -113,6 +118,7 @@
               </li>
             </ul>
           </li>
+          @endif
         </ul>
         <!--end::Sidebar Menu-->
       </nav>

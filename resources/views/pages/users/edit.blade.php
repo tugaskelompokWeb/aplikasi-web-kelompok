@@ -15,7 +15,7 @@
             </div>
             <!--end::Header-->
             <!--begin::Form-->
-            <form action="{{ route('users.update', $users->id) }}" method="POST">
+            <form action="{{ route('users.update', $users->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <!--begin::Body-->
@@ -64,6 +64,18 @@
                         <textarea class="form-control" name="alamat" required>{{ old('alamat', $users->alamat) }}</textarea>
                         @error('alamat') <small class="text-danger">{{ $message }}</small> @enderror
                     </div>
+                    @if(isset($users) && $users->foto)
+                    <div class="mb-3">
+                        <label>Foto Saat Ini:</label><br>
+                        <img src="{{ asset('storage/' . $users->foto) }}" alt="Foto User" width="120" class="img-thumbnail mb-2">
+                    </div>
+                @endif
+
+                <div class="mb-3">
+                    <label for="foto" class="form-label">Ganti Foto</label>
+                    <input type="file" class="form-control" name="foto" accept="image/*">
+                    @error('foto') <small class="text-danger">{{ $message }}</small> @enderror
+                </div>
                 </div>
                 <!--end::Body-->
                 <!--begin::Footer-->

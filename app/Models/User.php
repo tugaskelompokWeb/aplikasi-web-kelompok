@@ -24,7 +24,8 @@ class User extends Authenticatable
         'role_id',
         'no_telp',
         'posisi',
-        'alamat'
+        'alamat',
+        'foto',
     ];
 
     /**
@@ -54,4 +55,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function hasRole($roles): bool
+    {
+        if (is_array($roles)) {
+            return in_array($this->role->nama, $roles);
+        }
+
+        return $this->role->nama === $roles;
+    }
+
 }

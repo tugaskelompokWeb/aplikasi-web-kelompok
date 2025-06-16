@@ -46,6 +46,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Foto</th>
                             <th>Nama</th>
                             <th>Role</th>
                             <th>Posisi</th>
@@ -59,6 +60,13 @@
                         @foreach ($users as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
+                            <td>
+                                @if ($item->foto)
+                                    <img src="{{ asset('storage/' . $item->foto) }}" alt="Foto" style="width: 60px; height: 80px; object-fit: cover; border-radius: 4px;">
+                                @else
+                                    <span class="text-muted">Tidak ada</span>
+                                @endif
+                            </td>
                             <td>{{ $item->name ?? null }}</td>
                             <td>{{ $item->role->nama }}</td>
                             <td>{{ $item->posisi }}</td>

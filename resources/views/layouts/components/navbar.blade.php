@@ -25,7 +25,7 @@
         <li class="nav-item dropdown user-menu">
           <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
             <img
-              src="../../dist/assets/img/user2-160x160.jpg"
+              src="{{ auth()->user()->foto ? asset('storage/' . auth()->user()->foto) : asset('dist/assets/img/user2-160x160.jpg') }}"
               class="user-image rounded-circle shadow"
               alt="User Image"
             />
@@ -35,7 +35,7 @@
             <!--begin::User Image-->
             <li class="user-header text-bg-primary">
               <img
-                src="../../dist/assets/img/user2-160x160.jpg"
+                src="{{ auth()->user()->foto ? asset('storage/' . auth()->user()->foto) : asset('dist/assets/img/user2-160x160.jpg') }}"
                 class="rounded-circle shadow"
                 alt="User Image"
               />

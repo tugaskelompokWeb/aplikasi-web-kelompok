@@ -20,16 +20,23 @@ Route::post('/login', [UserController::class, 'login'])->name('login');
     Route::middleware('auth')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-        Route::resource('users', UserController::class);
-        Route::get('users/search', [UserController::class, 'search'])->name('users.search');
-        Route::resource('roles', RoleController::class);
-        Route::resource('pelanggan', PelangganController::class);
-        Route::resource('mekanik', MekanikController::class);
-        Route::resource('garansi', GaransiController::class);
-        Route::resource('barang', BarangController::class);
-        Route::resource('servis', ServisController::class);
-        Route::resource('kendaraan', KendaraanController::class);
-        Route::resource('transaksi', TransaksiController::class);
+        Route::middleware('role:developer')->group(function () {
+            Route::resource('users', UserController::class);
+            Route::resource('roles', RoleController::class);
+        });
+
+        Route::middleware('role:developer,admin')->group(function () {
+            Route::resource('barang', BarangController::class);
+            Route::resource('garansi', GaransiController::class);
+        });
+
+        Route::middleware('role:developer,manager,admin')->group(function () {
+            Route::resource('pelanggan', PelangganController::class);
+            Route::resource('mekanik', MekanikController::class);
+            Route::resource('servis', ServisController::class);
+            Route::resource('kendaraan', KendaraanController::class);
+            Route::resource('transaksi', TransaksiController::class);
+        });
 
         Route::post('/logout', [UserController::class, 'logout'])->name('logout');
     });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -44,8 +45,16 @@ class UserController extends Controller
             'role_id'   => 'required|exists:roles,id',
             'no_telp'   => 'required|string',
             'posisi'    => 'required|string',
-            'alamat'    => 'required|string'
+            'alamat'    => 'required|string',
+            'foto'     => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
+
+        $fotoPath = null;
+        if ($request->hasFile('foto')) {
+            $foto      = $request->file('foto');
+            $namaFile  = uniqid() . '_' . $foto->getClientOriginalName();
+            $fotoPath  = $foto->storeAs('foto_users', $namaFile, 'public');
+        }
 
         $user = User::create([
             'name'     => $validated['name'],
@@ -55,6 +64,7 @@ class UserController extends Controller
             'no_telp'  => $validated['no_telp'],
             'posisi'   => $validated['posisi'],
             'alamat'   => $validated['alamat'],
+            'foto'     => $fotoPath,
         ]);
 
         return redirect()->route('users.index');
@@ -78,7 +88,20 @@ class UserController extends Controller
             'no_telp'  => 'required|string',
             'posisi'   => 'required|string',
             'alamat'   => 'required|string',
+            'foto'     => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
+
+        if ($request->hasFile('foto')) {
+            if ($user->foto && Storage::disk('public')->exists($user->foto)) {
+                Storage::disk('public')->delete($user->foto);
+            }
+
+            $foto      = $request->file('foto');
+            $namaFile  = uniqid() . '_' . $foto->getClientOriginalName();
+            $fotoPath  = $foto->storeAs('foto_users', $namaFile, 'public');
+
+            $validated['foto'] = $fotoPath;
+        }
 
         $user->update($validated);
         return redirect()->route('users.index')->with('User berhasil di update');

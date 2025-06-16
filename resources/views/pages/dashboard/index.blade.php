@@ -3,6 +3,7 @@
 @section('title', 'Project')
 
 @section('content')
+@if(auth()->user()->hasRole(['manager', 'developer']))
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -298,10 +299,13 @@ Highcharts.chart('container-barang', {
         }
     ]
 });
-
-
 </script>
 
-
+@else
+<div class="alert alert-danger mt-4">
+    <h4>Akses Ditolak</h4>
+    <p>Anda tidak memiliki izin untuk mengakses dashboard ini.</p>
+</div>
+@endif
 
   @endsection

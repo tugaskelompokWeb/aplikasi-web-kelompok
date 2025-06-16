@@ -16,6 +16,8 @@ class Transaksi extends Model
         'user_id',
         'metode_pembayaran',
         'tanggal',
+        'pajak',
+        'diskon',
         'total_harga'
     ];
 

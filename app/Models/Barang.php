@@ -18,4 +18,5 @@ class Barang extends Model
         'harga'
     ];
 
+
 }

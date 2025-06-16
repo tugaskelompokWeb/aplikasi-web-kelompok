@@ -27,61 +27,74 @@ class TransaksiController extends Controller
     }
 
     public function store(Request $request)
-{
-    $validated = $request->validate([
-        'servis_id' => 'required|exists:servis,id',
-        'metode_pembayaran' => 'required|string',
-        'items' => 'required|array|min:1',
-        'items.*.barang_id' => 'required|exists:barang,id',
-        'items.*.jumlah' => 'required|integer|min:1',
-        'items.*.harga_satuan' => 'required|numeric|min:0',
-    ]);
+    {
+        $validated = $request->validate([
+            'servis_id' => 'required|exists:servis,id',
+            'metode_pembayaran' => 'required|string',
+            'items' => 'required|array|min:1',
+            'items.*.barang_id' => 'required|exists:barang,id',
+            'items.*.jumlah' => 'required|integer|min:1',
+            'items.*.harga_satuan' => 'required|numeric|min:0',
+            'pajak' => 'nullable|numeric|min:1',
+            'diskon' => 'nullable|numeric|min:1',
+        ]);
 
-    DB::beginTransaction();
-    try {
-        $servis = Servis::findOrFail($request->servis_id);
-        if ($servis->status_servis === 'selesai') {
-            return redirect()->back()->with('error', 'Servis sudah selesai, tidak dapat membuat transaksi baru.');
-        }
-
-        $noTransaksi = $this->generateNoTransaksi();
-
-        $transaksi = new Transaksi();
-        $transaksi->no_transaksi = $noTransaksi;
-        $transaksi->servis_id = $request->servis_id;
-        $transaksi->user_id = auth()->id();
-        $transaksi->metode_pembayaran = $request->metode_pembayaran;
-        $transaksi->tanggal = Carbon::now();
-        $transaksi->save();
-
-        $totalItems = 0;
-        if ($request->has('items')) {
-            foreach ($request->items as $item) {
-                $transaksiItem = new TransaksiItem();
-                $transaksiItem->transaksi_id = $transaksi->id;
-                $transaksiItem->barang_id = $item['barang_id'];
-                $transaksiItem->jumlah = $item['jumlah'];
-                $transaksiItem->harga_satuan = $item['harga_satuan'];
-                $transaksiItem->save();
-                $totalItems += $item['jumlah'] * $item['harga_satuan'];
+        DB::beginTransaction();
+        try {
+            $servis = Servis::findOrFail($request->servis_id);
+            if ($servis->status_servis === 'selesai') {
+                return redirect()->back()->with('error', 'Servis sudah selesai, tidak dapat membuat transaksi baru.');
             }
+
+            $noTransaksi = $this->generateNoTransaksi();
+
+            $transaksi = new Transaksi();
+            $transaksi->no_transaksi = $noTransaksi;
+            $transaksi->servis_id = $request->servis_id;
+            $transaksi->user_id = auth()->id();
+            $transaksi->metode_pembayaran = $request->metode_pembayaran;
+            $transaksi->tanggal = Carbon::now();
+            $transaksi->pajak = $request->pajak ?? 0;
+            $transaksi->diskon = $request->diskon ?? 0;
+            $transaksi->save();
+
+            $totalItems = 0;
+            if ($request->has('items')) {
+                foreach ($request->items as $item) {
+                    $transaksiItem = new TransaksiItem();
+                    $transaksiItem->transaksi_id = $transaksi->id;
+                    $transaksiItem->barang_id = $item['barang_id'];
+                    $transaksiItem->jumlah = $item['jumlah'];
+                    $transaksiItem->harga_satuan = $item['harga_satuan'];
+                    $transaksiItem->save();
+                    $totalItems += $item['jumlah'] * $item['harga_satuan'];
+                }
+            }
+
+                // Hitung subtotal (biaya servis + item)
+            $subtotal = $servis->total_biaya + $totalItems;
+            // Hitung diskon (persentase dari subtotal)
+            $diskonAmount = $subtotal * ($transaksi->diskon / 100);
+            // Subtotal setelah diskon
+            $subtotalAfterDiskon = $subtotal - $diskonAmount;
+            // Hitung pajak (persentase dari subtotal setelah diskon)
+            $pajakAmount = $subtotalAfterDiskon * ($transaksi->pajak / 100);
+            // Total akhir
+            $transaksi->total_harga = $subtotalAfterDiskon + $pajakAmount;
+            $transaksi->save();
+
+            $servis->status_servis = 'selesai';
+            $servis->tgl_keluar = Carbon::now();
+            $servis->save();
+
+            DB::commit();
+            return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil dibuat');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Transaksi gagal: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Transaksi gagal dibuat: ' . $e->getMessage());
         }
-
-        $transaksi->total_harga = $servis->total_biaya + $totalItems;
-        $transaksi->save();
-
-        $servis->status_servis = 'selesai';
-        $servis->tgl_keluar = Carbon::now();
-        $servis->save();
-
-        DB::commit();
-        return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil dibuat');
-    } catch (\Exception $e) {
-        DB::rollBack();
-        Log::error('Transaksi gagal: ' . $e->getMessage());
-        return redirect()->back()->with('error', 'Transaksi gagal dibuat: ' . $e->getMessage());
     }
-}
 
     private function generateNoTransaksi()
     {

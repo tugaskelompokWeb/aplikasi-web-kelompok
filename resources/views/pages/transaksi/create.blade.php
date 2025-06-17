@@ -188,7 +188,7 @@
                                     </label>
                                     <input type="number" class="form-control @error('diskon') is-invalid @enderror"
                                         id="diskon" name="diskon" min="0" max="100" step="0.01"
-                                        value="{{ old('diskon', 0) }}" placeholder="% diskon">
+                                        value="{{ old('diskon') }}" placeholder="% diskon">
                                     @error('diskon')
                                         <div class="invalid-feedback" style="font-size: 0.75rem;">{{ $message }}</div>
                                     @enderror
@@ -203,7 +203,7 @@
                                     </label>
                                     <input type="number" class="form-control @error('pajak') is-invalid @enderror"
                                         id="pajak" name="pajak" min="0" max="100" step="0.01"
-                                        value="{{ old('pajak', 0) }}" placeholder="% pajak">
+                                        value="{{ old('pajak') }}" placeholder="% pajak">
                                     @error('pajak')
                                         <div class="invalid-feedback" style="font-size: 0.75rem;">{{ $message }}</div>
                                     @enderror

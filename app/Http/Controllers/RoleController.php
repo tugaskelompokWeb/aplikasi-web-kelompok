@@ -14,9 +14,6 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::all();
-        $title = 'Konfirmasi hapus data role';
-        $text = 'Apakah Anda yakin ingin menghapus role ini?';
-        confirmDelete($title, $text);
         return view('pages.roles.index', compact('roles'));
     }
 

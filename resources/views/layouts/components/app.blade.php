@@ -240,6 +240,29 @@
       //-----------------
     </script>
     <!--end::Script-->
+    @include('sweetalert::alert')
+
+    <script>
+        document.addEventListener('submit', function (e) {
+            if (e.target.matches('.form-delete')) {
+                e.preventDefault();
+
+                Swal.fire({
+                    title: 'Konfirmasi Hapus',
+                    text: 'Yakin ingin menghapus data ini?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, hapus',
+                    cancelButtonText: 'Batal',
+                    confirmButtonColor: '#d33'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        e.target.submit();
+                    }
+                });
+            }
+        });
+        </script>
   </body>
   <!--end::Body-->
 </html>

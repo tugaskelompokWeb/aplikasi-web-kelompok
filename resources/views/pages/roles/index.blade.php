@@ -43,11 +43,12 @@
                                 <td>{{ $item->nama ?? null }}</td>
                                 <td>
                                     <a href="#" class="btn btn-warning btn-sm">Edit</a>
-                                    <form action="{{ route('roles.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
+                                    <form action="{{ route('roles.destroy', $item->id) }}" method="POST" class="form-delete d-inline">
                                         @csrf
-                                        @method('DELETE')`
-                                        <button class="btn btn-danger btn-sm">Delete</button>
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                     </form>
+
                                 </td>
                             </tr>
                             @endforeach

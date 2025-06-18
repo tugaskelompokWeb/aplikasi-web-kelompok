@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -49,11 +50,32 @@ class UserController extends Controller
             'foto'     => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $fotoPath = null;
         if ($request->hasFile('foto')) {
+            try {
             $foto      = $request->file('foto');
-            $namaFile  = uniqid() . '_' . $foto->getClientOriginalName();
-            $fotoPath  = $foto->storeAs('foto_users', $namaFile, 'public');
+            $response = Http::asMultipart()->post(
+                'https://api.cloudinary.com/v1_1/' . env('CLOUDINARY_CLOUD_NAME') . '/image/upload',
+                [
+                    [
+                        'name'     => 'file',
+                        'contents' => fopen($foto->getRealPath(), 'r'),
+                        'filename' => $foto->getClientOriginalName(),
+                    ],
+                    [
+                        'name'     => 'upload_preset',
+                        'contents' => env('CLOUDINARY_UPLOAD_PRESET'),
+                    ],
+                ]
+            );
+            $result = $response->json();
+                if (isset($result['secure_url'])) {
+                    $validated['foto'] = $result['secure_url'];
+                } else {
+                    return back()->withErrors(['foto' => 'Cloudinary upload error: ' . ($result['error']['message'] ?? 'Unknown error')]);
+                }
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', 'Gagal mengunggah foto: ' . $e->getMessage());
+            }
         }
 
         $user = User::create([
@@ -64,7 +86,7 @@ class UserController extends Controller
             'no_telp'  => $validated['no_telp'],
             'posisi'   => $validated['posisi'],
             'alamat'   => $validated['alamat'],
-            'foto'     => $fotoPath,
+            'foto'     => $validated['foto'] ?? null,
         ]);
 
         return redirect()->route('users.index');
@@ -79,33 +101,52 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
+    $user = User::findOrFail($id);
 
-        $validated = $request->validate([
-            'name'     => 'required|unique:users,name,' . $id,
-            'email'    => 'required|email|unique:users,email,' . $id,
-            'role_id'  => 'required|exists:roles,id',
-            'no_telp'  => 'required|string',
-            'posisi'   => 'required|string',
-            'alamat'   => 'required|string',
-            'foto'     => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
+    $validated = $request->validate([
+        'name'     => 'required|unique:users,name,' . $id,
+        'email'    => 'required|email|unique:users,email,' . $id,
+        'role_id'  => 'required|exists:roles,id',
+        'no_telp'  => 'required|string',
+        'posisi'   => 'required|string',
+        'alamat'   => 'required|string',
+        'foto'     => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+    ]);
 
-        if ($request->hasFile('foto')) {
-            if ($user->foto && Storage::disk('public')->exists($user->foto)) {
-                Storage::disk('public')->delete($user->foto);
+    if ($request->hasFile('foto')) {
+        try {
+            $foto = $request->file('foto');
+            $response = Http::asMultipart()->post(
+                'https://api.cloudinary.com/v1_1/' . env('CLOUDINARY_CLOUD_NAME') . '/image/upload',
+                [
+                    [
+                        'name'     => 'file',
+                        'contents' => fopen($foto->getRealPath(), 'r'),
+                        'filename' => $foto->getClientOriginalName(),
+                    ],
+                    [
+                        'name'     => 'upload_preset',
+                        'contents' => env('CLOUDINARY_UPLOAD_PRESET'),
+                    ],
+                ]
+            );
+
+            $result = $response->json();
+            if (isset($result['secure_url'])) {
+                $validated['foto'] = $result['secure_url'];
+            } else {
+                return back()->withErrors(['foto' => 'Cloudinary upload error: ' . ($result['error']['message'] ?? 'Unknown error')]);
             }
-
-            $foto      = $request->file('foto');
-            $namaFile  = uniqid() . '_' . $foto->getClientOriginalName();
-            $fotoPath  = $foto->storeAs('foto_users', $namaFile, 'public');
-
-            $validated['foto'] = $fotoPath;
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal mengunggah foto: ' . $e->getMessage());
         }
-
-        $user->update($validated);
-        return redirect()->route('users.index')->with('User berhasil di update');
     }
+
+    $user->update($validated);
+
+    return redirect()->route('users.index')->with('success', 'User berhasil diupdate');
+}
+
 
     public function destroy($id)
     {

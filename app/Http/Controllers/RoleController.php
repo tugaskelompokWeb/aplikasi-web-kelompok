@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class RoleController extends Controller
 {
@@ -13,6 +14,9 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::all();
+        $title = 'Konfirmasi hapus data role';
+        $text = 'Apakah Anda yakin ingin menghapus role ini?';
+        confirmDelete($title, $text);
         return view('pages.roles.index', compact('roles'));
     }
 
@@ -35,7 +39,8 @@ class RoleController extends Controller
 
         Role::create($validated);
 
-        return redirect()->route('roles.index')->with('success', 'Role berhasil ditambahkan.');
+        Alert::success('Role berhasil ditambahkan.');
+        return redirect()->route('roles.index');
     }
 
     /**
@@ -68,7 +73,8 @@ class RoleController extends Controller
 
         $role->update($validated);
 
-        return redirect()->route('roles.index')->with('success', 'Role berhasil diupdate.');
+        Alert::success('Role berhasil diupdate.');
+        return redirect()->route('roles.index');
     }
 
     /**
@@ -79,11 +85,13 @@ class RoleController extends Controller
         $role = Role::findOrFail($id);
 
         if ($role->users()->count() > 0) {
-            return redirect()->route('roles.index')->with('error', 'Role tidak dapat dihapus karena masih digunakan oleh pengguna.');
+            Alert::error('Gagal menghapus role.', 'Role ini masih digunakan oleh beberapa pengguna.');
+            return redirect()->route('roles.index');
         }
 
         $role->delete();
 
-        return redirect()->route('roles.index')->with('success', 'Role berhasil dihapus.');
+        Alert::success('Role berhasil dihapus.');
+        return redirect()->route('roles.index');
     }
 }

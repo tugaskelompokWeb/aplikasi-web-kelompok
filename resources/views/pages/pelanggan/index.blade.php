@@ -18,15 +18,32 @@
                             <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
                             <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
                         </button>
-                        <button type="button" class="btn-btn-tool" data-lte-toggle="card-collapse" title="Collapse">
-                            <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
-                            <i data-lte-icon="colla[se" class="bi bi-dash-lg"></i>
-                        </button>
+                    
                         <button type="button" class="btn btn-tool" data-lte-toggle="card-remove" title="Remove">
                             <i class="bi bi-x-lg"></i>
                         </button>
                     </div>
                 </div>
+
+                <div class="row mb-3 align-items-center">
+                    <div class="col-md-6 col-sm-12 mb-2 mb-md-0">
+                        <a href="{{ route('pelanggan.create') }}" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Tambah
+                        </a>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12">
+                        <form action="{{ route('pelanggan.index') }}" method="GET">
+                            <div class="input-group">
+                                <input type="text" name="search" class="form-control" placeholder="Cari nama pelanggan..." value="{{ request('search') }}">
+                                <button class="btn btn-secondary" type="submit">
+                                    <i class="fas fa-search"></i> Cari
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
                 <div class="card-body">
                     <a href="{{ route('pelanggan.create') }}" class="btn btn-primary">Tambah</a>
                     <table class="table">

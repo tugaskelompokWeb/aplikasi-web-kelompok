@@ -20,7 +20,7 @@ class PelangganController extends Controller
     $pelanggans = $query->paginate(10)->withQueryString();
         return view('pages.pelanggan.index', compact('pelanggans'));
     }
-    
+
 
     public function create()
     {

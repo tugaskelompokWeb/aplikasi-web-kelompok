@@ -17,7 +17,7 @@
       <div class="col-lg-3 col-6 col-md-3">
         <div class="small-box text-bg-success">
             <div class="inner">
-                <h3>{{ $jumlahServis ?? 0 }}</h3>
+                <h3>{{ $totalServis ?? 0 }}</h3>
                 <p>Total Servis Masuk</p>
             </div>
             <svg

@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('transaksi', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('no_transaksi')->unique();
             $table->date('tanggal');
             $table->uuid('servis_id');
             $table->decimal('total_harga', 10, 2);

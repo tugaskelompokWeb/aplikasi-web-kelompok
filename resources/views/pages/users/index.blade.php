@@ -64,7 +64,7 @@
                                 @if ($item->foto)
                                     <img src="{{ $item->foto }}" alt="Foto" style="width: 60px; height: 80px; object-fit: cover; border-radius: 4px;">
                                 @else
-                                    <span class="text-muted">Tidak ada</span>
+                                    <img src="{{asset('dist/assets/img/avatar5.png')}}" alt="" style="width: 60px; height: 80px; object-fit: cover; border-radius: 4px;">
                                 @endif
                             </td>
                             <td>{{ $item->name ?? null }}</td>

@@ -97,7 +97,7 @@
                                         @foreach ($servis as $s)
                                             <option value="{{ $s->id }}" data-biaya="{{ $s->total_biaya }}"
                                                 {{ old('servis_id') == $s->id ? 'selected' : '' }}>
-                                                Servis #{{ $s->id }} - {{ $s->keluhan_awal }} - Rp
+                                                Servis #{{ $s->kendaraan->no_plat }} - {{ $s->keluhan_awal }} - Rp
                                                 {{ number_format($s->total_biaya, 0, ',', '.') }}
                                             </option>
                                         @endforeach
@@ -343,21 +343,14 @@
                 itemsTotal += jumlah * harga;
             });
 
-            // Hitung subtotal
             const subtotal = servisBiaya + itemsTotal;
-            // Ambil nilai diskon dan pajak
             const diskonPersen = parseFloat(diskonInput.value) || 0;
             const pajakPersen = parseFloat(pajakInput.value) || 0;
-            // Hitung jumlah diskon
             const diskonAmount = subtotal * (diskonPersen / 100);
-            // Subtotal setelah diskon
             const subtotalAfterDiskon = subtotal - diskonAmount;
-            // Hitung jumlah pajak
             const pajakAmount = subtotalAfterDiskon * (pajakPersen / 100);
-            // Total akhir
             const total = subtotalAfterDiskon + pajakAmount;
 
-            // Update tampilan
             document.getElementById('subtotalHarga').textContent = 'Rp ' + subtotal.toLocaleString('id-ID');
             document.getElementById('diskonHarga').textContent = 'Rp ' + diskonAmount.toLocaleString('id-ID');
             document.getElementById('pajakHarga').textContent = 'Rp ' + pajakAmount.toLocaleString('id-ID');

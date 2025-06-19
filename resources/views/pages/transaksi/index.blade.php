@@ -52,12 +52,12 @@
                         @foreach ($transaksi as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->servis->kendaraan->pluck('no_plat')->join(', ') ?? '-' }}</td>
+                            <td>{{ $item->servis->kendaraan->no_plat ?? '-' }}</td>
                             <td>{{ $item->metode_pembayaran }}</td>
                             <td>Rp{{ number_format($item->total_harga) }}</td>
                             <td>{{ $item->user->name ?? '-' }}</td>
                             <td>
-                                <a href="{{ route('transaksi.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{{ route('transaksi.show', $item->id) }}" class="btn btn-info btn-sm">Detail</a>
                                 <form action="{{ route('transaksi.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus user ini?');">
                                     @csrf
                                     @method('DELETE')

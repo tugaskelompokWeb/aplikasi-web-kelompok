@@ -30,13 +30,11 @@ Route::post('/login', [UserController::class, 'login'])->name('login');
             Route::resource('garansi', GaransiController::class);
         });
 
-        Route::middleware('role:developer,manager,admin')->group(function () {
             Route::resource('pelanggan', PelangganController::class);
             Route::resource('mekanik', MekanikController::class);
             Route::resource('servis', ServisController::class);
             Route::resource('kendaraan', KendaraanController::class);
             Route::resource('transaksi', TransaksiController::class);
-        });
 
         Route::post('/logout', [UserController::class, 'logout'])->name('logout');
     });

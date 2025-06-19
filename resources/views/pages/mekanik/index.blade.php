@@ -51,7 +51,7 @@
                                     <a href="{{ route('mekanik.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                     <form action="{{ route('mekanik.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
                                         @csrf
-                                        @method('DELETE')`
+                                        @method('DELETE')
                                         <button class="btn btn-danger btn-sm">Delete</button>
                                     </form>
                                 </td>

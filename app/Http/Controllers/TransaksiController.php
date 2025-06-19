@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class TransaksiController extends Controller
 {
@@ -21,7 +22,7 @@ class TransaksiController extends Controller
 
     public function create()
     {
-        $servis = Servis::where('status_servis', '!=', 'selesai')->get();
+        $servis = Servis::with('kendaraan')->where('status_servis', '!=', 'selesai')->get();
         $barang = Barang::all(); // Assuming you have a Barang model to fetch items
         return view('pages.transaksi.create', compact('servis', 'barang'));
     }
@@ -56,6 +57,7 @@ class TransaksiController extends Controller
             $transaksi->tanggal = Carbon::now();
             $transaksi->pajak = $request->pajak ?? 0;
             $transaksi->diskon = $request->diskon ?? 0;
+            $transaksi->total_harga = 0;
             $transaksi->save();
 
             $totalItems = 0;
@@ -67,6 +69,14 @@ class TransaksiController extends Controller
                     $transaksiItem->jumlah = $item['jumlah'];
                     $transaksiItem->harga_satuan = $item['harga_satuan'];
                     $transaksiItem->save();
+
+                    $barang = Barang::findOrFail($item['barang_id']);
+                    if ($barang->stok < $item['jumlah']) {
+                        Alert::error('Stok Tidak Cukup', "Stok untuk barang {$barang->nama_barang} tidak mencukupi.");
+                        return redirect()->back();
+                    }
+                    $barang->stok -= $item['jumlah'];
+                    $barang->save();
                     $totalItems += $item['jumlah'] * $item['harga_satuan'];
                 }
             }
@@ -111,7 +121,7 @@ class TransaksiController extends Controller
 
     public function show($id)
     {
-        $transaksi = Transaksi::with(['servis', 'user', 'items.barang'])->findOrFail($id);
-        return view('transaksi.show', compact('transaksi'));
+        $transaksi = Transaksi::with(['servis.kendaraan.pelanggan', 'user', 'items.barang','servis.jasaServis'])->findOrFail($id);
+        return view('pages.transaksi.detail', compact('transaksi'));
     }
 }

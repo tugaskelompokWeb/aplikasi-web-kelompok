@@ -23,3 +23,4 @@ class Kendaraan extends Model
         return $this->belongsTo(pelanggan::class, 'pelanggan_id');
     }
 }
+        

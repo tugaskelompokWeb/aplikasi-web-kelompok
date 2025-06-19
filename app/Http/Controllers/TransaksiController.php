@@ -15,20 +15,16 @@ use RealRashid\SweetAlert\Facades\Alert;
 class TransaksiController extends Controller
 {
     public function index(Request $request){
-        $query = Transaksi::with(['servis.kendaraan.pelanggan', 'user', 'items.barang'])
-            ->orderBy('created_at', 'desc');
+        $query = Transaksi::query();
+
 
         if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where(function ($q) use ($search) {
-                $q->where('no_transaksi', 'like', "%$search%")
-                    ->orWhereHas('servis.kendaraan.pelanggan', function ($q) use ($search) {
-                        $q->where('nama', 'like', "%$search%");
-                    });
-            });
-        }
+        $search = $request->search;
+        $query->where(function ($q) use ($search) {
+            $q->where('no_transaksi', 'like', "%$search%");
+        });
+    }
 
-   
     $transaksis = $query->paginate(10)->withQueryString();
         return view('pages.transaksi.index', compact('transaksis'));
     }
@@ -137,4 +133,7 @@ class TransaksiController extends Controller
         $transaksi = Transaksi::with(['servis.kendaraan.pelanggan', 'user', 'items.barang','servis.jasaServis'])->findOrFail($id);
         return view('pages.transaksi.detail', compact('transaksi'));
     }
+
+
 }
+

@@ -14,12 +14,22 @@ class ServisController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $servis = Servis::with(['mekanik', 'kendaraan'])->get();
-        return view('pages.servis.index', compact('servis'));
+        $query = Servis::query();
+
+    if ($request->filled('search')) {
+        $search = $request->search;
+        $query->where(function ($q) use ($search) {
+            $q->WhereHas('Mekanik', function ($q2) use ($search) {
+                  $q2->where('nama', 'like', "%$search%");
+              });
+        });
     }
 
+    $servis = $query->paginate(10)->withQueryString();
+        return view('pages.servis.index', compact('servis'));
+    }
     /**
      * Show the form for creating a new resource.
      */

@@ -34,14 +34,19 @@
             </div>
             </div>
             <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-                    <a href="{{ route('transaksi.create') }}" class="btn btn-primary">Tambah</a>
-                </div>
+
+                {{-- // mulai untuk menampilkan pencarian --}}
+                <div class="row mb-3 align-items-center">
+                    <div class="col-md-6 col-sm-12 mb-2 mb-md-0">
+                        <a href="{{ route('transaksi.create') }}" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Tambah
+                        </a>
+                    </div>
 
                     <div class="col-md-6 col-sm-12">
-                        <form action="{{ route('pelanggan.index') }}" method="GET">
+                        <form action="{{ route('transaksi.index') }}" method="GET">
                             <div class="input-group">
-                                <input type="text" name="search" class="form-control" placeholder="Cari Transaksi..." value="{{ request('search') }}">
+                                <input type="text" name="search" class="form-control" placeholder="Cari Kode Transaksi..." value="{{ request('search') }}">
                                 <button class="btn btn-secondary" type="submit">
                                     <i class="fas fa-search"></i> Cari
                                 </button>
@@ -54,6 +59,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>No Transaksi</th>
                             <th>Kendaraan</th>
                             <th>Metode Pembayaran</th>
                             <th>Total Harga</th>
@@ -65,6 +71,7 @@
                         @foreach ($transaksis as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
+                            <td>{{$item->no_transaksi}}</td>
                             <td>{{ $item->servis->kendaraan->no_plat ?? '-' }}</td>
                             <td>{{ $item->metode_pembayaran }}</td>
                             <td>Rp{{ number_format($item->total_harga) }}</td>

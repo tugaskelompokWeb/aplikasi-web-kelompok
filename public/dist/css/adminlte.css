@@ -13710,7 +13710,7 @@ fieldset:disabled .btn {
     }
 }
 .sidebar-brand .brand-text:hover {
-    color: var(--bs-emphasis-color);
+    color: #495057;
 }
 
 .sidebar-wrapper {

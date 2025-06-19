@@ -33,15 +33,15 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
             <!--begin::User Image-->
-            <li class="user-header text-bg-primary">
+            <li class="user-header">
               <img
-                src="{{ auth()->user()->foto ? asset('storage/' . auth()->user()->foto) : asset('dist/assets/img/user2-160x160.jpg') }}"
+                src="{{ auth()->user()->foto ? asset('storage/' . auth()->user()->foto) : asset('dist/assets/img/avatar5.png') }}"
                 class="rounded-circle shadow"
                 alt="User Image"
               />
               <p>
                 {{ auth()->user()->name ?? 'User' }}
-                <small>Member</small>
+                <small>Karyawan</small>
               </p>
             </li>
             <!--end::User Image-->

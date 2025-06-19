@@ -62,7 +62,6 @@ class DashboardController extends Controller
             GROUP BY kategori');
         }
 
-            // === CHART BULANAN ===
         $monthlyData = Transaksi::with('items.barang')
         ->selectRaw('YEAR(tanggal) as year, MONTH(tanggal) as month, SUM(total_harga) as revenue')
         ->whereYear('tanggal', date('Y'))
@@ -92,7 +91,6 @@ class DashboardController extends Controller
         $monthlyCategories[] = date('Y-m-01', strtotime($monthData->year . '-' . $monthData->month . '-01'));
         }
 
-        // === CHART HARIAN ===
         $dailyData = Transaksi::with('items.barang')
             ->whereDate('tanggal', '>=', Carbon::now()->subDays(6))
             ->orderBy('tanggal')
@@ -120,7 +118,6 @@ class DashboardController extends Controller
             $dailyCategories[] = Carbon::parse($date)->translatedFormat('l');
         }
 
-        // === CHART MINGGUAN ===
         $startOfMonth = Carbon::now()->startOfMonth();
         $endOfMonth = Carbon::now()->endOfMonth();
 

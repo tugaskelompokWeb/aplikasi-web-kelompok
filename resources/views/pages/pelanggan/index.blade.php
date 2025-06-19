@@ -43,9 +43,6 @@
                         </form>
                     </div>
                 </div>
-
-                <div class="card-body">
-                    <a href="{{ route('pelanggan.create') }}" class="btn btn-primary">Tambah</a>
                     <table class="table">
                         <thead>
                             <tr>
@@ -80,7 +77,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div>
+            
                 <div class="d-flex justify-content-end mt-3">
                     {!! $pelanggans->links('pagination::bootstrap-5') !!}
                 </div>

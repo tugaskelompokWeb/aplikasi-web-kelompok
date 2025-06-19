@@ -37,6 +37,19 @@
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                     <a href="{{ route('transaksi.create') }}" class="btn btn-primary">Tambah</a>
                 </div>
+
+                    <div class="col-md-6 col-sm-12">
+                        <form action="{{ route('pelanggan.index') }}" method="GET">
+                            <div class="input-group">
+                                <input type="text" name="search" class="form-control" placeholder="Cari Transaksi..." value="{{ request('search') }}">
+                                <button class="btn btn-secondary" type="submit">
+                                    <i class="fas fa-search"></i> Cari
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
                 <table class="table">
                     <thead>
                         <tr>
@@ -49,7 +62,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($transaksi as $item)
+                        @foreach ($transaksis as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->servis->kendaraan->no_plat ?? '-' }}</td>

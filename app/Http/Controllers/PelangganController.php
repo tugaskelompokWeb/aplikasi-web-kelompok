@@ -9,12 +9,13 @@ class PelangganController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Pelanggan::query();
+    $query = Pelanggan::query();
 
     if ($request->filled('search')) {
         $search = $request->search;
         $query->where(function ($q) use ($search) {
-            $q->where('nama', 'like', "%$search%");});
+            $q->where('nama', 'like', "%$search%");
+        });
     }
     $pelanggans = $query->paginate(10)->withQueryString();
         return view('pages.pelanggan.index', compact('pelanggans'));

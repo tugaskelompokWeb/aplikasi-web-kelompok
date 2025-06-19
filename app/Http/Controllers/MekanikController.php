@@ -7,15 +7,19 @@ use Illuminate\Http\Request;
 
 class MekanikController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $mekaniks = Mekanik::all();
-        return view('pages.mekanik.index', compact('mekaniks'));
-    }
+    $query = Mekanik::query();
 
-    public function create()
-    {
-        return view('pages.mekanik.create');
+    if ($request->filled('search')) {
+        $search = $request->search;
+        $query->where(function ($q) use ($search) {
+            $q->where('nama', 'like', "%$search%")
+              ->orWhere('status', 'like', "%$search%");
+        });
+    }
+    $mekaniks = $query->paginate(10)->withQueryString();
+        return view('pages.mekanik.index', compact('mekaniks'));
     }
 
     public function store(Request $request)

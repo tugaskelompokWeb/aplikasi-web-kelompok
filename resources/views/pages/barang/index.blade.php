@@ -34,6 +34,8 @@
             </div>
             </div>
             <div class="card-body">
+
+                {{-- // mulai untuk menampilkan pencarian --}}
                 <div class="row mb-3 align-items-center">
                     <div class="col-md-6 col-sm-12 mb-2 mb-md-0">
                         <a href="{{ route('barang.create') }}" class="btn btn-primary">
@@ -52,6 +54,8 @@
                         </form>
                     </div>
                 </div>
+
+                {{-- // selesai untuk menampilkan pencarian --}}
 
                 <table class="table">
                     <thead>
@@ -89,9 +93,12 @@
                     </tbody>
                 </table>
 
+                {{-- mulai untuk menampilkan pagination --}}
                 <div class="d-flex justify-content-end mt-3">
                     {!! $barangs->links('pagination::bootstrap-5') !!}
                 </div>
+                {{-- selesai untuk menampilkan pagination --}}
+
             </div>
             <!-- /.card-body -->
             <!-- /.card-footer-->

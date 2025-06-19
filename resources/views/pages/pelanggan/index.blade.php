@@ -81,6 +81,9 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="d-flex justify-content-end mt-3">
+                    {!! $pelanggans->links('pagination::bootstrap-5') !!}
+                </div>
                 <!-- /card body -->
                 <!-- /card footer -->
              </div>

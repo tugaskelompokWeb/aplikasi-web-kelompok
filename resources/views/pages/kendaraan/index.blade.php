@@ -34,7 +34,29 @@
             </div>
             </div>
             <div class="card-body">
-                <a href="{{ route('kendaraan.create') }}" class="btn btn-primary">Tambah</a>
+
+            {{-- // mulai untuk menampilkan pencarian --}}
+                <div class="row mb-3 align-items-center">
+                    <div class="col-md-6 col-sm-12 mb-2 mb-md-0">
+                        <a href="{{ route('kendaraan.create') }}" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Tambah
+                        </a>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12">
+                        <form action="{{ route('kendaraan.index') }}" method="GET">
+                            <div class="input-group">
+                                <input type="text" name="search" class="form-control" placeholder="Cari nama atau kode kendaraan..." value="{{ request('search') }}">
+                                <button class="btn btn-secondary" type="submit">
+                                    <i class="fas fa-search"></i> Cari
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                {{-- // selesai untuk menampilkan pencarian --}}
+
                 <table class="table">
                     <thead>
                         <tr>
@@ -70,6 +92,12 @@
                         @endforeach
                     </tbody>
                 </table>
+                 {{-- mulai untuk menampilkan pagination --}}
+                <div class="d-flex justify-content-end mt-3">
+                    {!! $kendaraans->links('pagination::bootstrap-5') !!}
+                </div>
+                {{-- selesai untuk menampilkan pagination --}}
+
             </div>
             <!-- /.card-body -->
             <!-- /.card-footer-->

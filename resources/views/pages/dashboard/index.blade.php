@@ -147,9 +147,29 @@
     </div>
 </div>
 
+<div class="row">
+    <!-- Start col -->
+    <div class="col-lg-7 connectedSortable">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h3 class="card-title mb-0">Grafik Pendapatan</h3>
+              <select id="chartFilter" class="form-select w-auto">
+                <option value="daily">Harian</option>
+                <option value="weekly">Mingguan</option>
+                <option value="monthly" selected>Bulanan</option>
+              </select>
+            </div>
+            <div class="card-body">
+              <div id="revenue-chart"></div>
+            </div>
+          </div>
+    </div>
+</div>
 
-        <style>
-    .highcharts-figure,
+
+
+<style>
+.highcharts-figure,
 .highcharts-data-table table {
     min-width: 310px;
     max-width: 800px;
@@ -300,6 +320,96 @@ Highcharts.chart('container-barang', {
     ]
 });
 </script>
+
+<script
+      src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js"
+      integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8="
+      crossorigin="anonymous"
+    >
+</script>
+
+<script>
+    const chartOptions = {
+  series: [],
+  chart: {
+    height: 300,
+    type: 'area',
+    toolbar: { show: false }
+  },
+  colors: ['#0d6efd', '#20c997'],
+  dataLabels: { enabled: false },
+  stroke: { curve: 'smooth' },
+  xaxis: {
+    type: 'category',
+    categories: []
+  },
+  yaxis: {
+    labels: {
+      formatter: function (val) {
+        return new Intl.NumberFormat('id-ID', {
+          style: 'currency',
+          currency: 'IDR',
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0
+        }).format(val);
+      }
+    }
+  },
+  tooltip: {
+    x: { format: 'yyyy-MM-dd' },
+    y: {
+      formatter: function (val) {
+        return new Intl.NumberFormat('id-ID', {
+          style: 'currency',
+          currency: 'IDR',
+          minimumFractionDigits: 0
+        }).format(val);
+      }
+    }
+  }
+};
+
+
+    const chart = new ApexCharts(document.querySelector("#revenue-chart"), chartOptions);
+    chart.render();
+
+    const chartData = {
+      monthly: {
+        categories: @json($monthlyCategories),
+        revenue: @json($monthlyRevenue),
+        profit: @json($monthlyProfit),
+      },
+      daily: {
+        categories: @json($dailyCategories),
+        revenue: @json($dailyRevenue),
+        profit: @json($dailyProfit),
+      },
+      weekly: {
+        categories: @json($weeklyCategories),
+        revenue: @json($weeklyRevenue),
+        profit: @json($weeklyProfit),
+      }
+    };
+
+    function updateChartView(filter) {
+      const data = chartData[filter];
+      chart.updateOptions({
+        series: [
+          { name: "Revenue", data: data.revenue },
+          { name: "Profit", data: data.profit },
+        ],
+        xaxis: { categories: data.categories }
+      });
+    }
+
+    document.querySelector("#chartFilter").addEventListener("change", function (e) {
+      updateChartView(e.target.value);
+    });
+
+    updateChartView('monthly');
+  </script>
+
+
 
 @else
 <div class="alert alert-danger mt-4">

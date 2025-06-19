@@ -21,13 +21,6 @@ class DashboardController extends Controller
         $totalBarang = Barang::count();
         $totalTransaksi = Transaksi::count();
         $totalPelanggan = Pelanggan::count();
-        $totalKendaraan = Kendaraan::count();
-        $totalMekanik = Mekanik::where('status', 'aktif')->count();
-        $servisHariIni = Servis::whereDate('tgl_datang', Carbon::today())->count();
-        $pendapatanHariIni = Transaksi::whereDate('created_at', Carbon::today())->sum('total_harga');
-        $pendapatanBulanIni = Transaksi::whereMonth('created_at', Carbon::now()->month)
-            ->whereYear('created_at', Carbon::now()->year)
-            ->sum('total_harga');
         $stokMenipis = Barang::where('stok', '<=', 5)->count();
         $barangStokRendah = Barang::where('stok', '<=', 5)
             ->select('nama', 'stok', 'satuan')
@@ -68,10 +61,98 @@ class DashboardController extends Controller
             GROUP BY kategori');
         }
 
+            // === CHART BULANAN ===
+        $monthlyData = Transaksi::with('items.barang')
+        ->selectRaw('YEAR(tanggal) as year, MONTH(tanggal) as month, SUM(total_harga) as revenue')
+        ->whereYear('tanggal', date('Y'))
+        ->groupByRaw('YEAR(tanggal), MONTH(tanggal)')
+        ->orderByRaw('YEAR(tanggal), MONTH(tanggal)')
+        ->get();
+
+        $monthlyRevenue = [];
+        $monthlyProfit = [];
+        $monthlyCategories = [];
+
+        foreach ($monthlyData as $monthData) {
+            $transaksis = Transaksi::with('items.barang')
+                ->whereYear('tanggal', $monthData->year)
+                ->whereMonth('tanggal', $monthData->month)
+                ->get();
+
+        $hpp = 0;
+        foreach ($transaksis as $transaksi) {
+            foreach ($transaksi->items as $item) {
+                $hpp += ($item->barang->harga ?? 0) * $item->jumlah;
+            }
+        }
+
+        $monthlyRevenue[] = $monthData->revenue;
+        $monthlyProfit[] = $monthData->revenue - $hpp;
+        $monthlyCategories[] = date('Y-m-01', strtotime($monthData->year . '-' . $monthData->month . '-01'));
+        }
+
+        // === CHART HARIAN ===
+        $dailyData = Transaksi::with('items.barang')
+            ->whereDate('tanggal', '>=', Carbon::now()->subDays(6))
+            ->orderBy('tanggal')
+            ->get()
+            ->groupBy(fn($item) => $item->tanggal->format('Y-m-d'));
+
+        $dailyRevenue = [];
+        $dailyProfit = [];
+        $dailyCategories = [];
+
+        foreach (range(6, 0) as $i) {
+            $date = Carbon::now()->subDays($i)->format('Y-m-d');
+            $transactions = $dailyData[$date] ?? collect();
+            $revenue = $transactions->sum('total_harga');
+
+            $hpp = 0;
+            foreach ($transactions as $transaksi) {
+                foreach ($transaksi->items as $item) {
+                    $hpp += ($item->barang->harga ?? 0) * $item->jumlah;
+                }
+            }
+
+            $dailyRevenue[] = $revenue;
+            $dailyProfit[] = $revenue - $hpp;
+            $dailyCategories[] = Carbon::parse($date)->translatedFormat('l');
+        }
+
+        // === CHART MINGGUAN ===
+        $startOfMonth = Carbon::now()->startOfMonth();
+        $endOfMonth = Carbon::now()->endOfMonth();
+
+        $weeklyData = Transaksi::with('items.barang')
+            ->whereBetween('tanggal', [$startOfMonth, $endOfMonth])
+            ->get()
+            ->groupBy(fn($item) => 'Minggu ' . $item->tanggal->weekOfMonth);
+
+        $weeklyRevenue = [];
+        $weeklyProfit = [];
+        $weeklyCategories = [];
+
+        foreach ($weeklyData as $week => $transactions) {
+            $revenue = $transactions->sum('total_harga');
+
+            $hpp = 0;
+            foreach ($transactions as $transaksi) {
+                foreach ($transaksi->items as $item) {
+                    $hpp += ($item->barang->harga ?? 0) * $item->jumlah;
+                }
+            }
+
+            $weeklyRevenue[] = $revenue;
+            $weeklyProfit[] = $revenue - $hpp;
+            $weeklyCategories[] = $week;
+        }
+
 
         return view('pages.dashboard.index', compact('totalServis', 'totalBarang', 'totalTransaksi',
-        'totalPelanggan', 'totalKendaraan', 'totalMekanik', 'servisHariIni', 'pendapatanHariIni',
-        'pendapatanBulanIni', 'stokMenipis', 'barangStokRendah','jumlahPlat', 'jumlahBarang', 'filterKendaraan', 'filterBarang'));
+        'totalPelanggan','stokMenipis', 'barangStokRendah','jumlahPlat', 'jumlahBarang', 'filterKendaraan',
+        'filterBarang','monthlyRevenue', 'monthlyProfit', 'monthlyCategories',
+        'dailyRevenue', 'dailyProfit', 'dailyCategories',
+        'weeklyRevenue', 'weeklyProfit', 'weeklyCategories'));
     }
 
 }

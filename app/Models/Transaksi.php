@@ -21,6 +21,10 @@ class Transaksi extends Model
         'total_harga'
     ];
 
+    protected $casts = [
+        'tanggal' => 'datetime',
+    ];
+
     public function servis()
     {
         return $this->belongsTo(Servis::class, 'servis_id');

@@ -15,8 +15,8 @@ class KendaraanController extends Controller
     if ($request->filled('search')) {
         $search = $request->search;
         $query->where(function ($q) use ($search) {
-            $q->where('nama', 'like', "%$search%")
-              ->orWhere('kode_barang', 'like', "%$search%");
+            $q->where('no_plat', 'like', "%$search%")
+              ->orWhere('pelanggan_id', 'like', "%$search%");
         });
     }
     $kendaraans = $query->paginate(10)->withQueryString();

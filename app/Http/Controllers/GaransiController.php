@@ -10,9 +10,19 @@ use App\Models\User;
 
 class GaransiController extends Controller
 {
-    public function index()
+     public function index(Request $request)
     {
-        $garansi = Garansi::with(['pelanggan', 'kendaraan', 'user'])->get();
+    $query = Garansi::query();
+
+    if ($request->filled('search')) {
+        $search = $request->search;
+        $query->where(function ($q) use ($search) {
+            $q->WhereHas('kendaraan', function ($q2) use ($search) {
+                  $q2->where('no_plat', 'like', "%$search%");
+              });
+        });
+    }
+    $garansi = $query->paginate(10)->withQueryString();
         return view('pages.garansi.index', compact('garansi'));
     }
 

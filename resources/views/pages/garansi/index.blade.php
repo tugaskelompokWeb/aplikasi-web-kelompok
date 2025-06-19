@@ -34,13 +34,35 @@
             </div>
             </div>
             <div class="card-body">
-                <a href="{{ route('garansi.create') }}" class="btn btn-primary">Tambah</a>
+
+                {{-- // mulai untuk menampilkan pencarian --}}
+                <div class="row mb-3 align-items-center">
+                    <div class="col-md-6 col-sm-12 mb-2 mb-md-0">
+                        <a href="{{ route('garansi.create') }}" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Tambah
+                        </a>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12">
+                        <form action="{{ route('garansi.index') }}" method="GET">
+                            <div class="input-group">
+                                <input type="text" name="search" class="form-control" placeholder="Cari nomor plat..." value="{{ request('search') }}">
+                                <button class="btn btn-secondary" type="submit">
+                                    <i class="fas fa-search"></i> Cari
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                {{-- // selesai untuk menampilkan pencarian --}}
+                
                 <table class="table">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Nama_Pelanggan</th>
-                            <th>Nama_Kendaraan</th>
+                            <th>Nomor_Plat</th>
                             <th>Nama_User</th>
                             <th>Keluhan</th>
                             <th>Tanggal_Garansi</th>
@@ -71,6 +93,13 @@
                         @endforeach
                     </tbody>
                 </table>
+
+                {{-- mulai untuk menampilkan pagination --}}
+                <div class="d-flex justify-content-end mt-3">
+                    {!! $garansi->links('pagination::bootstrap-5') !!}
+                </div>
+                {{-- selesai untuk menampilkan pagination --}}
+
             </div>
             <!-- /.card-body -->
             <!-- /.card-footer-->

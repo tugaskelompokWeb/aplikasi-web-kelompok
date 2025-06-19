@@ -148,24 +148,46 @@
 </div>
 
 <div class="row">
-    <!-- Start col -->
+    <!-- Grafik Pendapatan -->
     <div class="col-lg-7 connectedSortable">
-        <div class="card mb-4">
-            <div class="card-header d-flex justify-content-between align-items-center">
-              <h3 class="card-title mb-0">Grafik Pendapatan</h3>
-              <select id="chartFilter" class="form-select w-auto">
-                <option value="daily">Harian</option>
-                <option value="weekly">Mingguan</option>
-                <option value="monthly" selected>Bulanan</option>
-              </select>
-            </div>
-            <div class="card-body">
-              <div id="revenue-chart"></div>
-            </div>
-          </div>
+      <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h3 class="card-title mb-0">Grafik Pendapatan</h3>
+          <select id="chartFilter" class="form-select w-auto">
+            <option value="daily">Harian</option>
+            <option value="weekly">Mingguan</option>
+            <option value="monthly" selected>Bulanan</option>
+          </select>
+        </div>
+        <div class="card-body">
+          <div id="revenue-chart"></div>
+        </div>
+      </div>
     </div>
-</div>
 
+    <!-- Browser Usage -->
+    <div class="col-lg-5 connectedSortable">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h3 class="card-title">Top 5 Barang Sering Dibeli</h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse">
+              <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
+              <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-lte-toggle="card-remove">
+              <i class="bi bi-x-lg"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12"><div id="pie-chart"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 <style>
@@ -328,6 +350,7 @@ Highcharts.chart('container-barang', {
     >
 </script>
 
+
 <script>
     const chartOptions = {
   series: [],
@@ -407,6 +430,21 @@ Highcharts.chart('container-barang', {
     });
 
     updateChartView('monthly');
+
+    const pie_chart_options = {
+        series: @json($topBarangData),
+        chart: {
+          type: 'donut',
+        },
+        labels: @json($topBarangLabels),
+        dataLabels: {
+          enabled: false,
+        },
+        colors: ['#0d6efd', '#20c997', '#ffc107', '#d63384', '#6f42c1'],
+      };
+
+      const pie_chart = new ApexCharts(document.querySelector('#pie-chart'), pie_chart_options);
+      pie_chart.render();
   </script>
 
 

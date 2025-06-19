@@ -8,6 +8,7 @@ use App\Models\Mekanik;
 use App\Models\Pelanggan;
 use App\Models\Servis;
 use App\Models\Transaksi;
+use App\Models\TransaksiItem;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -147,12 +148,22 @@ class DashboardController extends Controller
             $weeklyCategories[] = $week;
         }
 
+        $topBarang = TransaksiItem::select('barang_id', DB::raw('SUM(jumlah) as totalTerjual'))
+                    ->groupBy('barang_id')
+                    ->orderByDesc('totalTerjual')
+                    ->with('barang:id,nama')
+                    ->limit(5)
+                    ->get();
+
+        $topBarangLabels = $topBarang->pluck('barang.nama')->toArray();
+        $topBarangData = $topBarang->pluck('totalTerjual')->map(fn($value) => (int) $value)->toArray();
+
 
         return view('pages.dashboard.index', compact('totalServis', 'totalBarang', 'totalTransaksi',
         'totalPelanggan','stokMenipis', 'barangStokRendah','jumlahPlat', 'jumlahBarang', 'filterKendaraan',
         'filterBarang','monthlyRevenue', 'monthlyProfit', 'monthlyCategories',
         'dailyRevenue', 'dailyProfit', 'dailyCategories',
-        'weeklyRevenue', 'weeklyProfit', 'weeklyCategories'));
+        'weeklyRevenue', 'weeklyProfit', 'weeklyCategories','topBarangLabels','topBarangData'));
     }
 
 }

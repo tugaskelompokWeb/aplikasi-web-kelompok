@@ -22,6 +22,12 @@ class MekanikController extends Controller
         return view('pages.mekanik.index', compact('mekaniks'));
     }
 
+    public function create()
+    {
+        $mekaniks = Mekanik::all();
+        return view('pages.mekanik.create', compact('mekaniks'));
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([

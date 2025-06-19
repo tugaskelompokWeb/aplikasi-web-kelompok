@@ -7,11 +7,12 @@ use Illuminate\Http\Request;
 
 class PelangganController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $pelanggans = Pelanggan::all();
         return view('pages.pelanggan.index', compact('pelanggans'));
     }
+    
 
     public function create()
     {

@@ -34,7 +34,27 @@
             </div>
             </div>
             <div class="card-body">
-                <a href="{{ route('servis.create') }}" class="btn btn-primary">Tambah</a>
+
+                 {{-- // mulai untuk menampilkan pencarian --}}
+                <div class="row mb-3 align-items-center">
+                    <div class="col-md-6 col-sm-12 mb-2 mb-md-0">
+                        <a href="{{ route('servis.create') }}" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Tambah
+                        </a>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12">
+                        <form action="{{ route('servis.index') }}" method="GET">
+                            <div class="input-group">
+                                <input type="text" name="search" class="form-control" placeholder="Cari Nama Mekanik..." value="{{ request('search') }}">
+                                <button class="btn btn-secondary" type="submit">
+                                    <i class="fas fa-search"></i> Cari
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
                 <table class="table">
                     <thead>
                         <tr>
@@ -69,6 +89,10 @@
                         @endforeach
                     </tbody>
                 </table>
+                {{-- mulai untuk menampilkan pagination --}}
+                <div class="d-flex justify-content-end mt-3">
+                    {!! $servis->links('pagination::bootstrap-5') !!}
+                </div>
             </div>
             <!-- /.card-body -->
             <!-- /.card-footer-->

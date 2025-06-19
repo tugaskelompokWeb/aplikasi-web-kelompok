@@ -18,13 +18,15 @@
                             <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
                             <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
                         </button>
-                    
+
                         <button type="button" class="btn btn-tool" data-lte-toggle="card-remove" title="Remove">
                             <i class="bi bi-x-lg"></i>
                         </button>
                     </div>
                 </div>
+                <div class="card-body">
 
+                {{-- // mulai untuk menampilkan pencarian --}}
                 <div class="row mb-3 align-items-center">
                     <div class="col-md-6 col-sm-12 mb-2 mb-md-0">
                         <a href="{{ route('pelanggan.create') }}" class="btn btn-primary">
@@ -35,7 +37,7 @@
                     <div class="col-md-6 col-sm-12">
                         <form action="{{ route('pelanggan.index') }}" method="GET">
                             <div class="input-group">
-                                <input type="text" name="search" class="form-control" placeholder="Cari nama pelanggan..." value="{{ request('search') }}">
+                                <input type="text" name="search" class="form-control" placeholder="Cari Nama Pelanggan..." value="{{ request('search') }}">
                                 <button class="btn btn-secondary" type="submit">
                                     <i class="fas fa-search"></i> Cari
                                 </button>
@@ -77,7 +79,7 @@
                             @endforeach
                         </tbody>
                     </table>
-            
+
                 <div class="d-flex justify-content-end mt-3">
                     {!! $pelanggans->links('pagination::bootstrap-5') !!}
                 </div>

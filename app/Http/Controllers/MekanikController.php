@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Mekanik;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class MekanikController extends Controller
 {
@@ -64,16 +65,15 @@ class MekanikController extends Controller
         return redirect()->route('mekanik.index')->with('success', 'Mekanik berhasil diupdate.');
     }
 
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $mekanik = Mekanik::findOrFail($id);
 
-        if (auth()->id() === $mekanik->id) {
-            return redirect()->route('mekanik.index')->with('error', 'Tidak dapat menghapus data sendiri.');
-        }
+
 
         $mekanik->delete();
 
-        return redirect()->route('mekanik.index')->with('success', 'Mekanik berhasil dihapus.');
+        Alert::success('Transaksi berhasil dihapus.');
+        return redirect()->route('transaksi.index');
     }
 }

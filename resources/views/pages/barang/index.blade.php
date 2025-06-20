@@ -82,11 +82,11 @@
                             <td>Rp{{ number_format($item->harga, 0, ',', '.') }}</td>
                             <td>
                                 <a href="{{ route('barang.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                <form action="{{ route('barang.destroy', $item->id) }}" method="POST" class="form-delete d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger btn-sm">Delete</button>
-                                </form>
+                                <form class="form-delete" action="{{ route('barang.destroy', $item->id) }}" method="POST" style="display:inline-block;">
+                                         @csrf
+                                            @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
                             </td>
                         </tr>
                         @endforeach
@@ -106,5 +106,6 @@
         <!-- /.card -->
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!--end::Row-->
 @endsection

@@ -69,10 +69,10 @@
                                 <td>{{ $item->tanggal_lahir }}</td>
                                 <td>
                                     <a href="{{ route('pelanggan.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                    <form action="{{ route('pelanggan.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger btn-sm">Delete</button>
+                                    <form class="form-delete" action="{{ route('pelanggan.destroy', $item->id) }}" method="POST" style="display:inline-block;">
+                                         @csrf
+                                            @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                     </form>
                                 </td>
                             </tr>
@@ -89,5 +89,6 @@
              <!-- /card -->
         </div>
      </div>
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
      <!-- end::Row -->
       @endsection

@@ -63,7 +63,7 @@ class MekanikController extends Controller
 
         $mekanik->update($validated);
 
-        Alert::sucess('Mekanik berhasil diupdate.');
+        Alert::success('Mekanik berhasil diupdate.');
         return redirect()->route('mekanik.index')->with('success', 'Mekanik berhasil diupdate.');
     }
 

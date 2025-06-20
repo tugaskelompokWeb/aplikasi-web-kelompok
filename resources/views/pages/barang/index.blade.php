@@ -82,7 +82,7 @@
                             <td>Rp{{ number_format($item->harga, 0, ',', '.') }}</td>
                             <td>
                                 <a href="{{ route('barang.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                <form action="{{ route('barang.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus user ini?');">
+                                <form action="{{ route('barang.destroy', $item->id) }}" method="POST" class="form-delete d-inline">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger btn-sm">Delete</button>

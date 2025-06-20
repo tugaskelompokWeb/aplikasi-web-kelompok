@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Barang;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class BarangController extends Controller
 {
@@ -38,6 +39,8 @@ class BarangController extends Controller
             'stok' => 'required|integer|min:0',
         ]);
         Barang::create($validated);
+
+        Alert::success('Barang berhasil ditambahkan');
         return redirect()->route('barang.index')->with('success', 'Barang berhasil ditambahkan');
     }
 
@@ -59,13 +62,19 @@ class BarangController extends Controller
             'stok' => 'required|integer|min:0',
         ]);
         $barang->update($validated);
+
+        Alert::success('Barang berhasil diupdate.');
         return redirect()->route('barang.index')->with('success', 'Barang berhasil diperbarui');
     }
 
     public function destroy($id)
     {
         $barang = Barang::findOrFail($id);
+        Alert::error('Gagal menghapus barang.');
+
         $barang->delete();
+
+        Alert::success('Barang berhasil dihapus.');
         return redirect()->route('barangs.index')->with('success', 'Barang berhasil dihapus');
     }
 }

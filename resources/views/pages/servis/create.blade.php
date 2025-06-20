@@ -86,9 +86,6 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="mb-3 mt-3">
-                            <h5>Total Biaya: <span id="totalBiayaDisplay">Rp0</span></h5>
-                        </div>
                       </div>
 
                     <!--end::Body-->
@@ -104,39 +101,6 @@
         </div>
     </div>
     <!--end::Row-->
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script>
-    function formatRupiah(angka) {
-        return new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            minimumFractionDigits: 0
-        }).format(angka);
-    }
-
-    function hitungTotalBiaya() {
-        let total = 0;
-
-        $('.jasa-checkbox:checked').each(function() {
-            let biaya = parseInt($(this).data('biaya'));
-            if (!isNaN(biaya)) {
-                total += biaya;
-            }
-        });
-
-        $('#totalBiayaDisplay').text(formatRupiah(total));
-    }
-
-    $(document).ready(function () {
-        $('.jasa-checkbox').on('change', function () {
-            hitungTotalBiaya();
-        });
-
-        hitungTotalBiaya();
-    });
-</script>
 
 
 @endsection

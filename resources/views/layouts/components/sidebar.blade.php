@@ -3,7 +3,7 @@
     <!--begin::Sidebar Brand-->
     <div class="sidebar-brand">
       <!--begin::Brand Link-->
-      <a href="./index.html" class="brand-link">
+      <a href="#" class="brand-link">
         <!--begin::Brand Image-->
         <img
           src="../../dist/assets/img/logo.png"
@@ -12,7 +12,7 @@
         />
         <!--end::Brand Image-->
         <!--begin::Brand Text-->
-        <span class="brand-text fw-light">ProjectUAS</span>
+        <span class="brand-text fw-bold" style="font-family: 'Poppins', sans-serif;">ProjectUAS</span>
         <!--end::Brand Text-->
       </a>
       <!--end::Brand Link-->

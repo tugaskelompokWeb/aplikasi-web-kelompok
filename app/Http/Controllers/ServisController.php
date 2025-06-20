@@ -109,7 +109,8 @@ class ServisController extends Controller
                             ->orWhere('id', $servis->mekanik_id)
                             ->get();
         $kendaraan = Kendaraan::all();
-        return view('pages.servis.edit', compact('servis', 'mekanik', 'kendaraan'));
+        $jasa = Jasa::all();
+        return view('pages.servis.edit', compact('servis', 'mekanik', 'kendaraan', 'jasa'));
     }
 
     /**

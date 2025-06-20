@@ -32,7 +32,7 @@ class TransaksiController extends Controller
     public function create()
     {
         $servis = Servis::with('kendaraan')->where('status_servis', '!=', 'selesai')->get();
-        $barang = Barang::all(); // Assuming you have a Barang model to fetch items
+        $barang = Barang::all();
         return view('pages.transaksi.create', compact('servis', 'barang'));
     }
 
@@ -133,6 +133,15 @@ class TransaksiController extends Controller
         return view('pages.transaksi.detail', compact('transaksi'));
     }
 
+    public function destroy($id)
+    {
+        $user = Transaksi::findOrFail($id);
+
+        $user->delete();
+
+        Alert::success("Transaksi berhasil dihapus");
+        return redirect()->route('transaksi.index');
+    }
 
 }
 

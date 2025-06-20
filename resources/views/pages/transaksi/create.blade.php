@@ -315,7 +315,7 @@
             calculateSubtotal($row);
         } else {
             calculateTotal();
-        }
+        }   
     });
 
     function updateRemoveButtons() {

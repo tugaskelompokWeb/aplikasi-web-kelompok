@@ -133,37 +133,37 @@
     </div>
 </form>
 
-<div class="row">
-    <div class="col-lg-6">
-        <figure class="highcharts-figure">
-            <div id="container"></div>
-        </figure>
+    <div class="row">
+        <div class="col-lg-6">
+            <figure class="highcharts-figure">
+                <div id="container"></div>
+            </figure>
+        </div>
+
+        <div class="col-lg-6">
+            <figure class="highcharts-figure">
+                <div id="container-barang"></div>
+            </figure>
+        </div>
     </div>
 
-    <div class="col-lg-6">
-        <figure class="highcharts-figure">
-            <div id="container-barang"></div>
-        </figure>
-    </div>
-</div>
-
-<div class="row">
-    <!-- Grafik Pendapatan -->
-    <div class="col-lg-7 connectedSortable">
-      <div class="card mb-4">
-        <div class="card-header d-flex justify-content-between align-items-center">
-          <h3 class="card-title mb-0">Grafik Pendapatan</h3>
-          <select id="chartFilter" class="form-select w-auto">
-            <option value="daily">Harian</option>
-            <option value="weekly">Mingguan</option>
-            <option value="monthly" selected>Bulanan</option>
-          </select>
-        </div>
-        <div class="card-body">
-          <div id="revenue-chart"></div>
-        </div>
-      </div>
-    </div>
+        <div class="row">
+            <!-- Grafik Pendapatan -->
+            <div class="col-lg-7 connectedSortable">
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="card-title mb-0">Grafik Pendapatan</h3>
+                <select id="chartFilter" class="form-select w-auto">
+                    <option value="daily" selected>Harian</option>
+                    <option value="weekly">Mingguan</option>
+                    <option value="monthly">Bulanan</option>
+                </select>
+                </div>
+                <div class="card-body">
+                <div id="revenue-chart"></div>
+                </div>
+            </div>
+            </div>
 
     <!-- Browser Usage -->
     <div class="col-lg-5 connectedSortable">
@@ -429,7 +429,7 @@ Highcharts.chart('container-barang', {
       updateChartView(e.target.value);
     });
 
-    updateChartView('monthly');
+    updateChartView('daily');
 
     const pie_chart_options = {
         series: @json($topBarangData),

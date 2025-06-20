@@ -70,8 +70,6 @@ class MekanikController extends Controller
     public function destroy(string $id)
     {
         $mekanik = Mekanik::findOrFail($id);
-            Alert::error('Gagal menghapus mekanik.');
-        
         $mekanik->delete();
 
         Alert::success('Mekanik berhasil dihapus.');

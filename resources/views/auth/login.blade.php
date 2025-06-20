@@ -3,7 +3,7 @@
   <!--begin::Head-->
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>AdminLTE 4 | Login</title>
+    <title>ProjectUAS | Login</title>
     <!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="title" content="AdminLTE 4 | Login Page v2" />
@@ -52,7 +52,7 @@
       <div class="card card-outline card-primary">
         <div class="card-header">
           <a
-            href="../index2.html"
+            href="#"
             class="link-dark text-center link-offset-2 link-opacity-100 link-opacity-50-hover"
           >
             <h1 class="mb-0"><b>Tugas </b>Web</h1>
@@ -67,7 +67,7 @@
                 <input type="text" name="name" class="form-control" value="" placeholder="Masukan Nama" required />
                 <label for="loginName">Masukan Nama : </label>
               </div>
-              <div class="input-group-text"><span class="bi bi-envelope"></span></div>
+              <div class="input-group-text"><span class="bi bi-people"></span></div>
             </div>
             <div class="input-group mb-1">
               <div class="form-floating">

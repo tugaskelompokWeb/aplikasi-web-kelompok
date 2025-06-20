@@ -3,6 +3,7 @@
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GaransiController;
+use App\Http\Controllers\JasaController;
 use App\Http\Controllers\KendaraanController;
 use App\Http\Controllers\MekanikController;
 use App\Http\Controllers\PelangganController;
@@ -28,6 +29,7 @@ Route::post('/login', [UserController::class, 'login'])->name('login');
         Route::middleware('role:developer,admin')->group(function () {
             Route::resource('barang', BarangController::class);
             Route::resource('garansi', GaransiController::class);
+            Route::resource('jasa', JasaController::class);
         });
 
             Route::resource('pelanggan', PelangganController::class);

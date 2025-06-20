@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('detail_servis', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('servis_id');
-            $table->string('nama_jasa');
-            $table->decimal('biaya', 10, 2);
+            $table->uuid('jasa_id');
             $table->timestamps();
 
             $table->foreign('servis_id')->references('id')->on('servis')->onDelete('cascade');
+            $table->foreign('jasa_id')->references('id')->on('jasa')->onDelete('cascade');
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jasa_services');
+        Schema::dropIfExists('detail_servis');
     }
 };

@@ -119,26 +119,29 @@
                             <div class="scrollable-items" id="itemContainer">
                                 <div class="item-row">
                                     <div class="row g-2 align-items-end">
-                                        <div class="col-md-5">
+                                        <div class="col-md-4">
                                             <label class="form-label">Barang <span class="text-danger">*</span></label>
                                             <select class="form-select barang-select" name="items[0][barang_id]">
                                                 <option value="">Pilih Barang</option>
                                                 @foreach ($barang as $b)
                                                     <option value="{{ $b->id }}" data-harga="{{ $b->harga }}">
-                                                        {{ $b->nama }} - Rp {{ number_format($b->harga, 0, ',', '.') }}
+                                                        {{ $b->nama }} - {{$b->stok}}
                                                     </option>
                                                 @endforeach
                                             </select>
                                         </div>
+
                                         <div class="col-md-2">
                                             <label class="form-label">Jumlah <span class="text-danger">*</span></label>
                                             <input type="number" class="form-control jumlah-input" name="items[0][jumlah]" min="1" value="1">
                                         </div>
-                                        <div class="col-md-3">
+
+                                        <div class="col-md-2">
                                             <label class="form-label">Harga Satuan</label>
                                             <input type="number" class="form-control harga-input" name="items[0][harga_satuan]" min="0" step="0.01" readonly>
                                         </div>
-                                        <div class="col-md-2 d-flex flex-column">
+
+                                        <div class="col-md-4">
                                             <label class="form-label">Subtotal</label>
                                             <div class="d-flex align-items-center">
                                                 <input type="text" class="form-control subtotal-display me-2" readonly>
@@ -248,121 +251,119 @@
         </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
-        let itemCount = 1;
-        let servisBiaya = 0;
+    let itemCount = 1;
+    let servisBiaya = 0;
 
-        const hargaBarang = {
-            @foreach ($barang as $b)
-                '{{ $b->id }}': {{ $b->harga }},
-            @endforeach
-        };
+    const hargaBarang = {
+        @foreach ($barang as $b)
+            '{{ $b->id }}': {{ $b->harga }},
+        @endforeach
+    };
 
-        const addItemBtn = document.getElementById('addItem');
-        const itemContainer = document.getElementById('itemContainer');
-        const servisSelect = document.getElementById('servis_id');
-        const diskonInput = document.getElementById('diskon');
-        const pajakInput = document.getElementById('pajak');
+    const $addItemBtn = $('#addItem');
+    const $itemContainer = $('#itemContainer');
+    const $servisSelect = $('#servis_id');
+    const $diskonInput = $('#diskon');
+    const $pajakInput = $('#pajak');
 
-        servisSelect.addEventListener('change', function() {
-            const selectedOption = this.options[this.selectedIndex];
-            servisBiaya = parseFloat(selectedOption.getAttribute('data-biaya')) || 0;
-            calculateTotal();
-        });
+    $servisSelect.on('change', function () {
+        const selectedOption = $(this).find('option:selected');
+        servisBiaya = parseFloat(selectedOption.data('biaya')) || 0;
+        calculateTotal();
+    });
 
-        addItemBtn.addEventListener('click', function() {
-            const newItem = document.querySelector('.item-row').cloneNode(true);
+    $addItemBtn.on('click', function () {
+        const $newItem = $('.item-row').first().clone();
 
-            newItem.querySelectorAll('select, input').forEach(function(el) {
-                if (el.name) {
-                    el.name = el.name.replace('[0]', `[${itemCount}]`);
-                }
-                if (el.type !== 'button') {
-                    el.value = el.classList.contains('jumlah-input') ? '1' : '';
-                }
-            });
-
-            newItem.querySelector('.remove-item').disabled = false;
-            itemContainer.appendChild(newItem);
-            itemCount++;
-            updateRemoveButtons();
-            calculateTotal();
-        });
-
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('remove-item')) {
-                e.target.closest('.item-row').remove();
-                updateRemoveButtons();
-                calculateTotal();
+        $newItem.find('select, input').each(function () {
+            const $el = $(this);
+            if ($el.attr('name')) {
+                $el.attr('name', $el.attr('name').replace('[0]', `[${itemCount}]`));
+            }
+            if ($el.attr('type') !== 'button') {
+                $el.val($el.hasClass('jumlah-input') ? '1' : '');
             }
         });
 
-        document.addEventListener('change', function(e) {
-            if (e.target.classList.contains('barang-select')) {
-                const barangId = e.target.value;
-                const harga = hargaBarang[barangId] || 0;
-                const row = e.target.closest('.item-row');
-                row.querySelector('.harga-input').value = harga;
-                calculateSubtotal(row);
-            }
-        });
-
-        document.addEventListener('input', function(e) {
-            if (e.target.classList.contains('jumlah-input') ||
-                e.target.id === 'diskon' || e.target.id === 'pajak') {
-                const row = e.target.closest('.item-row');
-                if (row) {
-                    calculateSubtotal(row);
-                } else {
-                    calculateTotal();
-                }
-            }
-        });
-
-        function updateRemoveButtons() {
-            const rows = document.querySelectorAll('.item-row');
-            rows.forEach(function(row) {
-                const btn = row.querySelector('.remove-item');
-                btn.disabled = rows.length <= 1;
-            });
-        }
-
-        function calculateSubtotal(row) {
-            const jumlah = parseFloat(row.querySelector('.jumlah-input').value) || 0;
-            const harga = parseFloat(row.querySelector('.harga-input').value) || 0;
-            const subtotal = jumlah * harga;
-            row.querySelector('.subtotal-display').value = 'Rp ' + subtotal.toLocaleString('id-ID');
-            calculateTotal();
-        }
-
-        function calculateTotal() {
-            let itemsTotal = 0;
-            document.querySelectorAll('.item-row').forEach(function(row) {
-                const jumlah = parseFloat(row.querySelector('.jumlah-input').value) || 0;
-                const harga = parseFloat(row.querySelector('.harga-input').value) || 0;
-                itemsTotal += jumlah * harga;
-            });
-
-            const subtotal = servisBiaya + itemsTotal;
-            const diskonPersen = parseFloat(diskonInput.value) || 0;
-            const pajakPersen = parseFloat(pajakInput.value) || 0;
-            const diskonAmount = subtotal * (diskonPersen / 100);
-            const subtotalAfterDiskon = subtotal - diskonAmount;
-            const pajakAmount = subtotalAfterDiskon * (pajakPersen / 100);
-            const total = subtotalAfterDiskon + pajakAmount;
-
-            document.getElementById('subtotalHarga').textContent = 'Rp ' + subtotal.toLocaleString('id-ID');
-            document.getElementById('diskonHarga').textContent = 'Rp ' + diskonAmount.toLocaleString('id-ID');
-            document.getElementById('pajakHarga').textContent = 'Rp ' + pajakAmount.toLocaleString('id-ID');
-            document.getElementById('totalHarga').textContent = 'Rp ' + total.toLocaleString('id-ID');
-        }
-
+        $newItem.find('.remove-item').prop('disabled', false);
+        $itemContainer.append($newItem);
+        itemCount++;
         updateRemoveButtons();
-        if (servisSelect.value) {
-            const selectedOption = servisSelect.options[servisSelect.selectedIndex];
-            servisBiaya = parseFloat(selectedOption.getAttribute('data-biaya')) || 0;
+        calculateTotal();
+    });
+
+    $(document).on('click', '.remove-item', function () {
+        $(this).closest('.item-row').remove();
+        updateRemoveButtons();
+        calculateTotal();
+    });
+
+    $(document).on('change', '.barang-select', function () {
+        const barangId = $(this).val();
+        const harga = hargaBarang[barangId] || 0;
+        const $row = $(this).closest('.item-row');
+        $row.find('.harga-input').val(harga);
+        calculateSubtotal($row);
+    });
+
+    $(document).on('input', '.jumlah-input, #diskon, #pajak', function () {
+        const $row = $(this).closest('.item-row');
+        if ($row.length) {
+            calculateSubtotal($row);
+        } else {
             calculateTotal();
         }
+    });
+
+    function updateRemoveButtons() {
+        const $rows = $('.item-row');
+        $rows.each(function () {
+            const $btn = $(this).find('.remove-item');
+            $btn.prop('disabled', $rows.length <= 1);
+        });
+    }
+
+    function calculateSubtotal($row) {
+        const jumlah = parseFloat($row.find('.jumlah-input').val()) || 0;
+        const harga = parseFloat($row.find('.harga-input').val()) || 0;
+        const subtotal = jumlah * harga;
+        $row.find('.subtotal-display').val('Rp ' + subtotal.toLocaleString('id-ID'));
+        calculateTotal();
+    }
+
+    function calculateTotal() {
+        let itemsTotal = 0;
+
+        $('.item-row').each(function () {
+            const jumlah = parseFloat($(this).find('.jumlah-input').val()) || 0;
+            const harga = parseFloat($(this).find('.harga-input').val()) || 0;
+            itemsTotal += jumlah * harga;
+        });
+
+        const subtotal = servisBiaya + itemsTotal;
+        const diskonPersen = parseFloat($diskonInput.val()) || 0;
+        const pajakPersen = parseFloat($pajakInput.val()) || 0;
+        const diskonAmount = subtotal * (diskonPersen / 100);
+        const subtotalAfterDiskon = subtotal - diskonAmount;
+        const pajakAmount = subtotalAfterDiskon * (pajakPersen / 100);
+        const total = subtotalAfterDiskon + pajakAmount;
+
+        $('#subtotalHarga').text('Rp ' + subtotal.toLocaleString('id-ID'));
+        $('#diskonHarga').text('Rp ' + diskonAmount.toLocaleString('id-ID'));
+        $('#pajakHarga').text('Rp ' + pajakAmount.toLocaleString('id-ID'));
+        $('#totalHarga').text('Rp ' + total.toLocaleString('id-ID'));
+    }
+
+    updateRemoveButtons();
+    if ($servisSelect.val()) {
+        const selectedOption = $servisSelect.find('option:selected');
+        servisBiaya = parseFloat(selectedOption.data('biaya')) || 0;
+        calculateTotal();
+    }
 </script>
+
 
 @endsection

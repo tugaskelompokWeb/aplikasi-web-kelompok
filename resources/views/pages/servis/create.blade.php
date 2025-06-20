@@ -64,25 +64,31 @@
                       </div>
 
                       <div id="jasa-container">
-                        <div class="mb-3 jasa-item">
-                          <div class="row">
-                            <div class="col-md-5">
-                              <label class="form-label">Nama Jasa</label>
-                              <input type="text" class="form-control" name="jasa[0][nama_jasa]" required>
+                       <div class="mb-3">
+                            <label class="form-label">Pilih Jasa</label>
+                            <div class="row">
+                                @foreach($jasa as $item)
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <input
+                                                class="form-check-input jasa-checkbox"
+                                                type="checkbox"
+                                                name="jasa[]"
+                                                value="{{ $item->id }}"
+                                                id="jasa{{ $item->id }}"
+                                                data-biaya="{{ $item->biaya }}"
+                                            >
+                                            <label class="form-check-label" for="jasa{{ $item->id }}">
+                                                {{ $item->nama_jasa }} - Rp{{ number_format($item->biaya) }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
-                            <div class="col-md-5">
-                              <label class="form-label">Biaya</label>
-                              <input type="number" class="form-control" name="jasa[0][biaya]" required>
-                            </div>
-                            <div class="col-md-2 d-flex align-items-end">
-                              <button type="button" class="btn btn-danger remove-jasa" style="margin-bottom: 16px;">Hapus</button>
-                            </div>
-                          </div>
                         </div>
-                      </div>
-
-                      <div class="mb-3">
-                        <button type="button" id="add-jasa" class="btn btn-secondary">Tambah Jasa</button>
+                        <div class="mb-3 mt-3">
+                            <h5>Total Biaya: <span id="totalBiayaDisplay">Rp0</span></h5>
+                        </div>
                       </div>
 
                     <!--end::Body-->
@@ -98,47 +104,39 @@
         </div>
     </div>
     <!--end::Row-->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            let jasaIndex = document.querySelectorAll('.jasa-item').length;
 
-            const addButton = document.getElementById('add-jasa');
-            const jasaContainer = document.getElementById('jasa-container');
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-            addButton.addEventListener('click', function () {
-                const newJasa = document.createElement('div');
-                newJasa.classList.add('mb-3', 'jasa-item');
-                newJasa.innerHTML = `
-                    <div class="row">
-                        <div class="col-md-5">
-                            <label class="form-label">Nama Jasa</label>
-                            <input type="text" class="form-control" name="jasa[${jasaIndex}][nama_jasa]" required>
-                        </div>
-                        <div class="col-md-5">
-                            <label class="form-label">Biaya</label>
-                            <input type="number" class="form-control" name="jasa[${jasaIndex}][biaya]" required>
-                        </div>
-                        <div class="col-md-2 d-flex align-items-end">
-                            <button type="button" class="btn btn-danger remove-jasa" style="margin-bottom: 16px;">Hapus</button>
-                        </div>
-                    </div>
-                `;
-                jasaContainer.appendChild(newJasa);
-                jasaIndex++;
-            });
+<script>
+    function formatRupiah(angka) {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0
+        }).format(angka);
+    }
 
-            jasaContainer.addEventListener('click', function (e) {
-                if (e.target.classList.contains('remove-jasa')) {
-                    const jasaItems = document.querySelectorAll('.jasa-item');
-                    if (jasaItems.length > 1) {
-                        e.target.closest('.jasa-item').remove();
-                    } else {
-                        alert('Minimal harus ada satu jasa');
-                    }
-                }
-            });
+    function hitungTotalBiaya() {
+        let total = 0;
+
+        $('.jasa-checkbox:checked').each(function() {
+            let biaya = parseInt($(this).data('biaya'));
+            if (!isNaN(biaya)) {
+                total += biaya;
+            }
         });
-    </script>
+
+        $('#totalBiayaDisplay').text(formatRupiah(total));
+    }
+
+    $(document).ready(function () {
+        $('.jasa-checkbox').on('change', function () {
+            hitungTotalBiaya();
+        });
+
+        hitungTotalBiaya();
+    });
+</script>
 
 
 @endsection

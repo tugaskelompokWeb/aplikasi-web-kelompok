@@ -90,15 +90,14 @@ class TransaksiController extends Controller
                 }
             }
 
-                // Hitung subtotal (biaya servis + item)
             $subtotal = $servis->total_biaya + $totalItems;
-            // Hitung diskon (persentase dari subtotal)
+
             $diskonAmount = $subtotal * ($transaksi->diskon / 100);
-            // Subtotal setelah diskon
+
             $subtotalAfterDiskon = $subtotal - $diskonAmount;
-            // Hitung pajak (persentase dari subtotal setelah diskon)
+
             $pajakAmount = $subtotalAfterDiskon * ($transaksi->pajak / 100);
-            // Total akhir
+
             $transaksi->total_harga = $subtotalAfterDiskon + $pajakAmount;
             $transaksi->save();
 
@@ -107,7 +106,7 @@ class TransaksiController extends Controller
             $servis->save();
 
             DB::commit();
-            return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil dibuat');
+            return redirect()->route('transaksi.index')->with('sukses', 'Transaksi berhasil dibuat');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Transaksi gagal: ' . $e->getMessage());

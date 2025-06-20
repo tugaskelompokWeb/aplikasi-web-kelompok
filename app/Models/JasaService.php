@@ -11,12 +11,10 @@ class JasaService extends Model
     protected $table = 'detail_servis';
     protected $fillable = [
         'servis_id',
-        'nama_jasa',
-        'biaya'
+        'jasa_id'
     ];
 
-    public function servis()
-    {
-        return $this->belongsTo(Servis::class, 'servis_id');
-    }
+    public function jasa() {
+    return $this->belongsTo(Jasa::class, 'jasa_id');
+}
 }

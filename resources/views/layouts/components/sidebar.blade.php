@@ -58,6 +58,12 @@
                   <p>Mekanik</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{route('jasa.index')}}" class="nav-link">
+                    <i class="nav-icon bi bi-person-gear"></i>
+                  <p>Jasa</p>
+                </a>
+              </li>
             </ul>
           </li>
          @endif

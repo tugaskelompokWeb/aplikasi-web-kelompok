@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jasa;
 use App\Models\JasaService;
 use App\Models\Kendaraan;
 use App\Models\Mekanik;
@@ -35,9 +36,11 @@ class ServisController extends Controller
      */
     public function create()
     {
-        $mekanik = Mekanik::all();
+        $mekanik = Mekanik::where('status','aktif')->get();
         $kendaraan = Kendaraan::all();
-        return view('pages.servis.create', compact(['mekanik', 'kendaraan']));
+        $jasa = Jasa::all();
+        return view('pages.servis.create', compact('mekanik', 'kendaraan', 'jasa'));
+
     }
 
     /**
@@ -51,8 +54,7 @@ class ServisController extends Controller
             'kendaraan_id' => 'required|exists:kendaraan,id',
             'mekanik_id' => 'required|exists:mekanik,id',
             'jasa' => 'required|array',
-            'jasa.*.nama_jasa' => 'required|string',
-            'jasa.*.biaya' => 'required|numeric',
+            'jasa.*' => 'required|exists:jasa,id',
         ]);
 
         DB::beginTransaction();
@@ -67,13 +69,15 @@ class ServisController extends Controller
             ]);
 
             $totalBiaya = 0;
-            foreach ($request->jasa as $jasa) {
+            foreach ($request->jasa as $jasaId) {
+                $jasa = Jasa::findOrFail($jasaId);
+
                 $servis->jasaServis()->create([
                     'servis_id' => $servis->id,
-                    'nama_jasa' => $jasa['nama_jasa'],
-                    'biaya' => $jasa['biaya'],
+                    'jasa_id' => $jasa->id,
                 ]);
-                $totalBiaya += $jasa['biaya'];
+
+                $totalBiaya += $jasa->biaya;
             }
             $servis->update(['total_biaya' => $totalBiaya]);
 
@@ -101,7 +105,9 @@ class ServisController extends Controller
     public function edit(string $id)
     {
         $servis = Servis::with('jasaServis')->findOrFail($id);
-        $mekanik = Mekanik::all();
+        $mekanik = Mekanik::where('status','aktif')
+                            ->orWhere('id', $servis->mekanik_id)
+                            ->get();
         $kendaraan = Kendaraan::all();
         return view('pages.servis.edit', compact('servis', 'mekanik', 'kendaraan'));
     }

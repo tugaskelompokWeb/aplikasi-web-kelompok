@@ -20,7 +20,7 @@
                         </button>
                         <button type="button" class="btn-btn-tool" data-lte-toggle="card-collapse" title="Collapse">
                             <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
-                            <i data-lte-icon="colla[se" class="bi bi-dash-lg"></i>
+                            <i data-lte-icon="collape" class="bi bi-dash-lg"></i>
                         </button>
                         <button type="button" class="btn btn-tool" data-lte-toggle="card-remove" title="Remove">
                             <i class="bi bi-x-lg"></i>

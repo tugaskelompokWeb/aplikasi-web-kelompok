@@ -40,6 +40,7 @@ class MekanikController extends Controller
 
         Mekanik::create($validated);
 
+        Alert::success('Mekanik berhasil ditambahkan.');
         return redirect()->route('mekanik.index')->with('success', 'Mekanik berhasil ditambahkan.');
     }
 
@@ -62,18 +63,18 @@ class MekanikController extends Controller
 
         $mekanik->update($validated);
 
+        Alert::sucess('Mekanik berhasil diupdate.');
         return redirect()->route('mekanik.index')->with('success', 'Mekanik berhasil diupdate.');
     }
 
     public function destroy(string $id)
     {
         $mekanik = Mekanik::findOrFail($id);
-
-
-
+            Alert::error('Gagal menghapus mekanik.');
+        
         $mekanik->delete();
 
-        Alert::success('Transaksi berhasil dihapus.');
-        return redirect()->route('transaksi.index');
+        Alert::success('Mekanik berhasil dihapus.');
+        return redirect()->route('mekanik.index');
     }
 }

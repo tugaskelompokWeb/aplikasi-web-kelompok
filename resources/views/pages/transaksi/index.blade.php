@@ -74,7 +74,7 @@
                             <td>{{$item->no_transaksi}}</td>
                             <td>{{ $item->servis->kendaraan->no_plat ?? '-' }}</td>
                             <td>{{ $item->metode_pembayaran }}</td>
-                            <td>Rp{{ number_format($item->total_harga) }}</td>
+                            <td>Rp{{ number_format($item->total_harga, 0, ',', '.') }}</td>
                             <td>{{ $item->user->name ?? '-' }}</td>
                             <td>
                                 <a href="{{ route('transaksi.show', $item->id) }}" class="btn btn-info btn-sm">Detail</a>

@@ -61,8 +61,8 @@
                             @foreach ($jasa as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->nama_jasa ?? null }}</td>
                                 <td>Rp{{ number_format($item->biaya, 0, ',', '.') }}</td>
-                                <td>{{ $item->biaya }}</td>
                                 <td>
                                     <a href="{{ route('jasa.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                     <form action="{{ route('jasa.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus data ini?');">

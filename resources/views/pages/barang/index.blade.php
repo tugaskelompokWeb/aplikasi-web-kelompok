@@ -79,7 +79,7 @@
                             <td>{{ $item->kategori }}</td>
                             <td>{{ $item->satuan }}</td>
                             <td>{{ $item->stok }}</td>
-                            <td>{{ $item->harga }}</td>
+                            <td>Rp{{ number_format($item->harga, 0, ',', '.') }}</td>
                             <td>
                                 <a href="{{ route('barang.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                 <form action="{{ route('barang.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus user ini?');">

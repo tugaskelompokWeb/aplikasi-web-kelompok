@@ -75,7 +75,7 @@
                                 <td>{{ $item->kendaraan->no_plat ?? null }}</td>
                                 <td>{{ $item->mekanik->nama ?? null }}</td>
                                 <td>{{ $item->status_servis ?? null }}</td>
-                                <td>{{ $item->total_biaya ?? null }}</td>
+                                <td>Rp{{ number_format($item->total_biaya, 0, ',', '.') }}</td>
                                 <td>
                                     <a href="{{ route('servis.show', $item->id) }}" class="btn btn-info btn-sm">Detail</a>
                                     <a href="{{ route('servis.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>

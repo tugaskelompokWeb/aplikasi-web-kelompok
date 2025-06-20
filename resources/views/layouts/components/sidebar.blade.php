@@ -39,7 +39,7 @@
           @if(auth()->user()->hasRole('manager') || auth()->user()->hasRole('developer'))
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon bi bi-box-arrow-in-right"></i>
+              <i class="nav-icon bi bi-database"></i>
               <p>
                 Master Data
                 <i class="nav-arrow bi bi-chevron-right"></i>
@@ -60,7 +60,7 @@
               </li>
               <li class="nav-item">
                 <a href="{{route('jasa.index')}}" class="nav-link">
-                    <i class="nav-icon bi bi-person-gear"></i>
+                    <i class="nav-icon bi bi-wrench"></i>
                   <p>Jasa</p>
                 </a>
               </li>

@@ -18,7 +18,7 @@ class JasaController extends Controller
             $q->where('nama_jasa', 'like', "%$search%");
         });
     }
-    $jasa = $query->paginate(10)->withQueryString();
+    $jasa = $query->paginate(10);
         return view('pages.jasa.index', compact('jasa'));
     }
 

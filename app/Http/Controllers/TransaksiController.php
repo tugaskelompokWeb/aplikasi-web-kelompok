@@ -25,7 +25,7 @@ class TransaksiController extends Controller
         });
     }
 
-    $transaksis = $query->paginate(10)->withQueryString();
+    $transaksis = $query->paginate(10);
         return view('pages.transaksi.index', compact('transaksis'));
     }
 

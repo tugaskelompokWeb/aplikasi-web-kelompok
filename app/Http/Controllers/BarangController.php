@@ -19,7 +19,7 @@ class BarangController extends Controller
               ->orWhere('kode_barang', 'like', "%$search%");
         });
     }
-    $barangs = $query->paginate(10)->withQueryString();
+    $barangs = $query->paginate(10);
         return view('pages.barang.index', compact('barangs'));
     }
 

@@ -106,7 +106,8 @@ class TransaksiController extends Controller
             $servis->save();
 
             DB::commit();
-            return redirect()->route('transaksi.index')->with('sukses', 'Transaksi berhasil dibuat');
+            Alert::success("Transaksi berhasil dibuat");
+            return redirect()->route('transaksi.index');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Transaksi gagal: ' . $e->getMessage());

@@ -22,7 +22,7 @@ class KendaraanController extends Controller
         });
     }
 
-    $kendaraans = $query->paginate(10)->withQueryString();
+    $kendaraans = $query->paginate(10);
         return view('pages.kendaraan.index', compact('kendaraans'));
     }
 

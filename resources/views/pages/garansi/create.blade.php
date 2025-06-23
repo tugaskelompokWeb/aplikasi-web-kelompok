@@ -17,30 +17,26 @@
                     @csrf
                     <!--begin::Body-->
                     <div class="card-body">
-                      <div class="mb-3">
+                      <!-- Select Pelanggan -->
+                    <div class="mb-3">
                         <label for="pelanggan_id" class="form-label">Pelanggan</label>
-                        <select class="form-control" name="pelanggan_id" required>
+                        <select class="form-control" name="pelanggan_id" id="pelanggan_id" required>
                             <option value="">-- Pilih Pelanggan --</option>
                             @foreach ($pelanggans as $pelanggan)
-                                <option value="{{ $pelanggan->id }}" {{ (old('pelanggan_id') == $pelanggan->id) ? 'selected' : '' }}>
-                                    {{ $pelanggan->nama }}
-                                </option>
+                                <option value="{{ $pelanggan->id }}">{{ $pelanggan->nama }}</option>
                             @endforeach
                         </select>
-                        @error('pelanggan_id') <small class="text-danger">{{ $message }}</small> @enderror
                     </div>
+
+                    <!-- Select Kendaraan -->
                     <div class="mb-3">
                         <label for="kendaraan_id" class="form-label">Kendaraan</label>
-                        <select class="form-control" name="kendaraan_id" required>
+                        <select class="form-control" name="kendaraan_id" id="kendaraan_id" required>
                             <option value="">-- Pilih Kendaraan --</option>
-                            @foreach ($kendaraans as $kendaraan)
-                                <option value="{{ $kendaraan->id }}" {{ (old('kendaraan_id') == $kendaraan->id) ? 'selected' : '' }}>
-                                    {{ $kendaraan->no_plat }}
-                                </option>
-                            @endforeach
+                            <!-- Akan diisi lewat JavaScript -->
                         </select>
-                        @error('kendaraan_id') <small class="text-danger">{{ $message }}</small> @enderror
                     </div>
+
                     <div class="mb-3">
                         <label for="keluhan" class="form-label">Keluhan</label>
                         <input type="text" class="form-control" name="keluhan" value="{{ old('keluhan')}}" required>
@@ -94,4 +90,31 @@
         </div>
     </div>
     <!--end::Row-->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#pelanggan_id').on('change', function() {
+                var pelangganId = $(this).val();
+
+                // Kosongkan dulu select kendaraan
+                $('#kendaraan_id').html('<option value="">-- Pilih Kendaraan --</option>');
+
+                if (pelangganId) {
+                    $.ajax({
+                        url: '/get-kendaraan/' + pelangganId,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            $.each(data, function(index, kendaraan) {
+                                $('#kendaraan_id').append('<option value="' + kendaraan.id + '">' + kendaraan.no_plat + '</option>');
+                            });
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+
 @endsection

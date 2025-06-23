@@ -91,7 +91,7 @@
                                     <label for="servis_id" class="form-label">
                                         <i class="fas fa-cogs me-1"></i>Servis <span class="text-danger">*</span>
                                     </label>
-                                    <select class="form-select @error('servis_id') is-invalid @enderror" id="servis_id"
+                                    <select class="form-select select2 @error('servis_id') is-invalid @enderror" id="servis_id"
                                         name="servis_id" required>
                                         <option value="">Pilih Servis</option>
                                         @foreach ($servis as $s)
@@ -121,7 +121,7 @@
                                     <div class="row g-2 align-items-end">
                                         <div class="col-md-4">
                                             <label class="form-label">Barang <span class="text-danger">*</span></label>
-                                            <select class="form-select barang-select" name="items[0][barang_id]">
+                                            <select class="form-select barang-select select2" name="items[0][barang_id]">
                                                 <option value="">Pilih Barang</option>
                                                 @foreach ($barang as $b)
                                                     <option value="{{ $b->id }}" data-harga="{{ $b->harga }}">
@@ -315,7 +315,7 @@
             calculateSubtotal($row);
         } else {
             calculateTotal();
-        }   
+        }
     });
 
     function updateRemoveButtons() {
@@ -364,6 +364,33 @@
         calculateTotal();
     }
 </script>
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+      $('.select2').select2({
+        placeholder: "-- Pilih Data --",
+        allowClear: true
+      });
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if(session('error'))
+<script>
+  Swal.fire({
+    icon: 'error',
+    title: 'Gagal',
+    text: '{{ session("error") }}',
+    confirmButtonColor: '#d33',
+  });
+</script>
+@endif
+
+
 
 
 @endsection

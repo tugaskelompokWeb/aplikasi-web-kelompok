@@ -17,7 +17,7 @@ class PelangganController extends Controller
             $q->where('nama', 'like', "%$search%");
         });
     }
-    $pelanggans = $query->paginate(10)->withQueryString();
+    $pelanggans = $query->paginate(10);
         return view('pages.pelanggan.index', compact('pelanggans'));
     }
 

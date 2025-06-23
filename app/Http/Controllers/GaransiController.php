@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Garansi;
-use App\Models\Kendaraan;   
+use App\Models\Kendaraan;
 use App\Models\Pelanggan;
 use App\Models\User;
 
@@ -22,7 +22,7 @@ class GaransiController extends Controller
               });
         });
     }
-    $garansi = $query->paginate(10)->withQueryString();
+    $garansi = $query->paginate(10);
         return view('pages.garansi.index', compact('garansi'));
     }
 
@@ -49,6 +49,14 @@ class GaransiController extends Controller
 
         return redirect()->route('garansi.index')->with('success', 'Data garansi berhasil ditambahkan');
     }
+
+    public function getKendaraan($pelangganId)
+    {
+        $kendaraans = Kendaraan::where('pelanggan_id', $pelangganId)->get();
+
+        return response()->json($kendaraans);
+    }
+
 
     public function edit($id)
     {

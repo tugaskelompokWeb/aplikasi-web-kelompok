@@ -41,7 +41,7 @@ class BarangController extends Controller
         Barang::create($validated);
 
         Alert::success('Barang berhasil ditambahkan');
-        return redirect()->route('barang.index')->with('success', 'Barang berhasil ditambahkan');
+        return redirect()->route('barang.index');
     }
 
     public function edit($id)
@@ -64,7 +64,7 @@ class BarangController extends Controller
         $barang->update($validated);
 
         Alert::success('Barang berhasil diupdate.');
-        return redirect()->route('barang.index')->with('success', 'Barang berhasil diperbarui');
+        return redirect()->route('barang.index');
     }
 
     public function destroy($id)

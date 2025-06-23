@@ -19,7 +19,7 @@ class MekanikController extends Controller
               ->orWhere('status', 'like', "%$search%");
         });
     }
-    $mekaniks = $query->paginate(10)->withQueryString();
+    $mekaniks = $query->paginate(10);
         return view('pages.mekanik.index', compact('mekaniks'));
     }
 

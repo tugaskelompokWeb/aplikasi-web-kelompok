@@ -28,7 +28,7 @@ class ServisController extends Controller
         });
     }
 
-    $servis = $query->paginate(10)->withQueryString();
+    $servis = $query->paginate(10);
         return view('pages.servis.index', compact('servis'));
     }
     /**
@@ -109,8 +109,10 @@ class ServisController extends Controller
                             ->orWhere('id', $servis->mekanik_id)
                             ->get();
         $kendaraan = Kendaraan::all();
+        $selectedJasaIds = $servis->jasaServis->pluck('jasa_id')->toArray();
         $jasa = Jasa::all();
-        return view('pages.servis.edit', compact('servis', 'mekanik', 'kendaraan', 'jasa'));
+        return view('pages.servis.edit', compact('servis', 'mekanik', 'kendaraan', 'jasa', 'selectedJasaIds'));
+
     }
 
     /**

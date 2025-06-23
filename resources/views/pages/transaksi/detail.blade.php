@@ -69,7 +69,12 @@
                                 <table class="table table-sm">
                                     <tr>
                                         <th width="30%">Jenis Servis</th>
-                                        <td>{{ $transaksi->servis->jasaServis->pluck('nama_jasa') }}</td>
+                                        <td>
+                                            @foreach ($transaksi->servis->jasaServis as $jasaServis)
+                                              • {{ $jasaServis->jasa->nama_jasa ?? '-' }}<br>
+                                            @endforeach
+                                          </td>
+                                          
                                     </tr>
                                     <tr>
                                         <th>Deskripsi</th>

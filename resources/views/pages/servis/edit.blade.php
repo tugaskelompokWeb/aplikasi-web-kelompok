@@ -40,7 +40,7 @@
 
                     <div class="mb-3">
                         <label for="kendaraan_id" class="form-label">Kendaraan</label>
-                        <select class="form-control" name="kendaraan_id" required>
+                        <select class="form-control select2" name="kendaraan_id" required>
                             <option value="">-- Pilih Kendaraan --</option>
                             @foreach ($kendaraan as $k)
                                 <option value="{{ $k->id }}" {{ (old('kendaraan_id', $servis->kendaraan_id) == $k->id) ? 'selected' : '' }}>
@@ -55,7 +55,7 @@
 
                     <div class="mb-3">
                         <label for="mekanik_id" class="form-label">Mekanik</label>
-                        <select class="form-control" name="mekanik_id" required>
+                        <select class="form-control select2" name="mekanik_id" required>
                             <option value="">-- Pilih Mekanik --</option>
                             @foreach ($mekanik as $m)
                                 <option value="{{ $m->id }}" {{ (old('mekanik_id', $servis->mekanik_id) == $m->id) ? 'selected' : '' }}>
@@ -73,22 +73,24 @@
                             <label class="form-label">Pilih Jasa</label>
                             <div class="row">
                                 @foreach($jasa as $item)
-                                    <div class="col-md-4">
-                                        <div class="form-check">
-                                            <input
-                                                class="form-check-input jasa-checkbox"
-                                                type="checkbox"
-                                                name="jasa[]"
-                                                value="{{ $item->id }}"
-                                                id="jasa{{ $item->id }}"
-                                                data-biaya="{{ $item->biaya }}"
-                                            >
-                                            <label class="form-check-label" for="jasa{{ $item->id }}">
-                                                {{ $item->nama_jasa }} - Rp{{ number_format($item->biaya) }}
-                                            </label>
-                                        </div>
-                                    </div>
-                                @endforeach
+                                <div class="col-md-4">
+                                  <div class="form-check">
+                                    <input
+                                      class="form-check-input jasa-checkbox"
+                                      type="checkbox"
+                                      name="jasa[]"
+                                      value="{{ $item->id }}"
+                                      id="jasa{{ $item->id }}"
+                                      data-biaya="{{ $item->biaya }}"
+                                      {{ in_array($item->id, $selectedJasaIds ?? []) ? 'checked' : '' }}
+                                    >
+                                    <label class="form-check-label" for="jasa{{ $item->id }}">
+                                      {{ $item->nama_jasa }} - Rp{{ number_format($item->biaya) }}
+                                    </label>
+                                  </div>
+                                </div>
+                              @endforeach
+
                             </div>
                         </div>
                     </div>
@@ -107,4 +109,18 @@
     </div>
 </div>
 <!--end::Row-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+          $('.select2').select2({
+            placeholder: "-- Pilih Data --",
+            allowClear: true
+          });
+        });
+      </script>
+
 @endsection

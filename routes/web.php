@@ -29,6 +29,7 @@ Route::post('/login', [UserController::class, 'login'])->name('login');
         Route::middleware('role:developer,admin')->group(function () {
             Route::resource('barang', BarangController::class);
             Route::resource('garansi', GaransiController::class);
+            Route::get('/get-kendaraan/{pelangganId}', [GaransiController::class, 'getKendaraan']);
             Route::resource('jasa', JasaController::class);
         });
 

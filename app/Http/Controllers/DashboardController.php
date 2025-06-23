@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
-use App\Models\Kendaraan;
-use App\Models\Mekanik;
 use App\Models\Pelanggan;
 use App\Models\Servis;
 use App\Models\Transaksi;
@@ -22,13 +20,6 @@ class DashboardController extends Controller
         $totalBarang = Barang::count();
         $totalTransaksi = Transaksi::count();
         $totalPelanggan = Pelanggan::count();
-        $stokMenipis = Barang::where('stok', '<=', 5)->count();
-        $barangStokRendah = Barang::where('stok', '<=', 5)
-            ->select('nama', 'stok', 'satuan')
-            ->orderBy('stok', 'asc')
-            ->limit(5)
-            ->get();
-
         $filterKendaraan = $request->input('filter_kendaraan','bulanan');
         $filterBarang = $request->input('filter_barang','bulanan');
 
@@ -157,7 +148,7 @@ class DashboardController extends Controller
 
 
         return view('pages.dashboard.index', compact('totalServis', 'totalBarang', 'totalTransaksi',
-        'totalPelanggan','stokMenipis', 'barangStokRendah','jumlahPlat', 'jumlahBarang', 'filterKendaraan',
+        'totalPelanggan', 'jumlahPlat', 'jumlahBarang', 'filterKendaraan',
         'filterBarang','monthlyRevenue', 'monthlyProfit', 'monthlyCategories',
         'dailyRevenue', 'dailyProfit', 'dailyCategories',
         'weeklyRevenue', 'weeklyProfit', 'weeklyCategories','topBarangLabels','topBarangData'));

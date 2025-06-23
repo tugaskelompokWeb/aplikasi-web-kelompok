@@ -33,35 +33,38 @@
                         @enderror
                       </div>
 
-                      <div class="mb-3">
-                        <label for="kendaraan_id" class="form-label">Kendaraan</label>
-                        <select class="form-control" name="kendaraan_id" required>
+                      <!-- Kendaraan -->
+                        <div class="mb-3">
+                            <label for="kendaraan_id" class="form-label">Kendaraan</label>
+                            <select class="form-control select2" name="kendaraan_id" required>
                             <option value="">-- Pilih Kendaraan --</option>
                             @foreach ($kendaraan as $k)
-                                <option value="{{ $k->id }}" {{ (old('kendaraan_id') == $k->id) ? 'selected' : '' }}>
-                                    {{ $k->no_plat }} - {{ $k->merk }}
+                                <option value="{{ $k->id }}" {{ old('kendaraan_id') == $k->id ? 'selected' : '' }}>
+                                {{ $k->no_plat }} - {{ $k->merk }}
                                 </option>
                             @endforeach
-                        </select>
-                        @error('kendaraan_id')
+                            </select>
+                            @error('kendaraan_id')
                             <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                      </div>
+                            @enderror
+                        </div>
 
-                      <div class="mb-3">
-                        <label for="mekanik_id" class="form-label">Mekanik</label>
-                        <select class="form-control" name="mekanik_id" required>
+                        <!-- Mekanik -->
+                        <div class="mb-3">
+                            <label for="mekanik_id" class="form-label">Mekanik</label>
+                            <select class="form-control select2" name="mekanik_id" required>
                             <option value="">-- Pilih Mekanik --</option>
                             @foreach ($mekanik as $m)
-                                <option value="{{ $m->id }}" {{ (old('mekanik_id') == $m->id) ? 'selected' : '' }}>
-                                    {{ $m->nama }}
+                                <option value="{{ $m->id }}" {{ old('mekanik_id') == $m->id ? 'selected' : '' }}>
+                                {{ $m->nama }}
                                 </option>
                             @endforeach
-                        </select>
-                        @error('mekanik_id')
+                            </select>
+                            @error('mekanik_id')
                             <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                      </div>
+                            @enderror
+                        </div>
+
 
                       <div id="jasa-container">
                        <div class="mb-3">
@@ -102,5 +105,18 @@
     </div>
     <!--end::Row-->
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+          $('.select2').select2({
+            placeholder: "-- Pilih Data --",
+            allowClear: true
+          });
+        });
+      </script>
 
 @endsection

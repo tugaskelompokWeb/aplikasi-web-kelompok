@@ -81,8 +81,7 @@ class TransaksiController extends Controller
 
                     $barang = Barang::findOrFail($item['barang_id']);
                     if ($barang->stok < $item['jumlah']) {
-                        Alert::error('Stok Tidak Cukup', "Stok untuk barang {$barang->nama_barang} tidak mencukupi.");
-                        return redirect()->back();
+                        return redirect()->back()->with('error', "Stok untuk barang {$barang->nama_barang} tidak mencukupi.");
                     }
                     $barang->stok -= $item['jumlah'];
                     $barang->save();
@@ -130,7 +129,7 @@ class TransaksiController extends Controller
 
     public function show($id)
     {
-        $transaksi = Transaksi::with(['servis.kendaraan.pelanggan', 'user', 'items.barang','servis.jasaServis'])->findOrFail($id);
+        $transaksi = Transaksi::with(['servis.kendaraan.pelanggan', 'user', 'items.barang','servis.jasaServis.jasa'])->findOrFail($id);
         return view('pages.transaksi.detail', compact('transaksi'));
     }
 

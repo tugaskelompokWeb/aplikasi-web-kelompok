@@ -22,7 +22,7 @@
                 <div class="card-body">
                     <div class="mb-3">
                       <label for="pelanggan_id" class="form-label">Pelanggan</label>
-                      <select class="form-control" name="pelanggan_id" required>
+                      <select class="form-control select2" name="pelanggan_id" required>
                           <option value="">-- Pilih Pelanggan --</option>
                           @foreach ($pelanggans as $pelanggan)
                               <option value="{{ $pelanggan->id }}" {{ (old('pelanggan_id', $kendaraan->pelanggan_id) == $pelanggan->id) ? 'selected' : '' }}>
@@ -81,5 +81,17 @@
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+    $('.select2').select2({
+        placeholder: "-- Pilih Data --",
+        allowClear: true
+    });
+    });
+</script>
 <!--end::Row-->
 @endsection

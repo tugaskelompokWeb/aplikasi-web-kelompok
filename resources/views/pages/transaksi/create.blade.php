@@ -253,9 +253,6 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- Select2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
 <script>
     let itemCount = 1;
     let servisBiaya = 0;
@@ -272,14 +269,6 @@
     const $diskonInput = $('#diskon');
     const $pajakInput = $('#pajak');
 
-    // Inisialisasi Select2 untuk elemen yang sudah ada
-    $(document).ready(function () {
-        $('.select2').select2({
-            placeholder: "-- Pilih Data --",
-            allowClear: true
-        });
-    });
-
     $servisSelect.on('change', function () {
         const selectedOption = $(this).find('option:selected');
         servisBiaya = parseFloat(selectedOption.data('biaya')) || 0;
@@ -287,47 +276,24 @@
     });
 
     $addItemBtn.on('click', function () {
-    const $firstItem = $('.item-row').first();
+        const $newItem = $('.item-row').first().clone();
 
-    // 1. Destroy select2 instance dulu sebelum clone
-    $firstItem.find('.select2').select2('destroy');
+        $newItem.find('select, input').each(function () {
+            const $el = $(this);
+            if ($el.attr('name')) {
+                $el.attr('name', $el.attr('name').replace('[0]', `[${itemCount}]`));
+            }
+            if ($el.attr('type') !== 'button') {
+                $el.val($el.hasClass('jumlah-input') ? '1' : '');
+            }
+        });
 
-    // 2. Clone elemen pertama
-    const $newItem = $firstItem.clone();
-
-    // 3. Kembalikan select2 di elemen pertama setelah clone
-    $firstItem.find('.select2').select2({
-        placeholder: "-- Pilih Data --",
-        allowClear: true
+        $newItem.find('.remove-item').prop('disabled', false);
+        $itemContainer.append($newItem);
+        itemCount++;
+        updateRemoveButtons();
+        calculateTotal();
     });
-
-    // 4. Reset form field di clone
-    $newItem.find('select, input').each(function () {
-        const $el = $(this);
-        if ($el.attr('name')) {
-            $el.attr('name', $el.attr('name').replace('[0]', `[${itemCount}]`));
-        }
-        if ($el.attr('type') !== 'button') {
-            $el.val($el.hasClass('jumlah-input') ? '1' : '');
-        }
-    });
-
-    $newItem.find('.remove-item').prop('disabled', false);
-
-    // 5. Append ke container
-    $itemContainer.append($newItem);
-
-    // 6. Inisialisasi Select2 di clone baru
-    $newItem.find('.select2').select2({
-        placeholder: "-- Pilih Data --",
-        allowClear: true
-    });
-
-    itemCount++;
-    updateRemoveButtons();
-    calculateTotal();
-});
-
 
     $(document).on('click', '.remove-item', function () {
         $(this).closest('.item-row').remove();
@@ -391,7 +357,6 @@
         $('#totalHarga').text('Rp ' + total.toLocaleString('id-ID'));
     }
 
-    // Hitung total awal jika sudah ada servis terpilih
     updateRemoveButtons();
     if ($servisSelect.val()) {
         const selectedOption = $servisSelect.find('option:selected');
@@ -399,6 +364,17 @@
         calculateTotal();
     }
 </script>
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+      $('.select2').select2({
+        placeholder: "-- Pilih Data --",
+        allowClear: true
+      });
+    });
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
